@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { _FindService } from "../../../service/store/findService";
-import { IStore } from "../../../data/store";
 
 export default class StoreController {
   protected Find = async (req: Request, res: Response) => {

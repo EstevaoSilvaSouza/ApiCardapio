@@ -1,6 +1,6 @@
 import { IStore } from "../../data/store";
 
-interface InterfaceStoryRepo<T> {
+export interface InterfaceStoryRepo<T> {
   find(storeName: string): Promise<T | null>;
   findAll(): Promise<T[] | null>;
 }

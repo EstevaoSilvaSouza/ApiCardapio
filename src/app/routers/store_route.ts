@@ -9,10 +9,19 @@ class StoreRoute extends StoreController {
     this.Router = Router();
     //Rotas abaixo!!
     this.FindByStoreName();
+    this.RouteTest();
   }
 
   private FindByStoreName = () => {
     this.Router.post("/find", this.Find);
+  };
+
+  private RouteTest = () => {
+    this.Router.get("/", (req: Request, res: Response) => {
+      res.status(200).json({
+        Mensagem: "Store Online",
+      });
+    });
   };
 }
 
