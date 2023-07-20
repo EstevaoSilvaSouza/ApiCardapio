@@ -2,6 +2,8 @@ import { Model, DataTypes } from "sequelize";
 import { _DbContext } from "./dbContext";
 import Store from "./store";
 
+import Table from "./Table";
+
 export interface IProduct {
   Id?: number;
   Name: string;

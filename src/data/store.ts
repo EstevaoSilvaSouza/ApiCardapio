@@ -46,5 +46,6 @@ Store.init(
   },
   {
     sequelize: _DbContext,
+    tableName: "Store",
   }
 );

@@ -8,10 +8,15 @@ class DbContext {
   }
 
   private Connect = (): void => {
-    this.Con = new Sequelize("railway", "root", "fTfEMGxYG3mMW4fzoIvW", {
+    /*this.Con = new Sequelize("railway", "root", "fTfEMGxYG3mMW4fzoIvW", {
       dialect: "mysql",
       host: "containers-us-west-124.railway.app",
       port: 6298,
+      logging: true,
+    });*/
+    this.Con = new Sequelize("AStore", "root", "Tilindo@14", {
+      dialect: "mysql",
+      host: "localhost",
       logging: true,
     });
   };
