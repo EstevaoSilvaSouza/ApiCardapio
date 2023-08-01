@@ -1,10 +1,8 @@
-import { Model, DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { _DbContext } from "./dbContext";
 import Store from "./store";
 
-import Table from "./Table";
-
-export interface IProduct {
+export interface IProductsOrder {
   Id?: number;
   Name: string;
   Type: string;
@@ -14,7 +12,7 @@ export interface IProduct {
   Tag: string;
 }
 
-export default class Product extends Model<IProduct> {
+export class ProductsOrder extends Model<IProductsOrder> {
   declare Name: string;
   declare Type: string;
   declare Value: number;
@@ -23,7 +21,7 @@ export default class Product extends Model<IProduct> {
   declare Tag: string;
 }
 
-Product.init(
+ProductsOrder.init(
   {
     Id: {
       type: DataTypes.INTEGER,
@@ -58,18 +56,18 @@ Product.init(
   },
   {
     sequelize: _DbContext,
-    tableName: "product",
+    tableName: "productOrder",
     freezeTableName: true,
   }
 );
 
-Product.belongsTo(Store, {
+ProductsOrder.belongsTo(Store, {
   foreignKey: "Id_Store",
   constraints: true,
   foreignKeyConstraint: true,
 });
 
-Store.hasMany(Product, {
+Store.hasMany(ProductsOrder, {
   foreignKey: "Id_Store",
   constraints: true,
   foreignKeyConstraint: true,

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { _FindService } from "../../../service/store/findService";
+import { _CartFindItemService } from "../../../service/cart/findItemService";
 
 export default class StoreController {
   protected Find = async (req: Request, res: Response) => {
@@ -23,6 +24,28 @@ export default class StoreController {
       res.status(500).json({
         Mensage: "Erro de servidor, contate o administrador do sistema!",
         Erro: e,
+      });
+    }
+  };
+
+  protected Teste = async (req: Request, res: Response) => {
+    const { Id, Name } = req.body;
+
+    try {
+      const Find = await _CartFindItemService.Execute(Id, Name);
+
+      if (Find) {
+        return res.status(200).json({
+          Data: Find,
+        });
+      } else {
+        return res.status(200).json({
+          Mensagem: "Sem dado!",
+        });
+      }
+    } catch (Error: any) {
+      return res.status(500).json({
+        Erro: Error,
       });
     }
   };

@@ -1,8 +1,9 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
 import { _DbContext } from "./dbContext";
-import Store from "./store";
 import Product from "./product";
 import Table from "./Table";
+import { Order } from "./order";
+import { ProductsOrder } from "./productsOrder";
 
 export interface IImage {
   Id?: number;
@@ -50,5 +51,12 @@ Product.hasMany(Image, {
   constraints: true,
   foreignKeyConstraint: true,
 });
-Table.belongsToMany(Product, { through: "CartItem", foreignKey: "Id_Table" });
-Product.belongsToMany(Table, { through: "CartItem", foreignKey: "Id_Product" });
+
+Order.belongsToMany(ProductsOrder, {
+  through: "CartItem",
+  foreignKey: "Id_Order",
+});
+ProductsOrder.belongsToMany(Order, {
+  through: "CartItem",
+  foreignKey: "Id_Product",
+});

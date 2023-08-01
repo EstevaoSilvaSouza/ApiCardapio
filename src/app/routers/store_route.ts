@@ -17,11 +17,7 @@ class StoreRoute extends StoreController {
   };
 
   private RouteTest = () => {
-    this.Router.get("/", (req: Request, res: Response) => {
-      res.status(200).json({
-        Mensagem: "Store Online",
-      });
-    });
+    this.Router.post("/teste", this.Teste);
   };
 }
 

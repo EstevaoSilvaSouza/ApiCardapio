@@ -60,5 +60,3 @@ Store.hasMany(Table, {
   foreignKeyConstraint: true,
   constraints: true,
 });
-Table.belongsToMany(Product, { through: "CartItem", foreignKey: "Id_Table" });
-Product.belongsToMany(Table, { through: "CartItem", foreignKey: "Id_Product" });
