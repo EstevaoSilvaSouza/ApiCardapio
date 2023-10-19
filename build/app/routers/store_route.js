@@ -13,11 +13,7 @@ class StoreRoute extends store_controller_1.default {
             this.Router.post("/find", this.Find);
         };
         this.RouteTest = () => {
-            this.Router.get("/", (req, res) => {
-                res.status(200).json({
-                    Mensagem: "Store Online",
-                });
-            });
+            this.Router.post("/teste", this.Teste);
         };
         this.Router = (0, express_1.Router)();
         //Rotas abaixo!!

@@ -1,21 +1,13 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const findService_1 = require("../../../service/store/findService");
+const findItemService_1 = require("../../../service/cart/findItemService");
 class StoreController {
     constructor() {
-        this.Find = (req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.Find = async (req, res) => {
             const { Name, Type } = req.body;
             try {
-                let StoreFind = yield findService_1._FindService.Execute(Type, Name);
+                let StoreFind = await findService_1._FindService.Execute(Type, Name);
                 if (StoreFind) {
                     const Filter = StoreFind.Products.map((e) => e.Type);
                     const Newmap = [...new Map(Filter.map((e) => [e, e])).values()];
@@ -36,7 +28,28 @@ class StoreController {
                     Erro: e,
                 });
             }
-        });
+        };
+        this.Teste = async (req, res) => {
+            const { Id, Name } = req.body;
+            try {
+                const Find = await findItemService_1._CartFindItemService.Execute(Id, Name);
+                if (Find) {
+                    return res.status(200).json({
+                        Data: Find,
+                    });
+                }
+                else {
+                    return res.status(200).json({
+                        Mensagem: "Sem dado!",
+                    });
+                }
+            }
+            catch (Error) {
+                return res.status(500).json({
+                    Erro: Error,
+                });
+            }
+        };
     }
 }
 exports.default = StoreController;

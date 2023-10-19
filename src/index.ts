@@ -14,7 +14,7 @@ const StartApplication = async () => {
 
   new App().app.listen(3080, () => {
     console.log(`
-        Servidor Rodando!!
+        Servidor online teste!
 
 
         Url Base API : http://localhost:3080/store

@@ -6,52 +6,43 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const dbContext_1 = require("./dbContext");
 const store_1 = __importDefault(require("./store"));
-class Product extends sequelize_1.Model {
+class Table extends sequelize_1.Model {
 }
-exports.default = Product;
-Product.init({
+exports.default = Table;
+Table.init({
     Id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        unique: true,
     },
     Name: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
+        unique: true,
     },
     Description: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: true,
     },
-    Quantity: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: true,
+    Status: {
+        type: sequelize_1.DataTypes.BOOLEAN,
+        allowNull: false,
     },
-    Tag: {
+    Password: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: true,
-    },
-    Type: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: true,
-    },
-    Value: {
-        type: sequelize_1.DataTypes.FLOAT,
-        allowNull: true,
+        allowNull: false,
     },
 }, {
     sequelize: dbContext_1._DbContext,
-    tableName: "product",
-    freezeTableName: true,
+    tableName: "Table",
 });
-Product.belongsTo(store_1.default, {
+Table.belongsTo(store_1.default, {
     foreignKey: "Id_Store",
-    constraints: true,
     foreignKeyConstraint: true,
+    constraints: true,
 });
-store_1.default.hasMany(Product, {
+store_1.default.hasMany(Table, {
     foreignKey: "Id_Store",
-    constraints: true,
     foreignKeyConstraint: true,
+    constraints: true,
 });
