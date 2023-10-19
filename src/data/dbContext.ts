@@ -14,11 +14,18 @@ class DbContext {
       port: 6298,
       logging: true,
     });*/
-    this.Con = new Sequelize("AStore", "root", "Tilindo@14", {
-      dialect: "mysql",
-      host: "localhost",
-      logging: true,
-    });
+    this.Con = new Sequelize(
+      "postgres://default:K93MYgrwuLjv@ep-dawn-fire-87063438.us-east-1.postgres.vercel-storage.com:5432/verceldb",
+      {
+        dialect: "postgres",
+        dialectOptions: {
+          ssl: {
+            require: true, // Requer conexão SSL
+            rejectUnauthorized: false, // Ignora a verificação do certificado (não é recomendado para produção)
+          },
+        },
+      },
+    );
   };
 }
 
