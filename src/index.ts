@@ -8,7 +8,7 @@ import { ProductsOrder } from "./data/productsOrder";
 const StartApplication = async () => {
   await _DbContext.authenticate().then(async () => {
     console.log(`banco conectado!`);
-
+    //_DbContext.sync();
     //await ProductsOrder.sync({ alter: true });
   });
 
