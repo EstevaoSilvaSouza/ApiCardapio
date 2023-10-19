@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const findService_1 = require("../../../service/store/findService");
 const findItemService_1 = require("../../../service/cart/findItemService");
+const createService_1 = require("../../../service/store/createService");
 class StoreController {
     constructor() {
         this.Find = async (req, res) => {
@@ -47,6 +48,21 @@ class StoreController {
             catch (Error) {
                 return res.status(500).json({
                     Erro: Error,
+                });
+            }
+        };
+        this.Create = async (req, res) => {
+            const payload = req.body;
+            try {
+                const create = await createService_1._CreateService.handleExecute(payload);
+                if (!create)
+                    return res.status(404).json({ Message: 'Falha ao criar usuario!', Date: new Date() });
+                return res.status(200).json({ Message: 'Store criada com sucesso', Data: create });
+            }
+            catch (error) {
+                return res.status(500).json({
+                    Message: error.message,
+                    Date: new Date()
                 });
             }
         };

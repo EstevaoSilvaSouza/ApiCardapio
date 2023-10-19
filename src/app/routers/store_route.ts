@@ -10,15 +10,12 @@ class StoreRoute extends StoreController {
     //Rotas abaixo!!
     this.FindByStoreName();
     this.RouteTest();
+    this.CreateStore();
   }
 
-  private FindByStoreName = () => {
-    this.Router.post("/find", this.Find);
-  };
-
-  private RouteTest = () => {
-    this.Router.post("/teste", this.Teste);
-  };
+  private FindByStoreName = () => this.Router.post("/find", this.Find);
+  private RouteTest = () => this.Router.post("/teste", this.Teste);
+  private CreateStore = () => this.Router.post('/new',this.Create);
 }
 
 export const _StoreRoute = new StoreRoute().Router;

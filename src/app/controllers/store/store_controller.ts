@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { _FindService } from "../../../service/store/findService";
 import { _CartFindItemService } from "../../../service/cart/findItemService";
+import { _CreateService } from "../../../service/store/createService";
 
 export default class StoreController {
   protected Find = async (req: Request, res: Response) => {
@@ -49,4 +50,20 @@ export default class StoreController {
       });
     }
   };
+
+  protected Create = async (req:Request,res:Response) => {
+    const payload = req.body;
+
+    try{
+      const create = await _CreateService.handleExecute(payload);
+      if(!create) return res.status(404).json({Message:'Falha ao criar usuario!', Date:new Date()})
+      return res.status(200).json({Message:'Store criada com sucesso',Data:create})
+    }
+    catch(error:any){
+      return res.status(500).json({
+        Message:error.message,
+        Date: new Date()
+      })
+    }
+  }
 }
