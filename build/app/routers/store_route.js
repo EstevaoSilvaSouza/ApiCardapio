@@ -9,16 +9,14 @@ const store_controller_1 = __importDefault(require("../controllers/store/store_c
 class StoreRoute extends store_controller_1.default {
     constructor() {
         super();
-        this.FindByStoreName = () => {
-            this.Router.post("/find", this.Find);
-        };
-        this.RouteTest = () => {
-            this.Router.post("/teste", this.Teste);
-        };
+        this.FindByStoreName = () => this.Router.post("/find", this.Find);
+        this.RouteTest = () => this.Router.post("/teste", this.Teste);
+        this.CreateStore = () => this.Router.post('/new', this.Create);
         this.Router = (0, express_1.Router)();
         //Rotas abaixo!!
         this.FindByStoreName();
         this.RouteTest();
+        this.CreateStore();
     }
 }
 exports._StoreRoute = new StoreRoute().Router;

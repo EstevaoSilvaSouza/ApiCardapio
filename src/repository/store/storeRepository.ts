@@ -4,6 +4,10 @@ import Store, { IStore } from "../../data/store";
 import AbsStoreRepository from "./IstoryRepository";
 
 export default class StoreRepository implements AbsStoreRepository {
+  async create(payload: IStore):Promise<IStore | null> {
+    return await Store.create(payload);
+  }
+  
   async find(storeName?: string): Promise<IStore | null> {
     return await Store.findOne({
       where: { Name: storeName },

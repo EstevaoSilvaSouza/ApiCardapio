@@ -7,6 +7,9 @@ const image_1 = require("../../data/image");
 const product_1 = __importDefault(require("../../data/product"));
 const store_1 = __importDefault(require("../../data/store"));
 class StoreRepository {
+    async create(payload) {
+        return await store_1.default.create(payload);
+    }
     async find(storeName) {
         return await store_1.default.findOne({
             where: { Name: storeName },
