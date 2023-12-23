@@ -2,6 +2,7 @@ import Express, { Application } from "express";
 import { _StoreRoute } from "./routers/store_route";
 import { NotFound } from "./midlwares/notfound";
 import Cors from "cors";
+import { _UserRouter } from "./routers/user_route";
 export default class App {
   public app: Application;
 
@@ -18,7 +19,8 @@ export default class App {
   };
 
   private Route = () => {
-    this.app.use("/store", _StoreRoute);
+    this.app.use('/store', _StoreRoute);
+    this.app.use('/user', _UserRouter);
     this.app.use("*", NotFound);
   };
 }

@@ -6,17 +6,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports._StoreRoute = void 0;
 const express_1 = require("express");
 const store_controller_1 = __importDefault(require("../controllers/store/store_controller"));
+const auth_tokent_1 = require("../midlwares/auth.tokent");
 class StoreRoute extends store_controller_1.default {
     constructor() {
         super();
         this.FindByStoreName = () => this.Router.post("/find", this.Find);
-        this.RouteTest = () => this.Router.post("/teste", this.Teste);
+        this.RouteTest = () => this.Router.post("/teste", auth_tokent_1.AuthUser, this.Teste);
         this.CreateStore = () => this.Router.post('/new', this.Create);
+        this.FindByUserStore = () => this.Router.post('/currentuser/store', auth_tokent_1.AuthUser, this.FindStoreByUser);
         this.Router = (0, express_1.Router)();
         //Rotas abaixo!!
         this.FindByStoreName();
         this.RouteTest();
         this.CreateStore();
+        this.FindByUserStore();
     }
 }
 exports._StoreRoute = new StoreRoute().Router;

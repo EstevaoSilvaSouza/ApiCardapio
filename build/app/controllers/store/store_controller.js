@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const findService_1 = require("../../../service/store/findService");
 const findItemService_1 = require("../../../service/cart/findItemService");
 const createService_1 = require("../../../service/store/createService");
+const findStoreByUser_1 = require("../../../service/user/findStoreByUser");
+const checkTypeResponse_1 = require("../../../types/checkTypeResponse");
 class StoreController {
     constructor() {
         this.Find = async (req, res) => {
@@ -64,6 +66,21 @@ class StoreController {
                     Message: error.message,
                     Date: new Date()
                 });
+            }
+        };
+        this.FindStoreByUser = async (req, res) => {
+            const { Name } = req.body;
+            if (!Name)
+                return res.status(400).json({ message: 'Prop Name Store invalida.' });
+            try {
+                let findStoreByUser = await findStoreByUser_1._FindStoreByUserService.handleExecute(req.User.Id, Name);
+                if ((0, checkTypeResponse_1.checkTypeResponse)(findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.id).status === 401)
+                    return res.status((0, checkTypeResponse_1.checkTypeResponse)(findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.id).status).json({
+                        message: (0, checkTypeResponse_1.checkTypeResponse)(findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.id).message, returnCode: findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.id
+                    });
+                return res.status(200).json({ message: (0, checkTypeResponse_1.checkTypeResponse)(findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.id).message, returnCode: findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.id, Store: findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.obj });
+            }
+            catch (error) {
             }
         };
     }

@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { _FindService } from "../../../service/store/findService";
 import { _CartFindItemService } from "../../../service/cart/findItemService";
 import { _CreateService } from "../../../service/store/createService";
+import { _FindStoreByUserService } from "../../../service/user/findStoreByUser";
+import { checkTypeResponse } from "../../../types/checkTypeResponse";
 
 export default class StoreController {
   protected Find = async (req: Request, res: Response) => {
@@ -64,6 +66,25 @@ export default class StoreController {
         Message:error.message,
         Date: new Date()
       })
+    }
+  }
+
+
+  protected FindStoreByUser = async (req:Request,res:Response) => {
+    const {Name} = req.body;
+
+    if(!Name)return res.status(400).json({message:'Prop Name Store invalida.'});
+
+    try{
+      let findStoreByUser = await _FindStoreByUserService.handleExecute(req.User.Id,Name)
+      if(checkTypeResponse(findStoreByUser?.id!).status === 401) return res.status(checkTypeResponse(findStoreByUser?.id!).status).json({
+        message:checkTypeResponse(findStoreByUser?.id!).message,returnCode:findStoreByUser?.id!
+      })
+
+      return res.status(200).json({message:checkTypeResponse(findStoreByUser?.id!).message, returnCode:findStoreByUser?.id!,Store:findStoreByUser?.obj!}); 
+    }
+    catch(error:any){
+
     }
   }
 }

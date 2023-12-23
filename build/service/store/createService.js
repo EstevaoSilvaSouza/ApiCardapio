@@ -15,7 +15,7 @@ class CreateService {
             if (!create) {
                 throw ({ message: 'falha ao criar store' });
             }
-            return create;
+            return create ? create : null;
         };
     }
 }

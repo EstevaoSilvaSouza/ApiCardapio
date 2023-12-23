@@ -10,18 +10,33 @@ class StoreRepository {
     async create(payload) {
         return await store_1.default.create(payload);
     }
-    async find(storeName) {
-        return await store_1.default.findOne({
-            where: { Name: storeName },
-            attributes: { exclude: ["createdAt", "updatedAt"] },
-            include: {
-                model: product_1.default,
-                include: [
-                    { model: image_1.Image, attributes: { exclude: ["createdAt", "updatedAt"] } },
-                ],
+    async find(storeName, type, idUser) {
+        if (type === 'default') {
+            return await store_1.default.findOne({
+                where: { Name: storeName },
                 attributes: { exclude: ["createdAt", "updatedAt"] },
-            },
-        });
+                include: {
+                    model: product_1.default,
+                    include: [
+                        { model: image_1.Image, attributes: { exclude: ["createdAt", "updatedAt"] } },
+                    ],
+                    attributes: { exclude: ["createdAt", "updatedAt"] },
+                },
+            });
+        }
+        else {
+            return await store_1.default.findOne({
+                where: { Name: storeName, IdUser: idUser },
+                attributes: { exclude: ["createdAt", "updatedAt"] },
+                include: {
+                    model: product_1.default,
+                    include: [
+                        { model: image_1.Image, attributes: { exclude: ["createdAt", "updatedAt"] } },
+                    ],
+                    attributes: { exclude: ["createdAt", "updatedAt"] },
+                },
+            });
+        }
     }
     async findAll() {
         return await store_1.default.findAll({ raw: true });

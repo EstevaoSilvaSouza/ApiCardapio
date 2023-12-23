@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const store_route_1 = require("./routers/store_route");
 const notfound_1 = require("./midlwares/notfound");
 const cors_1 = __importDefault(require("cors"));
+const user_route_1 = require("./routers/user_route");
 class App {
     constructor() {
         this.Middleware = () => {
@@ -15,7 +16,8 @@ class App {
             this.app.use(express_1.default.urlencoded({ extended: true, limit: 2500 }));
         };
         this.Route = () => {
-            this.app.use("/store", store_route_1._StoreRoute);
+            this.app.use('/store', store_route_1._StoreRoute);
+            this.app.use('/user', user_route_1._UserRouter);
             this.app.use("*", notfound_1.NotFound);
         };
         this.app = (0, express_1.default)();

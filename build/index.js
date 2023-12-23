@@ -8,7 +8,7 @@ const dbContext_1 = require("./data/dbContext");
 const StartApplication = async () => {
     await dbContext_1._DbContext.authenticate().then(async () => {
         console.log(`banco conectado!`);
-        //_DbContext.sync();
+        //User.sync({force:true});
         //await ProductsOrder.sync({ alter: true });
     });
     new app_1.default().app.listen(3080, () => {

@@ -4,11 +4,13 @@ import Table from "./data/Table";
 
 import { _DbContext } from "./data/dbContext";
 import { ProductsOrder } from "./data/productsOrder";
+import Store from "./data/store";
+import { User } from "./data/user";
 
 const StartApplication = async () => {
   await _DbContext.authenticate().then(async () => {
     console.log(`banco conectado!`);
-    //_DbContext.sync();
+    //User.sync({force:true});
     //await ProductsOrder.sync({ alter: true });
   });
 

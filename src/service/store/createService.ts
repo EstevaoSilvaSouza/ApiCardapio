@@ -14,7 +14,7 @@ class CreateService {
             throw ({message:'falha ao criar store'})
         }
 
-        return create
+        return create ? create : null;
     
     }
 
