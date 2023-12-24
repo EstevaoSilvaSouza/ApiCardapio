@@ -25,6 +25,7 @@ class UserController {
         }
     }
     async AuthUser(req, res) {
+        var _a, _b;
         const { Username, Password } = req.body;
         if (!Username || !Password)
             return res.status(404).json({ message: 'Usuario/Senha em branco!' });
@@ -32,7 +33,7 @@ class UserController {
             const validateAuth = await authUserService_1._AuthUser.handleExecute({ Username, Password });
             if ((0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).status === 403 || (0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).status === 404 || (0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).status === 401)
                 return res.status((0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).status).json({ message: (0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).message, returnCode: validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num });
-            return res.status(200).json({ message: (0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).message, returnCode: validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num, token: (0, authUserTokenGenerate_1.AuthTokenGenerate)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.obj) });
+            return res.status(200).json({ message: (0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).message, data: `${(_a = validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.obj) === null || _a === void 0 ? void 0 : _a.Name} ${(_b = validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.obj) === null || _b === void 0 ? void 0 : _b.FullName}`, returnCode: validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num, token: (0, authUserTokenGenerate_1.AuthTokenGenerate)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.obj) });
         }
         catch ({ error }) {
             return res.status(500).json({
