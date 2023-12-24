@@ -38,7 +38,7 @@ export default class UserController {
             const validateAuth = await _AuthUser.handleExecute({Username,Password});
             
             if(checkTypeResponse(validateAuth?.num!).status === 403 || checkTypeResponse(validateAuth?.num!).status === 404 ||checkTypeResponse(validateAuth?.num!).status === 401 ) return res.status(checkTypeResponse(validateAuth?.num!).status).json({message:checkTypeResponse(validateAuth?.num!).message,returnCode:validateAuth?.num});
-            return res.status(200).json({message:checkTypeResponse(validateAuth?.num!).message, returnCode:validateAuth?.num,token:AuthTokenGenerate(validateAuth?.obj!)}); 
+            return res.status(200).json({message:checkTypeResponse(validateAuth?.num!).message, data:`${validateAuth?.obj?.Name} ${validateAuth?.obj?.FullName}`,returnCode:validateAuth?.num,token:AuthTokenGenerate(validateAuth?.obj!)}); 
         }
         catch ({ error }: any) {
             
