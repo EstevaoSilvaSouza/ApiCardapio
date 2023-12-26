@@ -36,8 +36,21 @@ export default class UserController {
 
         try{
             const validateAuth = await _AuthUser.handleExecute({Username,Password});
-            
+            const expirationDate = new Date();
+         expirationDate.setHours(expirationDate.getHours() + 1);
+
+
             if(checkTypeResponse(validateAuth?.num!).status === 403 || checkTypeResponse(validateAuth?.num!).status === 404 ||checkTypeResponse(validateAuth?.num!).status === 401 ) return res.status(checkTypeResponse(validateAuth?.num!).status).json({message:checkTypeResponse(validateAuth?.num!).message,returnCode:validateAuth?.num});
+            res.cookie('_xc0d3_t0k3n',AuthTokenGenerate(validateAuth?.obj!),
+            {
+                httpOnly: true,
+                sameSite: 'none',
+                secure:true,
+                maxAge: 3600000,
+                expires: expirationDate,
+
+            });
+            
             return res.status(200).json({message:checkTypeResponse(validateAuth?.num!).message, data:`${validateAuth?.obj?.Name} ${validateAuth?.obj?.FullName}`,returnCode:validateAuth?.num,token:AuthTokenGenerate(validateAuth?.obj!)}); 
         }
         catch ({ error }: any) {

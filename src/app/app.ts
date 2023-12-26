@@ -3,6 +3,8 @@ import { _StoreRoute } from "./routers/store_route";
 import { NotFound } from "./midlwares/notfound";
 import Cors from "cors";
 import { _UserRouter } from "./routers/user_route";
+import cookieParser from 'cookie-parser';
+
 export default class App {
   public app: Application;
 
@@ -13,9 +15,17 @@ export default class App {
   }
 
   private Middleware = () => {
-    this.app.use(Cors());
+    this.app.use(
+      Cors({
+        origin: 'https://cardapio-web-pearl.vercel.app/',
+        credentials: true,
+      })
+    );
+    
+    this.app.use(cookieParser());
     this.app.use(Express.json());
     this.app.use(Express.urlencoded({ extended: true, limit: 2500 }));
+    this.app.options('*', Cors());
   };
 
   private Route = () => {

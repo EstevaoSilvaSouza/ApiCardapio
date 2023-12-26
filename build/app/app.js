@@ -8,12 +8,18 @@ const store_route_1 = require("./routers/store_route");
 const notfound_1 = require("./midlwares/notfound");
 const cors_1 = __importDefault(require("cors"));
 const user_route_1 = require("./routers/user_route");
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 class App {
     constructor() {
         this.Middleware = () => {
-            this.app.use((0, cors_1.default)());
+            this.app.use((0, cors_1.default)({
+                origin: 'https://cardapio-web-pearl.vercel.app/',
+                credentials: true,
+            }));
+            this.app.use((0, cookie_parser_1.default)());
             this.app.use(express_1.default.json());
             this.app.use(express_1.default.urlencoded({ extended: true, limit: 2500 }));
+            this.app.options('*', (0, cors_1.default)());
         };
         this.Route = () => {
             this.app.use('/store', store_route_1._StoreRoute);
