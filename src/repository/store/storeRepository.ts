@@ -25,7 +25,7 @@ export default class StoreRepository implements AbsStoreRepository {
     }
     else {
       return await Store.findOne({
-        where: { Name: storeName ,IdUser:idUser},
+        where: { IdUser:idUser},
         attributes: { exclude: ["createdAt", "updatedAt"] },
         include: {
           model: Product,

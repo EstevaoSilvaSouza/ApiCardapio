@@ -26,7 +26,7 @@ class StoreRepository {
         }
         else {
             return await store_1.default.findOne({
-                where: { Name: storeName, IdUser: idUser },
+                where: { IdUser: idUser },
                 attributes: { exclude: ["createdAt", "updatedAt"] },
                 include: {
                     model: product_1.default,
