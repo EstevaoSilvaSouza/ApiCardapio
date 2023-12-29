@@ -10,7 +10,10 @@ class CreateUserService {
     handleExecute = async (t: IUser): Promise<IUser | null> => {
         const ObjCreate = new GenericData<IUser>(t).returnData();
         const newUser = await this.e.create(ObjCreate);
-    
+        newUser!.Type = 'Normal';
+        newUser!.Status = true;
+        newUser!.IsActive = true;
+
         if (!newUser) {
             throw { message: 'Falha ao cadastrar usuário', error: newUser };
         }

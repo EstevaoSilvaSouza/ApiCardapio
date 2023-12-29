@@ -11,6 +11,7 @@ class CreateService {
         this.StoreRepo = StoreRepo;
         this.handleExecute = async (payload) => {
             const createObj = new genericData_1.default(payload).returnData();
+            createObj.Type = "Loja";
             const create = await this.StoreRepo.create(createObj);
             if (!create) {
                 throw ({ message: 'falha ao criar store' });

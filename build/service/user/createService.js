@@ -12,6 +12,9 @@ class CreateUserService {
         this.handleExecute = async (t) => {
             const ObjCreate = new genericData_1.default(t).returnData();
             const newUser = await this.e.create(ObjCreate);
+            newUser.Type = 'Normal';
+            newUser.Status = true;
+            newUser.IsActive = true;
             if (!newUser) {
                 throw { message: 'Falha ao cadastrar usuário', error: newUser };
             }
