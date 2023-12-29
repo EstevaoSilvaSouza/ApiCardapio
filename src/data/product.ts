@@ -12,6 +12,7 @@ export interface IProduct {
   Quantity: number;
   Description: string;
   Tag: string;
+  Id_Store?:number;
 }
 
 export default class Product extends Model<IProduct> {

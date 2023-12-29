@@ -1,9 +1,18 @@
 import { Image } from "../../data/image";
-import Product from "../../data/product";
+import Product, { IProduct } from "../../data/product";
 import Store, { IStore } from "../../data/store";
 import AbsStoreRepository from "./IstoryRepository";
 
 export default class StoreRepository implements AbsStoreRepository {
+  async updateProduct(payload: IProduct): Promise<[affectedCount: number] | null> {
+    return await Product.update(payload, {where:{Id:payload.Id}})
+  }
+  deleteProduct(payload: IProduct): Promise<IProduct | null> {
+    throw new Error("Method not implemented.");
+  }
+  async createProduct(p:IProduct): Promise<IProduct | null> {
+    return await Product.create(p); 
+  }
   async create(payload: IStore):Promise<IStore | null> {
     return await Store.create(payload);
   }

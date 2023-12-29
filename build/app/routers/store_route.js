@@ -15,12 +15,14 @@ class StoreRoute extends store_controller_1.default {
         this.RouteTest = () => this.Router.post("/teste", auth_tokent_1.AuthUser, this.Teste);
         this.CreateStore = () => this.Router.post('/new', this.Create);
         this.FindByUserStore = () => this.Router.post('/currentuser/store', auth_httponly_1.AuhHttpOnly, this.FindStoreByUser);
+        this.CreateProductStore = () => this.Router.post('/currentstore/newProduct', auth_httponly_1.AuhHttpOnly, this.CreateProduct);
         this.Router = (0, express_1.Router)();
         //Rotas abaixo!!
         this.FindByStoreName();
         this.RouteTest();
         this.CreateStore();
         this.FindByUserStore();
+        this.CreateProductStore();
     }
 }
 exports._StoreRoute = new StoreRoute().Router;

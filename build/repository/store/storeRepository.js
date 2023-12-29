@@ -7,6 +7,15 @@ const image_1 = require("../../data/image");
 const product_1 = __importDefault(require("../../data/product"));
 const store_1 = __importDefault(require("../../data/store"));
 class StoreRepository {
+    async updateProduct(payload) {
+        return await product_1.default.update(payload, { where: { Id: payload.Id } });
+    }
+    deleteProduct(payload) {
+        throw new Error("Method not implemented.");
+    }
+    async createProduct(p) {
+        return await product_1.default.create(p);
+    }
     async create(payload) {
         return await store_1.default.create(payload);
     }

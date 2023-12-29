@@ -14,12 +14,14 @@ class StoreRoute extends StoreController {
     this.RouteTest();
     this.CreateStore();
     this.FindByUserStore();
+    this.CreateProductStore();
   }
 
   private FindByStoreName = () => this.Router.post("/find", this.Find);
   private RouteTest = () => this.Router.post("/teste",AuthUser, this.Teste);
   private CreateStore = () => this.Router.post('/new',this.Create);
   private FindByUserStore = () => this.Router.post('/currentuser/store',AuhHttpOnly, this.FindStoreByUser);
+  private CreateProductStore = () => this.Router.post('/currentstore/newProduct',AuhHttpOnly, this.CreateProduct);
 }
 
 export const _StoreRoute = new StoreRoute().Router;

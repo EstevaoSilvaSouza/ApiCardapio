@@ -4,6 +4,8 @@ import { _CartFindItemService } from "../../../service/cart/findItemService";
 import { _CreateService } from "../../../service/store/createService";
 import { _FindStoreByUserService } from "../../../service/user/findStoreByUser";
 import { checkTypeResponse } from "../../../types/checkTypeResponse";
+import { _CreateProductService } from "../../../service/store/createProductService";
+import { IProduct } from "../../../data/product";
 
 export default class StoreController {
   protected Find = async (req: Request, res: Response) => {
@@ -67,8 +69,7 @@ export default class StoreController {
         Date: new Date()
       })
     }
-  }
-
+  };
 
   protected FindStoreByUser = async (req:Request,res:Response) => {
     const {Name} = req.body;
@@ -86,5 +87,35 @@ export default class StoreController {
     catch(error:any){
 
     }
+  };
+
+  protected CreateProduct = async (req:Request,res:Response) => {
+    const {Name,Type,Value,Quantity,Description,Tag} = req.body;
+    if(!Name || !Type || !Value || !Quantity || !Description
+      || !Tag) return res.status(400).json({message:'Falha ao cadastrar produto, dado nulo'});
+
+      try{
+        const idUser = req.User.Id;
+        const findStoreByUserId:any = await _FindStoreByUserService.handleExecute(idUser,"store");
+        if(findStoreByUserId?.obj){
+          const { Id } = findStoreByUserId.obj;
+          const payload : IProduct = {Name,Type,Value,Quantity,Description,Tag};
+          const addProduct = await _CreateProductService.handleExecute(payload,Id);
+          if(addProduct?.Id) {
+            return res.status(200).json({message:'Produto adicionado com sucesso'});
+          }
+          else{
+            return res.status(400).json({message:'Falha ao cadastrar produto!'});
+          }
+        }
+        else{
+          return res.status(400).json({message:'Falha ao encontrar Store'});
+        }
+      }
+      catch(error:any){
+        return res.status(500).json({message:error})
+      }
   }
+
+
 }

@@ -5,6 +5,7 @@ const findItemService_1 = require("../../../service/cart/findItemService");
 const createService_1 = require("../../../service/store/createService");
 const findStoreByUser_1 = require("../../../service/user/findStoreByUser");
 const checkTypeResponse_1 = require("../../../types/checkTypeResponse");
+const createProductService_1 = require("../../../service/store/createProductService");
 class StoreController {
     constructor() {
         this.Find = async (req, res) => {
@@ -81,6 +82,33 @@ class StoreController {
                 return res.status(200).json({ message: (0, checkTypeResponse_1.checkTypeResponse)(findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.id).message, returnCode: findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.id, Store: findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.obj });
             }
             catch (error) {
+            }
+        };
+        this.CreateProduct = async (req, res) => {
+            const { Name, Type, Value, Quantity, Description, Tag } = req.body;
+            if (!Name || !Type || !Value || !Quantity || !Description
+                || !Tag)
+                return res.status(400).json({ message: 'Falha ao cadastrar produto, dado nulo' });
+            try {
+                const idUser = req.User.Id;
+                const findStoreByUserId = await findStoreByUser_1._FindStoreByUserService.handleExecute(idUser, "store");
+                if (findStoreByUserId === null || findStoreByUserId === void 0 ? void 0 : findStoreByUserId.obj) {
+                    const { Id } = findStoreByUserId.obj;
+                    const payload = { Name, Type, Value, Quantity, Description, Tag };
+                    const addProduct = await createProductService_1._CreateProductService.handleExecute(payload, Id);
+                    if (addProduct === null || addProduct === void 0 ? void 0 : addProduct.Id) {
+                        return res.status(200).json({ message: 'Produto adicionado com sucesso' });
+                    }
+                    else {
+                        return res.status(400).json({ message: 'Falha ao cadastrar produto!' });
+                    }
+                }
+                else {
+                    return res.status(400).json({ message: 'Falha ao encontrar Store' });
+                }
+            }
+            catch (error) {
+                return res.status(500).json({ message: error });
             }
         };
     }

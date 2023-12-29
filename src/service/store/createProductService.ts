@@ -5,22 +5,19 @@ import { InterfaceStoryRepo } from "../../repository/store/IstoryRepository";
 import StoreRepository from "../../repository/store/storeRepository";
 
 
-class CreateService {
+class CreateProductService {
     constructor(private StoreRepo:InterfaceStoryRepo<IStore,IProduct>){}
 
-    handleExecute = async (payload:IStore): Promise<IStore | null> => {
-        const createObj = new GenericData<IStore>(payload).returnData();
-        createObj.Type = "Loja";
-        
-        const create = await this.StoreRepo.create(createObj);
+    handleExecute = async (payload:IProduct,storeId:number): Promise<IProduct | null> => {
+        const createObj = new GenericData<IProduct>(payload).returnData();
+        const create = await this.StoreRepo.createProduct({...createObj,Id_Store:storeId});
         if(!create){
-            throw ({message:'falha ao criar store'})
+            throw ({message:'falha ao criar produto'})
         }
 
         return create ? create : null;
-    
     }
 
 }
 
-export const _CreateService = new CreateService(new StoreRepository());
+export const _CreateProductService = new CreateProductService(new StoreRepository());

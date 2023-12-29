@@ -1,9 +1,10 @@
+import { IProduct } from "../../data/product";
 import Store, { IStore } from "../../data/store";
 import { InterfaceStoryRepo } from "../../repository/store/IstoryRepository";
 import StoreRepository from "../../repository/store/storeRepository";
 
 class FindService {
-  constructor(private StoreRepository: InterfaceStoryRepo<IStore>) {}
+  constructor(private StoreRepository: InterfaceStoryRepo<IStore,IProduct>) {}
 
   async Execute(
     type: string,
