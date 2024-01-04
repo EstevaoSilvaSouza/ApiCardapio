@@ -1,3 +1,4 @@
+import Store from "../../data/store";
 import { IUser, User } from "../../data/user";
 import UserAbs from "./IuserRepository";
 
@@ -17,7 +18,9 @@ export default class UserRepository implements UserAbs {
         throw ('ok')
     };
     findByUserName = async (u: string) : Promise<IUser | null> => {
-        return await User.findOne({where:{Username:u}})
+        return await User.findOne(
+            {where:{Username:u},
+            include:[{model:Store, attributes:{exclude:["Type","Description","createdAt","updatedAt","IdUser"]}}]})
     };
     delete = (id: number) : Promise<boolean | null> => {
         throw ('ok')

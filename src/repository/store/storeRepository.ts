@@ -5,7 +5,7 @@ import AbsStoreRepository from "./IstoryRepository";
 
 export default class StoreRepository implements AbsStoreRepository {
   async updateProduct(payload: IProduct): Promise<[affectedCount: number] | null> {
-    return await Product.update(payload, {where:{Id:payload.Id}})
+    return await Product.update(payload, {where:{Id:payload.Id }})
   }
   deleteProduct(payload: IProduct): Promise<IProduct | null> {
     throw new Error("Method not implemented.");

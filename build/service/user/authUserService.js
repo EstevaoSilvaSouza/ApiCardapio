@@ -11,6 +11,7 @@ class AuthUser {
         this.handleExecute = async (s) => {
             try {
                 const FindUser = await this.e.findByUserName(s.Username);
+                console.log(FindUser === null || FindUser === void 0 ? void 0 : FindUser.Store);
                 if (FindUser === null) {
                     return { num: 2 };
                 }

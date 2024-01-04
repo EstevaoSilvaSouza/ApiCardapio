@@ -1,5 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const store_1 = __importDefault(require("../../data/store"));
 const user_1 = require("../../data/user");
 class UserRepository {
     constructor() {
@@ -18,7 +22,8 @@ class UserRepository {
             throw ('ok');
         };
         this.findByUserName = async (u) => {
-            return await user_1.User.findOne({ where: { Username: u } });
+            return await user_1.User.findOne({ where: { Username: u },
+                include: [{ model: store_1.default, attributes: { exclude: ["Type", "Description", "createdAt", "updatedAt", "IdUser"] } }] });
         };
         this.delete = (id) => {
             throw ('ok');

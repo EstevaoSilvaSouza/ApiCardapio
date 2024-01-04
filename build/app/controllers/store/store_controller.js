@@ -6,6 +6,7 @@ const createService_1 = require("../../../service/store/createService");
 const findStoreByUser_1 = require("../../../service/user/findStoreByUser");
 const checkTypeResponse_1 = require("../../../types/checkTypeResponse");
 const createProductService_1 = require("../../../service/store/createProductService");
+const updateProductService_1 = require("../../../service/store/updateProductService");
 class StoreController {
     constructor() {
         this.Find = async (req, res) => {
@@ -95,6 +96,7 @@ class StoreController {
                 if (findStoreByUserId === null || findStoreByUserId === void 0 ? void 0 : findStoreByUserId.obj) {
                     const { Id } = findStoreByUserId.obj;
                     const payload = { Name, Type, Value, Quantity, Description, Tag };
+                    console.log(Id);
                     const addProduct = await createProductService_1._CreateProductService.handleExecute(payload, Id);
                     if (addProduct === null || addProduct === void 0 ? void 0 : addProduct.Id) {
                         return res.status(200).json({ message: 'Produto adicionado com sucesso' });
@@ -106,6 +108,19 @@ class StoreController {
                 else {
                     return res.status(400).json({ message: 'Falha ao encontrar Store' });
                 }
+            }
+            catch (error) {
+                return res.status(500).json({ message: error });
+            }
+        };
+        this.UpdateProduct = async (req, res) => {
+            var _a, _b;
+            try {
+                const payload = req.body;
+                const userId = req.User.Id;
+                const storeId = (_b = (_a = req.User) === null || _a === void 0 ? void 0 : _a.Store) === null || _b === void 0 ? void 0 : _b.Id;
+                const updateProduct = await updateProductService_1._UpdateProductService.handleExecute(payload, storeId, userId);
+                return res.status(200).json({ message: 'foi ou nao', status: updateProduct, dataAlterada: payload });
             }
             catch (error) {
                 return res.status(500).json({ message: error });

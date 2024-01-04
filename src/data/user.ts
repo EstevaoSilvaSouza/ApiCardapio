@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { _DbContext } from "./dbContext";
+import { IStore } from "./store";
 
 
 
@@ -13,6 +14,7 @@ export interface IUser {
     Type:string;
     Status:boolean;
     IsActive:boolean;
+    Store?:IStore;
 }
 
 

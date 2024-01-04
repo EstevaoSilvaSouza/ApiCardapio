@@ -6,6 +6,7 @@ import { _FindStoreByUserService } from "../../../service/user/findStoreByUser";
 import { checkTypeResponse } from "../../../types/checkTypeResponse";
 import { _CreateProductService } from "../../../service/store/createProductService";
 import { IProduct } from "../../../data/product";
+import { _UpdateProductService } from "../../../service/store/updateProductService";
 
 export default class StoreController {
   protected Find = async (req: Request, res: Response) => {
@@ -98,8 +99,10 @@ export default class StoreController {
         const idUser = req.User.Id;
         const findStoreByUserId:any = await _FindStoreByUserService.handleExecute(idUser,"store");
         if(findStoreByUserId?.obj){
+          
           const { Id } = findStoreByUserId.obj;
           const payload : IProduct = {Name,Type,Value,Quantity,Description,Tag};
+          console.log(Id);
           const addProduct = await _CreateProductService.handleExecute(payload,Id);
           if(addProduct?.Id) {
             return res.status(200).json({message:'Produto adicionado com sucesso'});
@@ -115,6 +118,19 @@ export default class StoreController {
       catch(error:any){
         return res.status(500).json({message:error})
       }
+  }
+
+  protected UpdateProduct = async (req:Request,res:Response) => {
+    try{
+      const payload:IProduct = req.body;
+      const userId = req.User.Id;
+      const storeId = req.User?.Store?.Id;
+      const updateProduct = await _UpdateProductService.handleExecute(payload,storeId,userId);
+      return res.status(200).json({message:'foi ou nao', status:updateProduct, dataAlterada:payload})
+    }
+    catch(error:any){
+      return res.status(500).json({message:error})
+    }
   }
 
 
