@@ -4,6 +4,9 @@ import Store, { IStore } from "../../data/store";
 import AbsStoreRepository from "./IstoryRepository";
 
 export default class StoreRepository implements AbsStoreRepository {
+  async findProuctById(Id: number): Promise<IProduct | null>{
+   return await Product.findByPk(Id);
+  }
   async updateProduct(payload: IProduct): Promise<[affectedCount: number] | null> {
     return await Product.update(payload, {where:{Id:payload.Id }})
   }

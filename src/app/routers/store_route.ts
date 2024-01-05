@@ -16,6 +16,7 @@ class StoreRoute extends StoreController {
     this.FindByUserStore();
     this.CreateProductStore();
     this.UpdateProductStore();
+    this.FindProductByIdStore();
   }
 
   private FindByStoreName = () => this.Router.post("/find", this.Find);
@@ -24,6 +25,7 @@ class StoreRoute extends StoreController {
   private FindByUserStore = () => this.Router.post('/currentuser/store',AuhHttpOnly, this.FindStoreByUser);
   private CreateProductStore = () => this.Router.post('/currentstore/newProduct',AuhHttpOnly, this.CreateProduct);
   private UpdateProductStore = () => this.Router.post('/currentstore/updateProduct',AuhHttpOnly, this.UpdateProduct);
+  private FindProductByIdStore = () => this.Router.post('/currentstore/findProduct',AuhHttpOnly, this.FindProductById);
 }
 
 export const _StoreRoute = new StoreRoute().Router;

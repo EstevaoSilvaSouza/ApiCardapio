@@ -8,11 +8,13 @@ export interface InterfaceStoryRepo<T,S> {
   createProduct(payload:S): Promise<S | null>; 
   updateProduct(pyload:S): Promise<[affectedCount: number] | null>; 
   deleteProduct(pyload:S): Promise<S | null>; 
+  findProuctById(Id:number): Promise<S | null>;
 }
 
 export default abstract class AbsStoreRepository
   implements InterfaceStoryRepo<IStore,IProduct>
 {
+  abstract findProuctById(Id: number): Promise<IProduct | null>;
   abstract find(storeName?: string,type?:string,idUser?:number): Promise<IStore | null>;
   abstract findAll(): Promise<IStore[] | null>;
   abstract create(payload:IStore):Promise<IStore | null>; 

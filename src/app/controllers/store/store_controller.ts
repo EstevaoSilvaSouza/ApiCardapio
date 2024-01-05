@@ -7,6 +7,7 @@ import { checkTypeResponse } from "../../../types/checkTypeResponse";
 import { _CreateProductService } from "../../../service/store/createProductService";
 import { IProduct } from "../../../data/product";
 import { _UpdateProductService } from "../../../service/store/updateProductService";
+import { _FindProductByIdService } from "../../../service/store/findProductByIdService";
 
 export default class StoreController {
   protected Find = async (req: Request, res: Response) => {
@@ -126,12 +127,26 @@ export default class StoreController {
       const userId = req.User.Id;
       const storeId = req.User?.Store?.Id;
       const updateProduct = await _UpdateProductService.handleExecute(payload,storeId,userId);
-      return res.status(200).json({message:'foi ou nao', status:updateProduct, dataAlterada:payload})
+      return res.status(200).json({message:'Produto Atualizado com sucesso', status:updateProduct, dataAlterada:payload})
     }
     catch(error:any){
       return res.status(500).json({message:error})
     }
   }
+  protected FindProductById = async (req:Request, res:Response) => {
+    try{
+      const {Id} = req.body
+      if (typeof(Id) !== 'number'){return res.status(400).json({message:'Id invalido'})};
+      const userId = req.User.Id;
+      const storeId = req.User?.Store?.Id;
 
+      const findProduct = await _FindProductByIdService.handleExecute(Id,storeId,userId);
+      if(!findProduct) return res.status(400).json({message:'Falha ao encontrar produto'});
+      return res.status(200).json({message:'Busca realizada com sucesso', produto:findProduct});
+    } 
+    catch(error:any){
+      return res.status(error?.statusCode || 500).json({message:error?.message})
+    }
+  }
 
 }

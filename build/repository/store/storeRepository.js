@@ -7,6 +7,9 @@ const image_1 = require("../../data/image");
 const product_1 = __importDefault(require("../../data/product"));
 const store_1 = __importDefault(require("../../data/store"));
 class StoreRepository {
+    async findProuctById(Id) {
+        return await product_1.default.findByPk(Id);
+    }
     async updateProduct(payload) {
         return await product_1.default.update(payload, { where: { Id: payload.Id } });
     }
