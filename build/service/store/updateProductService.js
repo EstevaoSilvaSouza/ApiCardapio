@@ -16,9 +16,11 @@ class UpdateProductService {
             const CheckUserStore = await findService_1._FindService.Execute('UserAuth', 'name', userId, 1010);
             if (CheckUserStore) {
                 let store = CheckUserStore;
-                let findItem = (_a = store.Products) === null || _a === void 0 ? void 0 : _a.find((e) => e.Id === payload.Id);
-                if (!findItem || findItem.Id_Store !== storeId || findItem.Id_Store !== payload.Id_Store)
+                let findItem = (_a = store.Stores[0].Products) === null || _a === void 0 ? void 0 : _a.find((e) => e.Id === payload.Id);
+                if (!findItem)
                     throw ({ message: 'Produto não encontrado na Store' });
+                else if (findItem.Id_Store !== storeId || findItem.Id_Store !== payload.Id_Store)
+                    throw ({ message: 'Sem permissão para editar Produto' });
             }
             else {
                 throw ({ message: 'Store não encontrada' });

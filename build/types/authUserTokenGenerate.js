@@ -9,8 +9,8 @@ const globalConfi_1 = require("./globalConfi");
 const AuthTokenGenerate = (obj) => {
     try {
         if (obj) {
-            const { Id, Name, FullName, Store } = obj;
-            return jsonwebtoken_1.default.sign({ Id, Name, FullName, Store }, globalConfi_1.ObjGlobal.passwordTokenGenerate, { expiresIn: '1h' });
+            const { Id, Name, FullName, Stores } = obj;
+            return jsonwebtoken_1.default.sign({ Id, Name, FullName, Stores }, globalConfi_1.ObjGlobal.passwordTokenGenerate, { expiresIn: '1h' });
         }
     }
     catch (error) {

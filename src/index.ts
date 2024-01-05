@@ -8,11 +8,14 @@ import { ProductsOrder } from "./data/productsOrder";
 import Store from "./data/store";
 import { User } from "./data/user";
 
+
+
+
 const StartApplication = async () => {
   await _DbContext.authenticate().then(async () => {
     console.log(`banco conectado!`);
-    //User.sync({force:true});
-    //await Product.sync({ force: true });
+    //_DbContext.sync();
+    //await UserStore.sync({ force: true });
   });
 
   new App().app.listen(3080, () => {

@@ -18,9 +18,15 @@ export default class UserRepository implements UserAbs {
         throw ('ok')
     };
     findByUserName = async (u: string) : Promise<IUser | null> => {
-        return await User.findOne(
-            {where:{Username:u},
-            include:[{model:Store, attributes:{exclude:["Type","Description","createdAt","updatedAt","IdUser"]}}]})
+        return  User.findOne(
+            {
+            where:{Username:u},
+            include:[
+                {model:Store, attributes:{exclude:["Type","Description","createdAt","updatedAt","IdUser",]},through:{attributes:[]}},
+            ]
+        
+            })
+      
     };
     delete = (id: number) : Promise<boolean | null> => {
         throw ('ok')

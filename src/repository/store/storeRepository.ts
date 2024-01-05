@@ -1,6 +1,9 @@
 import { Image } from "../../data/image";
 import Product, { IProduct } from "../../data/product";
 import Store, { IStore } from "../../data/store";
+import { User } from "../../data/user";
+import { UsuarioStore } from "../../data/userStore";
+import { StoreByUser } from "../../service/store/findService";
 import AbsStoreRepository from "./IstoryRepository";
 
 export default class StoreRepository implements AbsStoreRepository {
@@ -20,7 +23,7 @@ export default class StoreRepository implements AbsStoreRepository {
     return await Store.create(payload);
   }
   
-  async find(storeName?: string,type?:string,idUser?:number): Promise<IStore | null> {
+  async find(storeName?: string,type?:string,idUser?:number): Promise<IStore | StoreByUser | null> {
     if(type === 'default'){
       return await Store.findOne({
         where: { Name: storeName },
@@ -36,18 +39,24 @@ export default class StoreRepository implements AbsStoreRepository {
       });
     }
     else {
-      return await Store.findOne({
-        where: { IdUser:idUser},
-        attributes: { exclude: ["createdAt", "updatedAt"] },
-        include: {
-          model: Product,
-          include: [
-            { model: Image, attributes: { exclude: ["createdAt", "updatedAt"] } },
-          ],
+      const t :any= await User.findOne({
+        where: { Id: idUser },
+        attributes: { exclude: ["createdAt", "updatedAt","FullName","Email","IsActive","Password","Type","Username","Name"]},
+        include: [
+          {
+            model: Store,
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+            include:[{
+              model:Product,
+              include:[{model:Image,attributes: { exclude: ["createdAt", "updatedAt"] },}]
+            }]
+          },
   
-          attributes: { exclude: ["createdAt", "updatedAt"] },
-        },
+        ],
       });
+    
+
+      return t;
     }
     
   }

@@ -9,7 +9,7 @@ class FindService {
     constructor(StoreRepository) {
         this.StoreRepository = StoreRepository;
     }
-    async Execute(type, name, userId, typeCheck) {
+    async Execute(type, name, userId, typeCheck, idStore) {
         let StoreResult = null;
         if (type === "one") {
             StoreResult = await this.StoreRepository.find(name, 'default');
@@ -19,7 +19,8 @@ class FindService {
         }
         else if (type === 'UserAuth' && typeCheck === 1010) {
             StoreResult = await this.StoreRepository.find(name, 'UserStore', userId);
-            if ((StoreResult === null || StoreResult === void 0 ? void 0 : StoreResult.IdUser) !== userId) {
+            const tempResult = StoreResult;
+            if (tempResult.Stores[0].UsuarioStore.Id_Usuario !== userId) {
                 StoreResult = null;
             }
         }

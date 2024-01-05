@@ -2,6 +2,7 @@ import { Model, DataTypes } from "sequelize";
 import { _DbContext } from "./dbContext";
 import { IProduct } from "./product";
 import { User } from "./user";
+import { UsuarioStore } from "./userStore";
 
 export interface IStore {
   Id?: number;
@@ -51,16 +52,3 @@ Store.init(
     tableName: "Store",
   }
 );
-
-
-Store.belongsTo(User, {
-  foreignKey:'IdUser',
-  constraints:true,
-  foreignKeyConstraint:true
-});
-
-User.hasOne(Store,{
-  foreignKey:'IdUser',
-  constraints:true,
-  foreignKeyConstraint:true
-})

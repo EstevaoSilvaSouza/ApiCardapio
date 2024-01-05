@@ -3,11 +3,11 @@ import { IProduct } from '../../data/product';
 import { IStore } from "../../data/store";
 import { InterfaceStoryRepo } from "../../repository/store/IstoryRepository";
 import StoreRepository from "../../repository/store/storeRepository";
-import { _FindService } from "./findService";
+import { StoreByUser, _FindService } from "./findService";
 
 
 class FindProductByIdService {
-    constructor(private StoreRepo:InterfaceStoryRepo<IStore,IProduct>){}
+    constructor(private StoreRepo:InterfaceStoryRepo<IStore,IProduct, StoreByUser>){}
 
     handleExecute = async (idProduct:number,storeId:number,userId:number): Promise<IProduct | null> => {
     

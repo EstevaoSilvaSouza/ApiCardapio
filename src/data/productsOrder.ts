@@ -1,6 +1,8 @@
 import { DataTypes, Model } from "sequelize";
 import { _DbContext } from "./dbContext";
 import Store from "./store";
+import { Order } from "./order";
+import Product from "./product";
 
 export interface IProductsOrder {
   Id?: number;
@@ -10,6 +12,9 @@ export interface IProductsOrder {
   Quantity: number;
   Description: string;
   Tag: string;
+  Id_Store?:number;
+  Id_Order?:number;
+  Id_ProduRef?:number;
 }
 
 export class ProductsOrder extends Model<IProductsOrder> {
@@ -19,6 +24,9 @@ export class ProductsOrder extends Model<IProductsOrder> {
   declare Quantity: number;
   declare Description: string;
   declare Tag: string;
+  declare Id_Store:number;
+  declare Id_Order:number;
+  declare Id_ProduRef:number;
 }
 
 ProductsOrder.init(
@@ -53,6 +61,18 @@ ProductsOrder.init(
       type: DataTypes.FLOAT,
       allowNull: true,
     },
+    Id_Store:{
+      type:DataTypes.INTEGER,
+      allowNull:false,
+    },
+    Id_Order: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    Id_ProduRef: {
+      type: DataTypes.INTEGER,
+      allowNull: false, 
+    }
   },
   {
     sequelize: _DbContext,
@@ -72,3 +92,27 @@ Store.hasMany(ProductsOrder, {
   constraints: true,
   foreignKeyConstraint: true,
 });
+
+ProductsOrder.belongsTo(Order,{
+  foreignKey: "Id_Order",
+  constraints: true,
+  foreignKeyConstraint: true,
+})
+
+Order.hasMany(ProductsOrder, {
+  foreignKey: "Id_Order",
+  constraints: true,
+  foreignKeyConstraint: true,
+})
+
+ProductsOrder.belongsTo(Product,{
+  foreignKey: "Id_ProduRef",
+  constraints: true,
+  foreignKeyConstraint: true,
+})
+
+Product.hasMany(ProductsOrder,{
+  foreignKey: "Id_ProduRef",
+  constraints: true,
+  foreignKeyConstraint: true,
+})

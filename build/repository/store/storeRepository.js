@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const image_1 = require("../../data/image");
 const product_1 = __importDefault(require("../../data/product"));
 const store_1 = __importDefault(require("../../data/store"));
+const user_1 = require("../../data/user");
 class StoreRepository {
     async findProuctById(Id) {
         return await product_1.default.findByPk(Id);
@@ -37,17 +38,21 @@ class StoreRepository {
             });
         }
         else {
-            return await store_1.default.findOne({
-                where: { IdUser: idUser },
-                attributes: { exclude: ["createdAt", "updatedAt"] },
-                include: {
-                    model: product_1.default,
-                    include: [
-                        { model: image_1.Image, attributes: { exclude: ["createdAt", "updatedAt"] } },
-                    ],
-                    attributes: { exclude: ["createdAt", "updatedAt"] },
-                },
+            const t = await user_1.User.findOne({
+                where: { Id: idUser },
+                attributes: { exclude: ["createdAt", "updatedAt", "FullName", "Email", "IsActive", "Password", "Type", "Username", "Name"] },
+                include: [
+                    {
+                        model: store_1.default,
+                        attributes: { exclude: ["createdAt", "updatedAt"] },
+                        include: [{
+                                model: product_1.default,
+                                include: [{ model: image_1.Image, attributes: { exclude: ["createdAt", "updatedAt"] }, }]
+                            }]
+                    },
+                ],
             });
+            return t;
         }
     }
     async findAll() {

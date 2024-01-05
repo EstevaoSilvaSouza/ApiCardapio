@@ -1,6 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { _DbContext } from "./dbContext";
-import { IStore } from "./store";
+import Store, { IStore } from "./store";
+import { UsuarioStore } from "./userStore";
 
 
 
@@ -14,7 +15,7 @@ export interface IUser {
     Type:string;
     Status:boolean;
     IsActive:boolean;
-    Store?:IStore;
+    Stores?:IStore[];
 }
 
 
@@ -95,3 +96,6 @@ User.init({
     sequelize:_DbContext,
     tableName:'User'
 })
+
+User.belongsToMany(Store, { through: UsuarioStore, foreignKey: "Id_Usuario" });
+Store.belongsToMany(User, { through: UsuarioStore, foreignKey: "Id_Store" });

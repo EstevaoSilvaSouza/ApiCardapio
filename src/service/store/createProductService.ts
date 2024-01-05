@@ -3,10 +3,11 @@ import { IProduct } from "../../data/product";
 import { IStore } from "../../data/store";
 import { InterfaceStoryRepo } from "../../repository/store/IstoryRepository";
 import StoreRepository from "../../repository/store/storeRepository";
+import { StoreByUser } from "./findService";
 
 
 class CreateProductService {
-    constructor(private StoreRepo:InterfaceStoryRepo<IStore,IProduct>){}
+    constructor(private StoreRepo:InterfaceStoryRepo<IStore,IProduct, StoreByUser>){}
 
     handleExecute = async (payload:IProduct,storeId:number): Promise<IProduct | null> => {
         const createObj = new GenericData<IProduct>(payload).returnData();

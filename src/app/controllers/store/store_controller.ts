@@ -79,12 +79,12 @@ export default class StoreController {
     if(!Name)return res.status(400).json({message:'Prop Name Store invalida.'});
 
     try{
-      let findStoreByUser = await _FindStoreByUserService.handleExecute(req.User.Id,Name)
+      let findStoreByUser :any = await _FindStoreByUserService.handleExecute(req.User.Id,Name)
       if(checkTypeResponse(findStoreByUser?.id!).status === 401) return res.status(checkTypeResponse(findStoreByUser?.id!).status).json({
         message:checkTypeResponse(findStoreByUser?.id!).message,returnCode:findStoreByUser?.id!
       })
 
-      return res.status(200).json({message:checkTypeResponse(findStoreByUser?.id!).message, returnCode:findStoreByUser?.id!,Store:findStoreByUser?.obj!}); 
+      return res.status(200).json({message:checkTypeResponse(findStoreByUser?.id!).message, returnCode:findStoreByUser?.id!,Store:findStoreByUser?.obj?.Stores[0]}); 
     }
     catch(error:any){
 
@@ -99,12 +99,13 @@ export default class StoreController {
       try{
         const idUser = req.User.Id;
         const findStoreByUserId:any = await _FindStoreByUserService.handleExecute(idUser,"store");
+        
         if(findStoreByUserId?.obj){
           
-          const { Id } = findStoreByUserId.obj;
+          const idStore= findStoreByUserId.obj?.Stores[0]?.Id;
           const payload : IProduct = {Name,Type,Value,Quantity,Description,Tag};
-          console.log(Id);
-          const addProduct = await _CreateProductService.handleExecute(payload,Id);
+          console.log(idStore);
+          const addProduct = await _CreateProductService.handleExecute(payload,idStore);
           if(addProduct?.Id) {
             return res.status(200).json({message:'Produto adicionado com sucesso'});
           }
@@ -125,7 +126,7 @@ export default class StoreController {
     try{
       const payload:IProduct = req.body;
       const userId = req.User.Id;
-      const storeId = req.User?.Store?.Id;
+      const storeId = req.User?.Stores[0]?.Id;
       const updateProduct = await _UpdateProductService.handleExecute(payload,storeId,userId);
       return res.status(200).json({message:'Produto Atualizado com sucesso', status:updateProduct, dataAlterada:payload})
     }
@@ -138,7 +139,7 @@ export default class StoreController {
       const {Id} = req.body
       if (typeof(Id) !== 'number'){return res.status(400).json({message:'Id invalido'})};
       const userId = req.User.Id;
-      const storeId = req.User?.Store?.Id;
+      const storeId = req.User?.Stores[0]?.Id;
 
       const findProduct = await _FindProductByIdService.handleExecute(Id,storeId,userId);
       if(!findProduct) return res.status(400).json({message:'Falha ao encontrar produto'});

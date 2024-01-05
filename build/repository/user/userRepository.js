@@ -22,8 +22,12 @@ class UserRepository {
             throw ('ok');
         };
         this.findByUserName = async (u) => {
-            return await user_1.User.findOne({ where: { Username: u },
-                include: [{ model: store_1.default, attributes: { exclude: ["Type", "Description", "createdAt", "updatedAt", "IdUser"] } }] });
+            return user_1.User.findOne({
+                where: { Username: u },
+                include: [
+                    { model: store_1.default, attributes: { exclude: ["Type", "Description", "createdAt", "updatedAt", "IdUser",] }, through: { attributes: [] } },
+                ]
+            });
         };
         this.delete = (id) => {
             throw ('ok');

@@ -11,7 +11,7 @@ class  AuthUser {
         
         try{
             const FindUser : IUser | null = await this.e.findByUserName(s.Username);
-            console.log(FindUser?.Store);
+            console.log(FindUser?.Stores);
             if(FindUser === null){
                 return {num:2};
             }

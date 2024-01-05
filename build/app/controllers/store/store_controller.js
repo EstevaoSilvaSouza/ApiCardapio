@@ -72,6 +72,7 @@ class StoreController {
             }
         };
         this.FindStoreByUser = async (req, res) => {
+            var _a;
             const { Name } = req.body;
             if (!Name)
                 return res.status(400).json({ message: 'Prop Name Store invalida.' });
@@ -81,12 +82,13 @@ class StoreController {
                     return res.status((0, checkTypeResponse_1.checkTypeResponse)(findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.id).status).json({
                         message: (0, checkTypeResponse_1.checkTypeResponse)(findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.id).message, returnCode: findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.id
                     });
-                return res.status(200).json({ message: (0, checkTypeResponse_1.checkTypeResponse)(findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.id).message, returnCode: findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.id, Store: findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.obj });
+                return res.status(200).json({ message: (0, checkTypeResponse_1.checkTypeResponse)(findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.id).message, returnCode: findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.id, Store: (_a = findStoreByUser === null || findStoreByUser === void 0 ? void 0 : findStoreByUser.obj) === null || _a === void 0 ? void 0 : _a.Stores[0] });
             }
             catch (error) {
             }
         };
         this.CreateProduct = async (req, res) => {
+            var _a, _b;
             const { Name, Type, Value, Quantity, Description, Tag } = req.body;
             if (!Name || !Type || !Value || !Quantity || !Description
                 || !Tag)
@@ -95,10 +97,10 @@ class StoreController {
                 const idUser = req.User.Id;
                 const findStoreByUserId = await findStoreByUser_1._FindStoreByUserService.handleExecute(idUser, "store");
                 if (findStoreByUserId === null || findStoreByUserId === void 0 ? void 0 : findStoreByUserId.obj) {
-                    const { Id } = findStoreByUserId.obj;
+                    const idStore = (_b = (_a = findStoreByUserId.obj) === null || _a === void 0 ? void 0 : _a.Stores[0]) === null || _b === void 0 ? void 0 : _b.Id;
                     const payload = { Name, Type, Value, Quantity, Description, Tag };
-                    console.log(Id);
-                    const addProduct = await createProductService_1._CreateProductService.handleExecute(payload, Id);
+                    console.log(idStore);
+                    const addProduct = await createProductService_1._CreateProductService.handleExecute(payload, idStore);
                     if (addProduct === null || addProduct === void 0 ? void 0 : addProduct.Id) {
                         return res.status(200).json({ message: 'Produto adicionado com sucesso' });
                     }
@@ -119,7 +121,7 @@ class StoreController {
             try {
                 const payload = req.body;
                 const userId = req.User.Id;
-                const storeId = (_b = (_a = req.User) === null || _a === void 0 ? void 0 : _a.Store) === null || _b === void 0 ? void 0 : _b.Id;
+                const storeId = (_b = (_a = req.User) === null || _a === void 0 ? void 0 : _a.Stores[0]) === null || _b === void 0 ? void 0 : _b.Id;
                 const updateProduct = await updateProductService_1._UpdateProductService.handleExecute(payload, storeId, userId);
                 return res.status(200).json({ message: 'Produto Atualizado com sucesso', status: updateProduct, dataAlterada: payload });
             }
@@ -136,7 +138,7 @@ class StoreController {
                 }
                 ;
                 const userId = req.User.Id;
-                const storeId = (_b = (_a = req.User) === null || _a === void 0 ? void 0 : _a.Store) === null || _b === void 0 ? void 0 : _b.Id;
+                const storeId = (_b = (_a = req.User) === null || _a === void 0 ? void 0 : _a.Stores[0]) === null || _b === void 0 ? void 0 : _b.Id;
                 const findProduct = await findProductByIdService_1._FindProductByIdService.handleExecute(Id, storeId, userId);
                 if (!findProduct)
                     return res.status(400).json({ message: 'Falha ao encontrar produto' });

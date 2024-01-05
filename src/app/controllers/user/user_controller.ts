@@ -39,8 +39,9 @@ export default class UserController {
             const expirationDate = new Date();
          expirationDate.setHours(expirationDate.getHours() + 1);
 
-
+            console.log(validateAuth)
             if(checkTypeResponse(validateAuth?.num!).status === 403 || checkTypeResponse(validateAuth?.num!).status === 404 ||checkTypeResponse(validateAuth?.num!).status === 401 ) return res.status(checkTypeResponse(validateAuth?.num!).status).json({message:checkTypeResponse(validateAuth?.num!).message,returnCode:validateAuth?.num});
+            
             res.cookie('_xc0d3_t0k3n',AuthTokenGenerate(validateAuth?.obj!),
             {
                 httpOnly: true,

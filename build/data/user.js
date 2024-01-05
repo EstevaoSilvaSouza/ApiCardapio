@@ -1,8 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const sequelize_1 = require("sequelize");
 const dbContext_1 = require("./dbContext");
+const store_1 = __importDefault(require("./store"));
+const userStore_1 = require("./userStore");
 class User extends sequelize_1.Model {
 }
 exports.User = User;
@@ -71,3 +76,5 @@ User.init({
     sequelize: dbContext_1._DbContext,
     tableName: 'User'
 });
+User.belongsToMany(store_1.default, { through: userStore_1.UsuarioStore, foreignKey: "Id_Usuario" });
+store_1.default.belongsToMany(User, { through: userStore_1.UsuarioStore, foreignKey: "Id_Store" });

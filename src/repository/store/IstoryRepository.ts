@@ -1,8 +1,9 @@
 import { IProduct } from "../../data/product";
 import { IStore } from "../../data/store";
+import { StoreByUser } from "../../service/store/findService";
 
-export interface InterfaceStoryRepo<T,S> {
-  find(storeName?: string,type?:string,idUser?:number): Promise<T | null>;
+export interface InterfaceStoryRepo<T,S,X> {
+  find(storeName?: string,type?:string,idUser?:number): Promise<T | X | null>;
   findAll(): Promise<T[] | null>;
   create(payload:T) : Promise<T | null>;
   createProduct(payload:S): Promise<S | null>; 
@@ -12,10 +13,10 @@ export interface InterfaceStoryRepo<T,S> {
 }
 
 export default abstract class AbsStoreRepository
-  implements InterfaceStoryRepo<IStore,IProduct>
+  implements InterfaceStoryRepo<IStore,IProduct,StoreByUser >
 {
   abstract findProuctById(Id: number): Promise<IProduct | null>;
-  abstract find(storeName?: string,type?:string,idUser?:number): Promise<IStore | null>;
+  abstract find(storeName?: string,type?:string,idUser?:number): Promise<IStore | StoreByUser | null>;
   abstract findAll(): Promise<IStore[] | null>;
   abstract create(payload:IStore):Promise<IStore | null>; 
   abstract createProduct(payload:IProduct):Promise<IProduct | null>; 

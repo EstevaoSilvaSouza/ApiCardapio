@@ -75,3 +75,4 @@ Store.hasMany(Product, {
   constraints: true,
   foreignKeyConstraint: true,
 });
+
