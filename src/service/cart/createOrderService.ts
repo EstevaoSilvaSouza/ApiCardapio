@@ -14,7 +14,9 @@ class CreateOrderService {
         const createOrder = await this.s.Create(OrderObj);
 
         if(!createOrder){ throw({message:'Falha interna ao criar Order'})}
-        const getIdStore =  await _FindService.Execute('default',payload.NameCart) as IStore;
+        const getIdStore =  await _FindService.Execute('one',payload.NameCart) as IStore;
+       console.log(getIdStore)
+        if(!getIdStore) throw({message:getIdStore})
         if(getIdStore.Id){
             if(OrderObj.Items?.length! >= 1){
                 const newObj = OrderObj.Items?.map((e) => {

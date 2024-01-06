@@ -18,7 +18,10 @@ class CreateOrderService {
             if (!createOrder) {
                 throw ({ message: 'Falha interna ao criar Order' });
             }
-            const getIdStore = await findService_1._FindService.Execute('default', payload.NameCart);
+            const getIdStore = await findService_1._FindService.Execute('one', payload.NameCart);
+            console.log(getIdStore);
+            if (!getIdStore)
+                throw ({ message: getIdStore });
             if (getIdStore.Id) {
                 if (((_a = OrderObj.Items) === null || _a === void 0 ? void 0 : _a.length) >= 1) {
                     const newObj = (_b = OrderObj.Items) === null || _b === void 0 ? void 0 : _b.map((e) => {
