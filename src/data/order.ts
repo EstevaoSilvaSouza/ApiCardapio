@@ -8,7 +8,7 @@ export interface IOrder {
   Id?: number;
   NameCart?: string;
   Status?: boolean;
-  StatusOrder:string;
+  StatusOrder?:string;
   Items?:IProductsOrder[];
   Id_Table?: number;
 }
@@ -16,7 +16,7 @@ export interface IOrder {
 export class Order extends Model<IOrder> {
   declare NameCart?: string;
   declare Status?: boolean;
-  declare StatusOrder: string;
+  declare StatusOrder?: string;
 }
 
 Order.init(
