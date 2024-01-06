@@ -16,7 +16,7 @@ const StartApplication = async () => {
   await _DbContext.authenticate().then(async () => {
     console.log(`banco conectado!`);
     //_DbContext.sync();
-    await Order.sync({force:true});
+    //await Order.sync({force:true});
   });
 
   new App().app.listen(3080, () => {

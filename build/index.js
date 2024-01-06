@@ -5,12 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app/app"));
 const dbContext_1 = require("./data/dbContext");
-const order_1 = require("./data/order");
 const StartApplication = async () => {
     await dbContext_1._DbContext.authenticate().then(async () => {
         console.log(`banco conectado!`);
         //_DbContext.sync();
-        await order_1.Order.sync({ force: true });
+        //await Order.sync({force:true});
     });
     new app_1.default().app.listen(3080, () => {
         console.log(`
