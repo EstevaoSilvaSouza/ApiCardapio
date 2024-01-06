@@ -6,6 +6,13 @@ const order_1 = require("../../data/order");
 const ICartRepository_1 = require("./ICartRepository");
 const productsOrder_1 = require("../../data/productsOrder");
 class CartItemRepository extends ICartRepository_1.CartAbsRepository {
+    async FindByIdOrder(idOrder) {
+        return await order_1.Order.findByPk(idOrder, {
+            include: [
+                { model: productsOrder_1.ProductsOrder, as: "orderProducts" }
+            ]
+        });
+    }
     async CreateProductOrder(payload) {
         return await productsOrder_1.ProductsOrder.create(payload);
     }

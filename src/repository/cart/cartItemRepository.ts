@@ -7,6 +7,14 @@ import { CartAbsRepository } from "./ICartRepository";
 import { IProductsOrder, ProductsOrder } from "../../data/productsOrder";
 
 export class CartItemRepository extends CartAbsRepository {
+  async FindByIdOrder(idOrder: number): Promise<IOrder | null> {
+    return await Order.findByPk(idOrder,{
+      include:[
+        {model:ProductsOrder, as:"orderProducts"}
+      ]
+    });
+  }
+  
   async CreateProductOrder(payload: IProductsOrder): Promise<IProductsOrder | null> {
     return await ProductsOrder.create(payload);
   }

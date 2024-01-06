@@ -77,6 +77,7 @@ ProductsOrder.belongsTo(order_1.Order, {
 });
 order_1.Order.hasMany(ProductsOrder, {
     foreignKey: "Id_Order",
+    as: "orderProducts",
     constraints: true,
     foreignKeyConstraint: true,
 });

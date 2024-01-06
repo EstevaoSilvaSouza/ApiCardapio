@@ -7,9 +7,11 @@ class CartRoute extends cart_controller_1.CartController {
     constructor() {
         super();
         this.CreateOrder = () => this.Router.post('/store/newOrder', this.Create);
+        this.FindOrderById = () => this.Router.post('/store/findOrder', this.FindOrder);
         this.Router = (0, express_1.Router)();
         //rotas logo abaixo!
         this.CreateOrder();
+        this.FindOrderById();
     }
 }
 exports._CartRoute = new CartRoute().Router;

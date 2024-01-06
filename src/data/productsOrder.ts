@@ -103,9 +103,10 @@ ProductsOrder.belongsTo(Order,{
 
 Order.hasMany(ProductsOrder, {
   foreignKey: "Id_Order",
+  as: "orderProducts", // Adicione um alias aqui
   constraints: true,
   foreignKeyConstraint: true,
-})
+});
 
 ProductsOrder.belongsTo(Product,{
   foreignKey: "Id_ProduRef",
