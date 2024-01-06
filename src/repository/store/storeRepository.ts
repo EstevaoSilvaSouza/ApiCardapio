@@ -22,7 +22,6 @@ export default class StoreRepository implements AbsStoreRepository {
   async create(payload: IStore):Promise<IStore | null> {
     return await Store.create(payload);
   }
-  
   async find(storeName?: string,type?:string,idUser?:number): Promise<IStore | StoreByUser | null> {
     if(type === 'default'){
       return await Store.findOne({
@@ -60,7 +59,6 @@ export default class StoreRepository implements AbsStoreRepository {
     }
     
   }
-
   async findAll(): Promise<IStore[] | null> {
     return await Store.findAll({ raw: true });
   }

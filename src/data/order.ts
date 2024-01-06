@@ -1,12 +1,14 @@
 import { DataTypes, Model } from "sequelize";
 import { _DbContext } from "./dbContext";
 import Table from "./Table";
-import Product from "./product";
+import Product, { IProduct } from "./product";
+import { IProductsOrder } from "./productsOrder";
 
 export interface IOrder {
   Id?: number;
   NameCart?: string;
   Status?: boolean;
+  Items?:IProductsOrder[];
   Id_Table?: number;
 }
 

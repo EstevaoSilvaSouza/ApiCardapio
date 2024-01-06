@@ -14,9 +14,9 @@ class ProductsOrder extends sequelize_1.Model {
 exports.ProductsOrder = ProductsOrder;
 ProductsOrder.init({
     Id: {
-        type: sequelize_1.DataTypes.INTEGER,
+        type: sequelize_1.DataTypes.UUID,
         primaryKey: true,
-        autoIncrement: true,
+        defaultValue: sequelize_1.Sequelize.literal('uuid_generate_v4()'),
         unique: true,
     },
     Name: {

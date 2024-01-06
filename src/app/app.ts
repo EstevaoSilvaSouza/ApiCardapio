@@ -4,6 +4,7 @@ import { NotFound } from "./midlwares/notfound";
 import Cors from "cors";
 import { _UserRouter } from "./routers/user_route";
 import cookieParser from 'cookie-parser';
+import { _CartRoute } from "./routers/cart_route";
 
 export default class App {
   public app: Application;
@@ -31,6 +32,7 @@ export default class App {
   private Route = () => {
     this.app.use('/store', _StoreRoute);
     this.app.use('/user', _UserRouter);
+    this.app.use('/cart',_CartRoute);
     this.app.use("*", NotFound);
   };
 }

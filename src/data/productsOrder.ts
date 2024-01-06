@@ -1,11 +1,12 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes, Model, Sequelize } from "sequelize";
 import { _DbContext } from "./dbContext";
 import Store from "./store";
 import { Order } from "./order";
 import Product from "./product";
+import { UUID } from "crypto";
 
 export interface IProductsOrder {
-  Id?: number;
+  Id?: UUID;
   Name: string;
   Type: string;
   Value: number;
@@ -32,10 +33,11 @@ export class ProductsOrder extends Model<IProductsOrder> {
 ProductsOrder.init(
   {
     Id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       primaryKey: true,
-      autoIncrement: true,
+      defaultValue: Sequelize.literal('uuid_generate_v4()'),
       unique: true,
+
     },
     Name: {
       type: DataTypes.STRING,

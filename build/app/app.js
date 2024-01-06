@@ -9,6 +9,7 @@ const notfound_1 = require("./midlwares/notfound");
 const cors_1 = __importDefault(require("cors"));
 const user_route_1 = require("./routers/user_route");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const cart_route_1 = require("./routers/cart_route");
 class App {
     constructor() {
         this.Middleware = () => {
@@ -24,6 +25,7 @@ class App {
         this.Route = () => {
             this.app.use('/store', store_route_1._StoreRoute);
             this.app.use('/user', user_route_1._UserRouter);
+            this.app.use('/cart', cart_route_1._CartRoute);
             this.app.use("*", notfound_1.NotFound);
         };
         this.app = (0, express_1.default)();
