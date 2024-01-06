@@ -8,6 +8,7 @@ export interface IOrder {
   Id?: number;
   NameCart?: string;
   Status?: boolean;
+  StatusOrder:string;
   Items?:IProductsOrder[];
   Id_Table?: number;
 }
@@ -15,6 +16,7 @@ export interface IOrder {
 export class Order extends Model<IOrder> {
   declare NameCart?: string;
   declare Status?: boolean;
+  declare StatusOrder: string;
 }
 
 Order.init(
@@ -31,6 +33,10 @@ Order.init(
     },
     Status: {
       type: DataTypes.BOOLEAN,
+      allowNull: true,
+    },
+    StatusOrder: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
   },

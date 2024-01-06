@@ -3,6 +3,7 @@ import { CartItem } from "./data/CartItem";
 import Table from "./data/Table";
 
 import { _DbContext } from "./data/dbContext";
+import { Order } from "./data/order";
 import Product from "./data/product";
 import { ProductsOrder } from "./data/productsOrder";
 import Store from "./data/store";
@@ -15,7 +16,7 @@ const StartApplication = async () => {
   await _DbContext.authenticate().then(async () => {
     console.log(`banco conectado!`);
     //_DbContext.sync();
-    //await ProductsOrder.sync({force:true});
+    //await Order.sync({force:true});
   });
 
   new App().app.listen(3080, () => {

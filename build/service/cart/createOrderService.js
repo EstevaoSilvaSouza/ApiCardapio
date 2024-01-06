@@ -14,7 +14,7 @@ class CreateOrderService {
         this.Execute = async (payload) => {
             var _a, _b;
             const OrderObj = new genericData_1.default(payload).returnData();
-            const createOrder = await this.s.Create(OrderObj);
+            const createOrder = await this.s.Create(Object.assign(Object.assign({}, OrderObj), { StatusOrder: "Aguardando Loja Confirmar" }));
             if (!createOrder) {
                 throw ({ message: 'Falha interna ao criar Order' });
             }

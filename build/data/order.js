@@ -25,6 +25,10 @@ Order.init({
         type: sequelize_1.DataTypes.BOOLEAN,
         allowNull: true,
     },
+    StatusOrder: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
 }, {
     sequelize: dbContext_1._DbContext,
     tableName: "Order",

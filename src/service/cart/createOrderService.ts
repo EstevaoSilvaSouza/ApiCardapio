@@ -11,7 +11,7 @@ class CreateOrderService {
 
     Execute = async (payload:IOrder) : Promise<IOrder | null> => {
         const OrderObj : IOrder = new GenericData<IOrder>(payload).returnData();
-        const createOrder = await this.s.Create(OrderObj);
+        const createOrder = await this.s.Create({...OrderObj,StatusOrder:"Aguardando Loja Confirmar"});
 
         if(!createOrder){ throw({message:'Falha interna ao criar Order'})}
         const getIdStore =  await _FindService.Execute('one',payload.NameCart) as IStore;
