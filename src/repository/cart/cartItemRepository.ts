@@ -15,8 +15,8 @@ export class CartItemRepository extends CartAbsRepository {
     });
   }
   
-  async CreateProductOrder(payload: IProductsOrder): Promise<IProductsOrder | null> {
-    return await ProductsOrder.create(payload);
+  async CreateProductOrder(payload: IProductsOrder[]): Promise<IProductsOrder[] | null> {
+    return await ProductsOrder.bulkCreate(payload);
   }
   async Create(p:IOrder): Promise<IOrder | null> {
     return await Order.create(p);

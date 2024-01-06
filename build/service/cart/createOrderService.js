@@ -33,9 +33,9 @@ class CreateOrderService {
                         e.Id_Store = getIdStore.Id;
                         return e;
                     });
-                    newObj === null || newObj === void 0 ? void 0 : newObj.map(async (e) => {
-                        await createProductOrderService_1._CreateProductOrderService.Execute(e).catch((e) => { throw ({ message: e }); });
-                    });
+                    //newObj?.map(async (e) => {
+                    await createProductOrderService_1._CreateProductOrderService.Execute(newObj).catch((e) => { throw ({ message: e }); });
+                    //})
                 }
             }
             return createOrder ? createOrder : null;

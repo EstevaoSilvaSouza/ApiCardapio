@@ -27,9 +27,10 @@ class CreateOrderService {
                     e.Id_Store = getIdStore.Id;
                     return e;
                 })
-                newObj?.map(async (e) => {
-                    await _CreateProductOrderService.Execute(e).catch((e) => {throw({message:e})})
-                })
+
+                //newObj?.map(async (e) => {
+                    await _CreateProductOrderService.Execute(newObj!).catch((e) => {throw({message:e})})
+                //})
             }
         }
       

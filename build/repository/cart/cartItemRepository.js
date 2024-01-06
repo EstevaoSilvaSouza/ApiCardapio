@@ -14,7 +14,7 @@ class CartItemRepository extends ICartRepository_1.CartAbsRepository {
         });
     }
     async CreateProductOrder(payload) {
-        return await productsOrder_1.ProductsOrder.create(payload);
+        return await productsOrder_1.ProductsOrder.bulkCreate(payload);
     }
     async Create(p) {
         return await order_1.Order.create(p);

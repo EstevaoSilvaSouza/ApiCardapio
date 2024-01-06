@@ -8,10 +8,10 @@ import { CartItemRepository } from "../../repository/cart/cartItemRepository";
 class CreateProductOrderService {
     constructor(private s:ICartRepository<any>){}
 
-    Execute = async (payload:IProductsOrder) : Promise<IProductsOrder | null> => {
-        const OrderObj : IProductsOrder = new GenericData<IProductsOrder>(payload).returnData();
+    Execute = async (payload:IProductsOrder[]) : Promise<IProductsOrder[] | null> => {
+        //const OrderObj : IProductsOrder = new GenericData<IProductsOrder>(payload).returnData();
 
-        const createProductOrder = await this.s.CreateProductOrder(OrderObj);
+        const createProductOrder = await this.s.CreateProductOrder(payload);
 
         if(!createProductOrder){ throw({message:'Falha interna ao cadastrar Produto Cart'})}
 
