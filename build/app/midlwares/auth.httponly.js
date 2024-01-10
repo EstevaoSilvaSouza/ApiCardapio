@@ -8,7 +8,6 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const AuhHttpOnly = (req, res, next) => {
     var _a;
     const token = (_a = req.cookies) === null || _a === void 0 ? void 0 : _a._xc0d3_t0k3n;
-    console.log(token);
     if (!token)
         return res.status(401).json({ Date: new Date(), isAuth: false });
     try {

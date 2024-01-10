@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { IOrder } from "../../../data/order";
 import { _CreateOrderService } from "../../../service/cart/createOrderService";
 import { _FindOrderByIdService } from "../../../service/cart/findByIdOrder";
+import { _UpdateOrderStatus } from "../../../service/cart/updateStatusOrder";
+import { _FindAllOrderStore } from "../../../service/cart/findAllOrderStore";
 
 export class CartController {
     protected async Create(req:Request,res:Response){
@@ -19,8 +21,8 @@ export class CartController {
 
     protected async FindOrder(req:Request,res:Response){
         try{
-            const {Id} = req.body;
-            const findOrder = await _FindOrderByIdService.Execute(Id);
+            const {Id} = req.params;
+            const findOrder = await _FindOrderByIdService.Execute(Number(Id));
             if(!findOrder)return res.status(401).json({message:"Falha ao buscar Order"});
             return res.status(200).json({message:"Order Encontrada",Pedido:findOrder})
         }
@@ -28,4 +30,31 @@ export class CartController {
             return res.status(500).json({message:error})
         }
     }
+
+    protected UpdateStatusOrderStore = async (req:Request,res:Response) => {
+        try{
+          const Payload:IOrder = req.body;
+          const NameStore = req.User?.Stores[0].Name;
+          const IdUser = req.User?.Id;
+          const updateProdutOrder = await _UpdateOrderStatus.handleExecute(Payload,NameStore,IdUser);
+          if(!this.UpdateStatusOrderStore) return res.status(400).json({message:'Falha ao atualizar produto'});
+          return res.status(200).json({message:'Produto atualizado com sucesso',status:updateProdutOrder, data:Payload})
+        }
+        catch(error:any){
+          res.status(500).json({message:error});
+        }
+      }
+
+      protected ListAllOrders = async (req:Request,res:Response) => {
+        try{
+            const nameStore = req.User?.Stores[0].Name;
+            const {QtdItensPage, Page} = req.params;
+            const findAll = await _FindAllOrderStore.Execute(nameStore,Number(QtdItensPage),Number(Page));
+            if(!findAll) return res.status(400).json({message:'Falha ao encontrar as Orders'});
+            return res.status(200).json({message:'Orders encontradas com sucesso',Orders:findAll})
+        }
+        catch(error:any){
+            res.status(500).json({message:error});
+        }
+      }
 }

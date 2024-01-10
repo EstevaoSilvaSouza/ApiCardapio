@@ -120,7 +120,7 @@ export default class StoreController {
       catch(error:any){
         return res.status(500).json({message:error})
       }
-  }
+  };
 
   protected UpdateProduct = async (req:Request,res:Response) => {
     try{
@@ -133,7 +133,8 @@ export default class StoreController {
     catch(error:any){
       return res.status(500).json({message:error})
     }
-  }
+  };
+
   protected FindProductById = async (req:Request, res:Response) => {
     try{
       const {Id} = req.body
@@ -148,6 +149,6 @@ export default class StoreController {
     catch(error:any){
       return res.status(error?.statusCode || 500).json({message:error?.message})
     }
-  }
+  };
 
 }

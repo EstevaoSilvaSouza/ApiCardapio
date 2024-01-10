@@ -6,7 +6,6 @@ export const AuhHttpOnly = (req:Request,res:Response,next:NextFunction) => {
 
     const token = req.cookies?._xc0d3_t0k3n;
 
-    console.log(token);
     if(!token) return res.status(401).json({Date:new Date(),isAuth:false})
     
     try{

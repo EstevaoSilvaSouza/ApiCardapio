@@ -1,14 +1,24 @@
 import { IOrder } from "../../data/order";
 import { IProductsOrder } from "../../data/productsOrder";
 
+export interface IResponseListAllOrders {
+  Data:IOrder[] | null;
+  TotalPagina:number;
+  QtdItens:number;
+}
+
 export interface ICartRepository<T> {
   Create(payload:IOrder): Promise<IOrder | null>;
   CreateProductOrder(payload:IProductsOrder[]) : Promise<IProductsOrder[] | null>;
   ListId(date: T, date2: T): Promise<T[] | null>;
   FindByIdOrder(idOrder:number):Promise<IOrder | null>;
+  FindAllOrder(nameStore:string,qtdItens:number,page:number):Promise<IResponseListAllOrders | null>;
+  UpdateOrderStatus(payload:IOrder):Promise<[affectedCount: number] | null>;
 }
 
 export abstract class CartAbsRepository implements ICartRepository<any> {
+  abstract FindAllOrder(nameStore:string,qtdItens:number,page:number):Promise<IResponseListAllOrders | null>;
+  abstract UpdateOrderStatus(payload:IOrder):Promise<[affectedCount: number] | null>;
   abstract Create(payload:IOrder): Promise<IOrder | null>;
   abstract FindByIdOrder(idOrder:number):Promise<IOrder | null>;
   abstract CreateProductOrder(payload:IProductsOrder[]) : Promise<IProductsOrder[] | null>;
