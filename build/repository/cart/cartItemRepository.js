@@ -24,7 +24,7 @@ class CartItemRepository extends ICartRepository_1.CartAbsRepository {
             order: [['createdAt', 'DESC']],
             distinct: true
         });
-        return { Data: rows, QtdItens: rows.length, TotalPagina: Math.round(count / qtdItens) };
+        return { Data: rows, QtdItens: count, TotalPagina: Math.round(count / qtdItens) };
     }
     async UpdateOrderStatus(payload) {
         return await order_1.Order.update(payload, { where: { Id: payload.Id } });

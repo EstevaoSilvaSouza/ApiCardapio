@@ -24,7 +24,7 @@ export class CartItemRepository extends CartAbsRepository {
       distinct:true
     });
   
-    return { Data: rows, QtdItens: rows.length, TotalPagina: Math.round(count / qtdItens) };
+    return { Data: rows, QtdItens: count, TotalPagina: Math.round(count / qtdItens) };
   }
  async UpdateOrderStatus(payload:IOrder): Promise<[affectedCount: number] | null> {
     return await Order.update(payload,{where:{Id:payload.Id}});
