@@ -38,7 +38,7 @@ class UserController {
                 return res.status((0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).status).json({ message: (0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).message, returnCode: validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num });
             res.cookie('_xc0d3_t0k3n', (0, authUserTokenGenerate_1.AuthTokenGenerate)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.obj), {
                 httpOnly: true,
-                sameSite: 'lax',
+                sameSite: 'none',
                 secure: true,
                 maxAge: 3600000,
                 expires: expirationDate,

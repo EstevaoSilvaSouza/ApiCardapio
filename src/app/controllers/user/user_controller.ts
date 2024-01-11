@@ -45,11 +45,11 @@ export default class UserController {
             res.cookie('_xc0d3_t0k3n',AuthTokenGenerate(validateAuth?.obj!),
             {
                 httpOnly: true,
-                sameSite: 'lax',
-                secure:true,
+                sameSite: 'none',
+                secure: true,
                 maxAge: 3600000,
                 expires: expirationDate,
-                domain:'.onrender.com'
+                domain: '.onrender.com'
 
             });
             
