@@ -49,8 +49,6 @@ export default class UserController {
                 secure: true,
                 maxAge: 3600000,
                 expires: expirationDate,
-                domain: '.onrender.com'
-
             });
             
             return res.status(200).json({message:checkTypeResponse(validateAuth?.num!).message, data:`${validateAuth?.obj?.Name} ${validateAuth?.obj?.FullName}`,returnCode:validateAuth?.num,token:AuthTokenGenerate(validateAuth?.obj!)}); 
