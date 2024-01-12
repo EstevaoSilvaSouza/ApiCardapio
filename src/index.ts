@@ -1,4 +1,7 @@
+import { Server } from "socket.io";
 import App from "./app/app";
+import socketInit from "./app/socket/socket";
+import SocketServer from "./app/socket/socket";
 import { CartItem } from "./data/CartItem";
 import Table from "./data/Table";
 
@@ -8,18 +11,12 @@ import Product from "./data/product";
 import { ProductsOrder } from "./data/productsOrder";
 import Store from "./data/store";
 import { User } from "./data/user";
+import Http from 'http'
 
-
-
-
-const StartApplication = async () => {
-  await _DbContext.authenticate().then(async () => {
-    console.log(`banco conectado!`);
-    //_DbContext.sync();
-    //await Order.sync({force:true});
-  });
-
-  new App().app.listen(3080, () => {
+const app = new App().app;
+const server = Http.createServer(app);
+socketInit.initialize(server)
+  server.listen(3080, () => {
     console.log(`
         Servidor online teste!
 
@@ -27,6 +24,3 @@ const StartApplication = async () => {
         Url Base API : http://localhost:3080/store
     `);
   });
-};
-
-StartApplication();

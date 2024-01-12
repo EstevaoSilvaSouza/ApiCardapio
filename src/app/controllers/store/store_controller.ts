@@ -36,25 +36,7 @@ export default class StoreController {
   };
 
   protected Teste = async (req: Request, res: Response) => {
-    const { Id, Name } = req.body;
-
-    try {
-      const Find = await _CartFindItemService.Execute(Id, Name);
-
-      if (Find) {
-        return res.status(200).json({
-          Data: Find,
-        });
-      } else {
-        return res.status(200).json({
-          Mensagem: "Sem dado!",
-        });
-      }
-    } catch (Error: any) {
-      return res.status(500).json({
-        Erro: Error,
-      });
-    }
+    return res.status(200).json({message:"Rota valida teste"})    
   };
 
   protected Create = async (req:Request,res:Response) => {

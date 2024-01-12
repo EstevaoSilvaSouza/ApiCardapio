@@ -4,6 +4,7 @@ import { _CreateOrderService } from "../../../service/cart/createOrderService";
 import { _FindOrderByIdService } from "../../../service/cart/findByIdOrder";
 import { _UpdateOrderStatus } from "../../../service/cart/updateStatusOrder";
 import { _FindAllOrderStore } from "../../../service/cart/findAllOrderStore";
+import socketInit, { ArrayOrderTime } from "../../socket/socket";
 
 export class CartController {
     protected async Create(req:Request,res:Response){
@@ -38,6 +39,9 @@ export class CartController {
           const IdUser = req.User?.Id;
           const updateProdutOrder = await _UpdateOrderStatus.handleExecute(Payload,NameStore,IdUser);
           if(!this.UpdateStatusOrderStore) return res.status(400).json({message:'Falha ao atualizar produto'});
+          if(ArrayOrderTime.get(Payload.Id)){
+            socketInit.sendOrderStatus(ArrayOrderTime.get(Payload.Id),Payload.StatusOrder!,Payload.Id!);
+          }
           return res.status(200).json({message:'Produto atualizado com sucesso',status:updateProdutOrder, data:Payload})
         }
         catch(error:any){

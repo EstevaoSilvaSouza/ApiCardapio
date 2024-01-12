@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const findService_1 = require("../../../service/store/findService");
-const findItemService_1 = require("../../../service/cart/findItemService");
 const createService_1 = require("../../../service/store/createService");
 const findStoreByUser_1 = require("../../../service/user/findStoreByUser");
 const checkTypeResponse_1 = require("../../../types/checkTypeResponse");
@@ -36,25 +35,7 @@ class StoreController {
             }
         };
         this.Teste = async (req, res) => {
-            const { Id, Name } = req.body;
-            try {
-                const Find = await findItemService_1._CartFindItemService.Execute(Id, Name);
-                if (Find) {
-                    return res.status(200).json({
-                        Data: Find,
-                    });
-                }
-                else {
-                    return res.status(200).json({
-                        Mensagem: "Sem dado!",
-                    });
-                }
-            }
-            catch (Error) {
-                return res.status(500).json({
-                    Erro: Error,
-                });
-            }
+            return res.status(200).json({ message: "Rota valida teste" });
         };
         this.Create = async (req, res) => {
             const payload = req.body;
