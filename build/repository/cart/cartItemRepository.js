@@ -27,7 +27,8 @@ class CartItemRepository extends ICartRepository_1.CartAbsRepository {
         return { Data: rows, QtdItens: count, TotalPagina: Math.round(count / qtdItens) };
     }
     async UpdateOrderStatus(payload) {
-        return await order_1.Order.update(payload, { where: { Id: payload.Id } });
+        const { Id, StatusOrder } = payload;
+        return await order_1.Order.update({ StatusOrder }, { where: { Id: Id } });
     }
     async FindByIdOrder(idOrder) {
         return await order_1.Order.findByPk(idOrder, {

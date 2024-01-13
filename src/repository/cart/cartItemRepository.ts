@@ -27,7 +27,8 @@ export class CartItemRepository extends CartAbsRepository {
     return { Data: rows, QtdItens: count, TotalPagina: Math.round(count / qtdItens) };
   }
  async UpdateOrderStatus(payload:IOrder): Promise<[affectedCount: number] | null> {
-    return await Order.update(payload,{where:{Id:payload.Id}});
+  const {Id, StatusOrder} = payload;
+    return await Order.update({StatusOrder},{where:{Id:Id}});
   }
   async FindByIdOrder(idOrder: number): Promise<IOrder | null> {
     return await Order.findByPk(idOrder,{
