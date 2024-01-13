@@ -23,6 +23,11 @@ class SocketServer {
                 socket.join(Id);
                 exports.ArrayOrderTime.set(Id, socket.id);
             });
+            socket.on('joinOrderPainel', (Name) => {
+                console.log(`nova loja para lista pedido em!! ${Name}`);
+                socket.join(Name);
+                exports.ArrayOrderTime.set(Name, socket.id);
+            });
             socket.on('disconnect', () => {
                 console.log('Cliente desconectado');
             });
@@ -32,6 +37,12 @@ class SocketServer {
         this.io.to(orderiD).emit('statusPedidoAlterado', {
             IdOrder: IdItem,
             Status: status
+        });
+    }
+    sendNewOrder(name, data) {
+        this.io.to(name).emit('newOrder', {
+            Id: data.Id,
+            Data: data
         });
     }
 }

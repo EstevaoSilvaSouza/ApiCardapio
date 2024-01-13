@@ -1,5 +1,6 @@
 import {Socket,Server} from 'socket.io';
 import http from 'http'; // Import http module
+import { IOrder } from '../../data/order';
 
 export const ArrayOrderTime = new Map();
 
@@ -28,6 +29,13 @@ class SocketServer {
             socket.join(Id);
             ArrayOrderTime.set(Id,socket.id);
         })
+
+        socket.on('joinOrderPainel',(Name) => {
+          console.log(`nova loja para lista pedido em!! ${Name}`)
+          socket.join(Name);
+          ArrayOrderTime.set(Name,socket.id);
+        })
+
         socket.on('disconnect', () => {
           console.log('Cliente desconectado');
         });
@@ -39,6 +47,13 @@ class SocketServer {
             IdOrder:IdItem,
             Status:status
         })
+    }
+
+    public sendNewOrder(name:any,data:IOrder){
+      this.io.to(name).emit('newOrder',{
+        Id:data.Id,
+        Data:data
+      })
     }
 
   }

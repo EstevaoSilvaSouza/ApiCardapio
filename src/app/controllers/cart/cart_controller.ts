@@ -10,9 +10,12 @@ export class CartController {
     protected async Create(req:Request,res:Response){
         try{
             const payload = req.body;
-            console.log(payload);
             const createOrder = await _CreateOrderService.Execute(payload);
             if(!createOrder) return res.status(401).json({message:'Falha ao criar Order'});
+            if(ArrayOrderTime.has(payload.NameCart)){
+              socketInit.sendNewOrder(ArrayOrderTime.get(payload.NameCart),createOrder);
+            }
+            
             return res.status(200).json({message:'Order Criada com sucesso', Order:createOrder.Id, Itens:createOrder.Items})
         }   
         catch(error:any){
