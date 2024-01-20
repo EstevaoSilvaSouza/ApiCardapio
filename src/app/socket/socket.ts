@@ -3,6 +3,7 @@ import http from 'http'; // Import http module
 import { IOrder } from '../../data/order';
 
 export const ArrayOrderTime = new Map();
+export const Array2Teste = new Map();
 
 class SocketServer {
     public io: Server;
@@ -27,7 +28,8 @@ class SocketServer {
         socket.on('joinOrderRoom',(Id) => {
             console.log(`chegou ID aqui em ${Id}`);
             socket.join(Id);
-            ArrayOrderTime.set(Id,socket.id);
+            Array2Teste.set(Id,socket.id);
+            console.log(Array2Teste);
         })
 
         socket.on('joinOrderPainel',(Name) => {
@@ -43,6 +45,7 @@ class SocketServer {
     }
 
     public sendOrderStatus(orderiD:any,status:string,IdItem:number): void {
+      console.log(`enviado para ${orderiD}`)
         this.io.to(orderiD).emit('statusPedidoAlterado',{
             IdOrder:IdItem,
             Status:status

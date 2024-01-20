@@ -4,7 +4,7 @@ import { _CreateOrderService } from "../../../service/cart/createOrderService";
 import { _FindOrderByIdService } from "../../../service/cart/findByIdOrder";
 import { _UpdateOrderStatus } from "../../../service/cart/updateStatusOrder";
 import { _FindAllOrderStore } from "../../../service/cart/findAllOrderStore";
-import socketInit, { ArrayOrderTime } from "../../socket/socket";
+import socketInit, { Array2Teste, ArrayOrderTime } from "../../socket/socket";
 
 export class CartController {
     protected async Create(req:Request,res:Response){
@@ -38,13 +38,14 @@ export class CartController {
     protected UpdateStatusOrderStore = async (req:Request,res:Response) => {
         try{
           const Payload:IOrder = req.body;
+          const { Id} = req.body;
           const NameStore = req.User?.Stores[0].Name;
           const IdUser = req.User?.Id;
           const updateProdutOrder = await _UpdateOrderStatus.handleExecute(Payload,NameStore,IdUser);
           if(!this.UpdateStatusOrderStore) return res.status(400).json({message:'Falha ao atualizar produto'});
-          if(ArrayOrderTime.has(Payload.Id)){
-            console.log('enctrou o ID')
-            socketInit.sendOrderStatus(ArrayOrderTime.get(Payload.Id),Payload.StatusOrder!,Payload.Id!);
+          if(Array2Teste.has(Id)){
+            console.log(`encontrou o ID : ${Id}`)
+            socketInit.sendOrderStatus(Array2Teste.get(Id),Payload.StatusOrder!,Id);
           }
           return res.status(200).json({message:'Produto atualizado com sucesso',status:updateProdutOrder, data:Payload})
         }
