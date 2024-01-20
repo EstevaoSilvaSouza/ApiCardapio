@@ -7,8 +7,7 @@ class SocketServer {
     constructor() {
         this.io = new socket_io_1.Server({ cors: {
                 origin: 'https://cardapio-web-pearl.vercel.app',
-                methods: ['GET', 'POST', 'PUT'],
-                credentials: false,
+                methods: ['GET', 'POST', 'PUT']
             } });
         this.initSocket();
     }
