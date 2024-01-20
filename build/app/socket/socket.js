@@ -37,6 +37,7 @@ class SocketServer {
     }
     sendOrderStatus(orderiD, status, IdItem) {
         console.log(`enviado para ${orderiD}`);
+        this.io.to(orderiD).emit('testEvent', { message: 'This is a test event' });
         this.io.to(orderiD).emit('statusPedidoAlterado', {
             IdOrder: IdItem,
             Status: status
