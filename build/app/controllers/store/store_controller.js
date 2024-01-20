@@ -7,6 +7,7 @@ const checkTypeResponse_1 = require("../../../types/checkTypeResponse");
 const createProductService_1 = require("../../../service/store/createProductService");
 const updateProductService_1 = require("../../../service/store/updateProductService");
 const findProductByIdService_1 = require("../../../service/store/findProductByIdService");
+const findAllCountService_1 = require("../../../service/store/findAllCountService");
 class StoreController {
     constructor() {
         this.Find = async (req, res) => {
@@ -124,6 +125,20 @@ class StoreController {
                 if (!findProduct)
                     return res.status(400).json({ message: 'Falha ao encontrar produto' });
                 return res.status(200).json({ message: 'Busca realizada com sucesso', produto: findProduct });
+            }
+            catch (error) {
+                return res.status((error === null || error === void 0 ? void 0 : error.statusCode) || 500).json({ message: error === null || error === void 0 ? void 0 : error.message });
+            }
+        };
+        this.GetAllCount = async (req, res) => {
+            var _a, _b, _c;
+            try {
+                const NameStore = (_a = req.User) === null || _a === void 0 ? void 0 : _a.Stores[0].Name;
+                const storeId = (_c = (_b = req.User) === null || _b === void 0 ? void 0 : _b.Stores[0]) === null || _c === void 0 ? void 0 : _c.Id;
+                const findCount = await findAllCountService_1._FindAllCountService.handleExecute(storeId, NameStore);
+                if (!findCount)
+                    return res.status(400).json({ message: 'Nenhum dado para ser processado' });
+                return res.status(200).json(findCount);
             }
             catch (error) {
                 return res.status((error === null || error === void 0 ? void 0 : error.statusCode) || 500).json({ message: error === null || error === void 0 ? void 0 : error.message });

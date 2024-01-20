@@ -8,6 +8,7 @@ import { _CreateProductService } from "../../../service/store/createProductServi
 import { IProduct } from "../../../data/product";
 import { _UpdateProductService } from "../../../service/store/updateProductService";
 import { _FindProductByIdService } from "../../../service/store/findProductByIdService";
+import { _FindAllCountService } from "../../../service/store/findAllCountService";
 
 export default class StoreController {
   protected Find = async (req: Request, res: Response) => {
@@ -132,5 +133,19 @@ export default class StoreController {
       return res.status(error?.statusCode || 500).json({message:error?.message})
     }
   };
+
+  protected GetAllCount = async (req:Request, res:Response) => {
+    try{
+      const NameStore = req.User?.Stores[0].Name;
+      const storeId = req.User?.Stores[0]?.Id;
+      const findCount = await _FindAllCountService.handleExecute(storeId,NameStore);
+      if(!findCount) return res.status(400).json({message:'Nenhum dado para ser processado'});
+      return res.status(200).json(findCount);
+      
+    }
+    catch(error:any){
+      return res.status(error?.statusCode || 500).json({message:error?.message})
+    }
+  }
 
 }

@@ -17,6 +17,7 @@ class StoreRoute extends store_controller_1.default {
         this.CreateProductStore = () => this.Router.post('/currentstore/newProduct', auth_httponly_1.AuhHttpOnly, this.CreateProduct);
         this.UpdateProductStore = () => this.Router.post('/currentstore/updateProduct', auth_httponly_1.AuhHttpOnly, this.UpdateProduct);
         this.FindProductByIdStore = () => this.Router.post('/currentstore/findProduct', auth_httponly_1.AuhHttpOnly, this.FindProductById);
+        this.CountAllDatas = () => this.Router.get('/currentstore/getallStatus', auth_httponly_1.AuhHttpOnly, this.GetAllCount);
         this.Router = (0, express_1.Router)();
         //Rotas abaixo!!
         this.FindByStoreName();
@@ -26,6 +27,7 @@ class StoreRoute extends store_controller_1.default {
         this.CreateProductStore();
         this.UpdateProductStore();
         this.FindProductByIdStore();
+        this.CountAllDatas();
     }
 }
 exports._StoreRoute = new StoreRoute().Router;

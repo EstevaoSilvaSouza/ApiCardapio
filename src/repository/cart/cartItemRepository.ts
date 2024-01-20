@@ -1,9 +1,28 @@
 import { Op } from "sequelize";
 import { IOrder, Order } from '../../data/order';
-import { CartAbsRepository, IResponseListAllOrders } from "./ICartRepository";
+import { CartAbsRepository, IGetAllCount, IResponseListAllOrders } from "./ICartRepository";
 import { IProductsOrder, ProductsOrder } from "../../data/productsOrder";
+import Product from "../../data/product";
 
 export class CartItemRepository extends CartAbsRepository {
+  async GetAllCount(id:number,name:string): Promise<IGetAllCount | null> {
+
+    const [TotalPedidos, PFinalizados,TotalProdutos] = await Promise.all([
+      Order.count({where:{NameCart:name}}),
+      Order.count({where:{NameCart:name, StatusOrder:'Finalizado'}}),
+      Product.count({where:{Id_Store:id}})
+    ])
+
+    return {
+      TotalPedidoMes:PFinalizados,
+      TotalPedidos:TotalPedidos,
+      TotalPedidosAno:PFinalizados,
+      TotalPedidosDia:PFinalizados,
+      TotalProdutos:TotalProdutos,
+      ValorVendaDia:PFinalizados
+    }
+  }
+
   async FindAllOrder(nameStore: string, qtdItens: number, page: number): Promise<IResponseListAllOrders | null> {
     const offset = (page - 1) * qtdItens;
     

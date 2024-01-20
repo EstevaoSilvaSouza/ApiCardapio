@@ -7,6 +7,14 @@ export interface IResponseListAllOrders {
   QtdItens:number;
 }
 
+export interface IGetAllCount {
+  TotalPedidos:number;
+  TotalProdutos:number;
+  TotalPedidosDia:number;
+  TotalPedidoMes:number;
+  TotalPedidosAno:number;
+  ValorVendaDia:number;
+}
 export interface ICartRepository<T> {
   Create(payload:IOrder): Promise<IOrder | null>;
   CreateProductOrder(payload:IProductsOrder[]) : Promise<IProductsOrder[] | null>;
@@ -14,9 +22,11 @@ export interface ICartRepository<T> {
   FindByIdOrder(idOrder:number):Promise<IOrder | null>;
   FindAllOrder(nameStore:string,qtdItens:number,page:number):Promise<IResponseListAllOrders | null>;
   UpdateOrderStatus(payload:IOrder):Promise<[affectedCount: number] | null>;
+  GetAllCount(id:number,name:string):Promise<IGetAllCount | null>;
 }
 
 export abstract class CartAbsRepository implements ICartRepository<any> {
+  abstract GetAllCount(id:number,name:string):Promise<IGetAllCount | null>;
   abstract FindAllOrder(nameStore:string,qtdItens:number,page:number):Promise<IResponseListAllOrders | null>;
   abstract UpdateOrderStatus(payload:IOrder):Promise<[affectedCount: number] | null>;
   abstract Create(payload:IOrder): Promise<IOrder | null>;
