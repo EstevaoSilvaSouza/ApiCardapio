@@ -1,15 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Array2Teste = exports.ArrayOrderTime = void 0;
+exports.ArrayOrderTime = void 0;
 const socket_io_1 = require("socket.io");
 exports.ArrayOrderTime = new Map();
-exports.Array2Teste = new Map();
 class SocketServer {
     constructor() {
         this.io = new socket_io_1.Server({ cors: {
                 origin: 'https://cardapio-web-pearl.vercel.app',
                 methods: ['GET', 'POST', 'PUT'],
-                credentials: true,
+                credentials: false,
             } });
         this.initSocket();
     }
@@ -22,8 +21,7 @@ class SocketServer {
             socket.on('joinOrderRoom', (Id) => {
                 console.log(`chegou ID aqui em ${Id}`);
                 socket.join(Id);
-                exports.Array2Teste.set(Id, socket.id);
-                console.log(exports.Array2Teste);
+                exports.ArrayOrderTime.set(Id, socket.id);
             });
             socket.on('joinOrderPainel', (Name) => {
                 console.log(`nova loja para lista pedido em!! ${Name}`);
@@ -36,8 +34,6 @@ class SocketServer {
         });
     }
     sendOrderStatus(orderiD, status, IdItem) {
-        console.log(`enviado para ${orderiD}`);
-        this.io.to(orderiD).emit('testEvent', { message: 'This is a test event' });
         this.io.to(orderiD).emit('statusPedidoAlterado', {
             IdOrder: IdItem,
             Status: status

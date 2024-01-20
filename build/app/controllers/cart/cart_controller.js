@@ -35,15 +35,14 @@ class CartController {
             var _a, _b;
             try {
                 const Payload = req.body;
-                const { Id } = req.body;
                 const NameStore = (_a = req.User) === null || _a === void 0 ? void 0 : _a.Stores[0].Name;
                 const IdUser = (_b = req.User) === null || _b === void 0 ? void 0 : _b.Id;
                 const updateProdutOrder = await updateStatusOrder_1._UpdateOrderStatus.handleExecute(Payload, NameStore, IdUser);
                 if (!this.UpdateStatusOrderStore)
                     return res.status(400).json({ message: 'Falha ao atualizar produto' });
-                if (socket_1.Array2Teste.has(Id)) {
-                    console.log(`encontrou o ID : ${Id}`);
-                    socket_1.default.sendOrderStatus(socket_1.Array2Teste.get(Id), Payload.StatusOrder, Id);
+                console.log(socket_1.ArrayOrderTime.has(Payload.Id));
+                if (socket_1.ArrayOrderTime.has(Payload.Id)) {
+                    socket_1.default.sendOrderStatus(socket_1.ArrayOrderTime.get(Payload.Id), Payload.StatusOrder, Payload.Id);
                 }
                 return res.status(200).json({ message: 'Produto atualizado com sucesso', status: updateProdutOrder, data: Payload });
             }

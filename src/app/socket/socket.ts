@@ -3,7 +3,6 @@ import http from 'http'; // Import http module
 import { IOrder } from '../../data/order';
 
 export const ArrayOrderTime = new Map();
-export const Array2Teste = new Map();
 
 class SocketServer {
     public io: Server;
@@ -12,7 +11,7 @@ class SocketServer {
       this.io = new Server({cors:{
               origin: 'https://cardapio-web-pearl.vercel.app',
               methods: ['GET', 'POST', 'PUT'],
-              credentials: true,
+              credentials: false,
       }});
       this.initSocket();
     }
@@ -28,8 +27,7 @@ class SocketServer {
         socket.on('joinOrderRoom',(Id) => {
             console.log(`chegou ID aqui em ${Id}`);
             socket.join(Id);
-            Array2Teste.set(Id,socket.id);
-            console.log(Array2Teste);
+            ArrayOrderTime.set(Id,socket.id);
         })
 
         socket.on('joinOrderPainel',(Name) => {
@@ -45,8 +43,6 @@ class SocketServer {
     }
 
     public sendOrderStatus(orderiD:any,status:string,IdItem:number): void {
-      console.log(`enviado para ${orderiD}`)
-      this.io.to(orderiD).emit('testEvent', { message: 'This is a test event' });
         this.io.to(orderiD).emit('statusPedidoAlterado',{
             IdOrder:IdItem,
             Status:status
