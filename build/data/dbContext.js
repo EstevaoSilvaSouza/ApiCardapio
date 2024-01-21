@@ -13,6 +13,7 @@ class DbContext {
             });*/
             this.Con = new sequelize_1.Sequelize("postgres://default:K93MYgrwuLjv@ep-dawn-fire-87063438.us-east-1.postgres.vercel-storage.com:5432/verceldb", {
                 dialect: "postgres",
+                logging: false,
                 dialectOptions: {
                     ssl: {
                         require: true,

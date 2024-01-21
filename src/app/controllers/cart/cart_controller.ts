@@ -42,9 +42,9 @@ export class CartController {
           const IdUser = req.User?.Id;
           const updateProdutOrder = await _UpdateOrderStatus.handleExecute(Payload,NameStore,IdUser);
           if(!this.UpdateStatusOrderStore) return res.status(400).json({message:'Falha ao atualizar produto'});
-          console.log(ArrayOrderTime.has(Payload.Id))
-          if(ArrayOrderTime.has(Payload.Id)){
-            socketInit.sendOrderStatus(ArrayOrderTime.get(Payload.Id),Payload.StatusOrder!,Payload.Id!);
+          console.log(ArrayOrderTime)
+          if(ArrayOrderTime.has(String(Payload.Id))){
+            socketInit.sendOrderStatus(ArrayOrderTime.get(String(Payload.Id)),Payload.StatusOrder!,Payload.Id!);
           }
           return res.status(200).json({message:'Produto atualizado com sucesso',status:updateProdutOrder, data:Payload})
         }
