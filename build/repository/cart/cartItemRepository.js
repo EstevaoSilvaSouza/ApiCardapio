@@ -25,12 +25,13 @@ class CartItemRepository extends ICartRepository_1.CartAbsRepository {
             ValorVendaDia: PFinalizados
         };
     }
-    async FindAllOrder(nameStore, qtdItens, page) {
+    async FindAllOrder(status, nameStore, qtdItens, page) {
         const offset = (page - 1) * qtdItens;
         const { count, rows } = await order_1.Order.findAndCountAll({
             where: {
                 NameCart: nameStore,
                 Status: { [sequelize_1.Op.not]: false },
+                StatusOrder: status
             },
             limit: qtdItens,
             offset: offset,

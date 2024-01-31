@@ -54,8 +54,8 @@ class CartController {
             var _a;
             try {
                 const nameStore = (_a = req.User) === null || _a === void 0 ? void 0 : _a.Stores[0].Name;
-                const { QtdItensPage, Page } = req.params;
-                const findAll = await findAllOrderStore_1._FindAllOrderStore.Execute(nameStore, Number(QtdItensPage), Number(Page));
+                const { QtdItensPage, Page, Status } = req.params;
+                const findAll = await findAllOrderStore_1._FindAllOrderStore.Execute(Status, nameStore, Number(QtdItensPage), Number(Page));
                 if (!findAll)
                     return res.status(400).json({ message: 'Falha ao encontrar as Orders' });
                 return res.status(200).json({ message: 'Orders encontradas com sucesso', Orders: findAll });

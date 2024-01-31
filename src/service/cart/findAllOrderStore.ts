@@ -5,9 +5,9 @@ import { CartItemRepository } from "../../repository/cart/cartItemRepository";
 class FindAllOrderStore {
   constructor(private CartItemRepository: ICartRepository<any>) {}
 
-  async Execute(nameStore:string,qtdItens:number,pagina:number): Promise<IResponseListAllOrders | null> {
+  async Execute(status:string,nameStore:string,qtdItens:number,pagina:number): Promise<IResponseListAllOrders | null> {
 
-    const findOrder = await this.CartItemRepository.FindAllOrder(nameStore,qtdItens,pagina);
+    const findOrder = await this.CartItemRepository.FindAllOrder(status,nameStore,qtdItens,pagina);
     if(!findOrder){
         throw({message:'Falha em processar as Orders'})
     }

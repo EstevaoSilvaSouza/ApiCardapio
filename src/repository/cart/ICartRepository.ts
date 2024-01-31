@@ -20,14 +20,14 @@ export interface ICartRepository<T> {
   CreateProductOrder(payload:IProductsOrder[]) : Promise<IProductsOrder[] | null>;
   ListId(date: T, date2: T): Promise<T[] | null>;
   FindByIdOrder(idOrder:number):Promise<IOrder | null>;
-  FindAllOrder(nameStore:string,qtdItens:number,page:number):Promise<IResponseListAllOrders | null>;
+  FindAllOrder(status:string,nameStore:string,qtdItens:number,page:number):Promise<IResponseListAllOrders | null>;
   UpdateOrderStatus(payload:IOrder):Promise<[affectedCount: number] | null>;
   GetAllCount(id:number,name:string):Promise<IGetAllCount | null>;
 }
 
 export abstract class CartAbsRepository implements ICartRepository<any> {
   abstract GetAllCount(id:number,name:string):Promise<IGetAllCount | null>;
-  abstract FindAllOrder(nameStore:string,qtdItens:number,page:number):Promise<IResponseListAllOrders | null>;
+  abstract FindAllOrder(status:string,nameStore:string,qtdItens:number,page:number):Promise<IResponseListAllOrders | null>;
   abstract UpdateOrderStatus(payload:IOrder):Promise<[affectedCount: number] | null>;
   abstract Create(payload:IOrder): Promise<IOrder | null>;
   abstract FindByIdOrder(idOrder:number):Promise<IOrder | null>;

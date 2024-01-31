@@ -23,13 +23,14 @@ export class CartItemRepository extends CartAbsRepository {
     }
   }
 
-  async FindAllOrder(nameStore: string, qtdItens: number, page: number): Promise<IResponseListAllOrders | null> {
+  async FindAllOrder(status:string,nameStore: string, qtdItens: number, page: number): Promise<IResponseListAllOrders | null> {
     const offset = (page - 1) * qtdItens;
-    
+
     const { count, rows } = await Order.findAndCountAll({
       where: {
         NameCart: nameStore,
         Status: { [Op.not]: false },
+        StatusOrder: status
       },
       limit: qtdItens,
       offset: offset,

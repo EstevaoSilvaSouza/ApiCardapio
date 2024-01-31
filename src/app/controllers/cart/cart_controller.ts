@@ -56,8 +56,8 @@ export class CartController {
       protected ListAllOrders = async (req:Request,res:Response) => {
         try{
             const nameStore = req.User?.Stores[0].Name;
-            const {QtdItensPage, Page} = req.params;
-            const findAll = await _FindAllOrderStore.Execute(nameStore,Number(QtdItensPage),Number(Page));
+            const {QtdItensPage, Page,Status} = req.params;
+            const findAll = await _FindAllOrderStore.Execute(Status,nameStore,Number(QtdItensPage),Number(Page));
             if(!findAll) return res.status(400).json({message:'Falha ao encontrar as Orders'});
             return res.status(200).json({message:'Orders encontradas com sucesso',Orders:findAll})
         }
