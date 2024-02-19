@@ -12,6 +12,7 @@ class UserRepository {
                 return await user_1.User.create(p);
             }
             catch (error) {
+                console.log(error);
                 return error;
             }
         };

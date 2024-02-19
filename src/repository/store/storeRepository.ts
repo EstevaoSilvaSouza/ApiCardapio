@@ -20,9 +20,16 @@ export default class StoreRepository implements AbsStoreRepository {
     return await Product.create(p); 
   }
   async create(payload: IStore):Promise<IStore | null> {
-    const t =  await Store.create(payload);
-    console.log(t);
-    return t
+    try{
+      const t =  await Store.create(payload)
+      console.log(t);
+       return t;
+    }
+    catch(error:any){
+      console.log(error)
+      return null;
+    }
+
   }
   async find(storeName?: string,type?:string,idUser?:number): Promise<IStore | StoreByUser | null> {
     if(type === 'default'){

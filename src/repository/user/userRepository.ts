@@ -7,6 +7,7 @@ export default class UserRepository implements UserAbs {
         try {
             return await User.create(p);
         } catch (error:any) {
+            console.log(error)
             return error;
         }
       
