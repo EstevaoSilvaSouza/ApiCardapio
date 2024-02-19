@@ -21,7 +21,9 @@ class StoreRepository {
         return await product_1.default.create(p);
     }
     async create(payload) {
-        return await store_1.default.create(payload);
+        const t = await store_1.default.create(payload);
+        console.log(t);
+        return t;
     }
     async find(storeName, type, idUser) {
         if (type === 'default') {

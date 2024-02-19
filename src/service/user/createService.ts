@@ -19,19 +19,22 @@ class CreateUserService {
         if(checkStore){
             throw { message:'Falha ao cadastrar, Loja já existente.',error:'l-2001'}
         }
+        console.log(checkStore)
         ObjCreate!.Type = 'Normal';
         ObjCreate!.Status = true;
         ObjCreate!.IsActive = true;
         const newUser = await this.e.create(ObjCreate);
-
+        console.log(newUser)
         if (!newUser) {
             throw { message: 'Falha ao cadastrar usuário', error: newUser };
         }
 
         const newStore = await _CreateService.handleExecute({Description:'Loja Nova', ImageUrl:'', Name:ObjCreate.NameStore!,Type:'',IdUser:newUser.Id});
         if(newStore){
+            console.log(newStore)
             const InsertStoreuSER = await UsuarioStore.create({Id_Store:newStore.Id!, Id_Usuario:newUser.Id!});
                 if(!InsertStoreuSER){
+                    console.log(InsertStoreuSER)
                     throw ({message:'Falha no processo, favor contato o dev do sistema.',error:'L-2111'})
                 }
         }
