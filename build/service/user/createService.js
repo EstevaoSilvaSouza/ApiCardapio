@@ -21,7 +21,7 @@ class CreateUserService {
                 if (checkStore) {
                     throw { message: 'Falha ao cadastrar, Loja já existente.', error: 'S-2001' };
                 }
-                const checkUser = await findByUsername_1._FindbyUserService.handleExecute({ Username: ObjCreate.Username, Password: ObjCreate.Password });
+                const checkUser = await findByUsername_1._FindByUserNew.handleExecute(ObjCreate.Username);
                 if (checkUser) {
                     throw { message: 'Falha ao cadastrar, Usuario já existente.', error: 'U-2002' };
                 }

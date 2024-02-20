@@ -6,7 +6,7 @@ import { IUserRepository } from "../../repository/user/IuserRepository";
 import UserRepository from "../../repository/user/userRepository";
 import { _CreateService } from "../store/createService";
 import { _FindService } from "../store/findService";
-import { _FindbyUserService } from "./findByUsername";
+import { _FindByUserNew, _FindbyUserService } from "./findByUsername";
 
 class CreateUserService {
     
@@ -22,7 +22,7 @@ class CreateUserService {
                 throw { message:'Falha ao cadastrar, Loja já existente.',error:'S-2001'}
             }
             
-            const checkUser = await _FindbyUserService.handleExecute({Username:ObjCreate.Username, Password:ObjCreate.Password});
+            const checkUser = await _FindByUserNew.handleExecute(ObjCreate.Username);
 
             if(checkUser){
                 throw { message:'Falha ao cadastrar, Usuario já existente.',error:'U-2002'}

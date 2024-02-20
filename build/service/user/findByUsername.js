@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports._FindbyUserService = void 0;
+exports._FindByUserNew = exports._FindbyUserService = void 0;
 const userRepository_1 = __importDefault(require("../../repository/user/userRepository"));
 class FindByUserName {
     constructor(e) {
@@ -18,3 +18,12 @@ class FindByUserName {
     }
 }
 exports._FindbyUserService = new FindByUserName(new userRepository_1.default());
+class FindByUserNew {
+    constructor(s) {
+        this.s = s;
+        this.handleExecute = async (s) => {
+            return await this.s.findByUserName(s);
+        };
+    }
+}
+exports._FindByUserNew = new FindByUserNew(new userRepository_1.default());

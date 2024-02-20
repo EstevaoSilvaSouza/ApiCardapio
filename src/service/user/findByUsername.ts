@@ -21,3 +21,14 @@ class FindByUserName {
 }
 
 export const _FindbyUserService = new FindByUserName(new UserRepository());
+
+
+class FindByUserNew {
+    constructor(private s:IUserRepository<IUser>){}
+
+    handleExecute = async (s:string): Promise<IUser | null> => {
+        return await this.s.findByUserName(s);
+    }
+}
+
+export const _FindByUserNew = new FindByUserNew(new UserRepository())
