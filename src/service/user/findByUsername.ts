@@ -12,7 +12,7 @@ class FindByUserName {
 
     handleExecute = async (s:ILoginAuth) : Promise<IUser | null> => {
         const findUser: IUser | null = await this.e.findByUserName(s.Username);
-        console.log(findUser)
+        
         if(!findUser) {
             throw ({message:'Falha ao realizar login', error:findUser})}
 

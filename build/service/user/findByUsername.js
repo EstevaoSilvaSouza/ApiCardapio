@@ -10,7 +10,6 @@ class FindByUserName {
         this.e = e;
         this.handleExecute = async (s) => {
             const findUser = await this.e.findByUserName(s.Username);
-            console.log(findUser);
             if (!findUser) {
                 throw ({ message: 'Falha ao realizar login', error: findUser });
             }
