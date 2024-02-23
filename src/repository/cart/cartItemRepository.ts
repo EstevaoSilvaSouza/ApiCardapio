@@ -41,11 +41,12 @@ export class CartItemRepository extends CartAbsRepository {
         }
       }),
       Product.count({ where: { Id_Store: id } }),
-      Product.findOne({
+      ProductsOrder.findOne({
         attributes: [
           [fn('SUM', col('Value')), 'totalVendas']
         ],
         where: {
+          Id_Store:id,
           createdAt: {
             [Op.between]: [literal("CURRENT_DATE"), literal("CURRENT_DATE + INTERVAL '1 day'")]
           }

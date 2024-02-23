@@ -44,11 +44,12 @@ class CartItemRepository extends ICartRepository_1.CartAbsRepository {
                 }
             }),
             product_1.default.count({ where: { Id_Store: id } }),
-            product_1.default.findOne({
+            productsOrder_1.ProductsOrder.findOne({
                 attributes: [
                     [(0, sequelize_1.fn)('SUM', (0, sequelize_1.col)('Value')), 'totalVendas']
                 ],
                 where: {
+                    Id_Store: id,
                     createdAt: {
                         [sequelize_1.Op.between]: [(0, sequelize_1.literal)("CURRENT_DATE"), (0, sequelize_1.literal)("CURRENT_DATE + INTERVAL '1 day'")]
                     }

@@ -16,6 +16,7 @@ export interface IProductsOrder {
   Id_Store?:number;
   Id_Order?:number;
   Id_ProduRef?:number;
+  createdAt?:Date | string;
 }
 
 export class ProductsOrder extends Model<IProductsOrder> {
