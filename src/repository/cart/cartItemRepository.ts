@@ -10,28 +10,37 @@ export class CartItemRepository extends CartAbsRepository {
     const dateInicial = literal("DATE_TRUNC('month',CURRENT_DATE)");
     const dataAnoInicial = literal("DATE_TRUNC('year',CURRENT_DATE)");
     const dataDiaHoje = literal("CURRENT_DATE");
-    const dataFinal = literal("LAST_DAY(CURRENT_DATE)");
-    const dataAnoFinal = literal("DATE_TRUNC('year', CURRENT_DATE) + INTERVAL '1 year' - INTERVAL '1 day'");
+    const dataFinal = literal("DATE_TRUNC('day', (CURRENT_DATE + INTERVAL '1 month' - INTERVAL '1 day'))");
+    const dataAnoFinal = literal("DATE_TRUNC('day', (CURRENT_DATE + INTERVAL '1 year' - INTERVAL '1 day'))");
     const dataDiaHojeFinal = literal("CURRENT_DATE + INTERVAL '1 day'");
 
-
-    const [TotalPedidosMes,TotalPedidos, TotalPedidosAno,TotalPedidosDia,TotalProdutos,consultaTotalVendas] = await Promise.all([
-      Order.count({where:
-        {
-          NameCart:name,
-          createdAt:{
-            [Op.between]:[dateInicial,dataFinal]
+    const [TotalPedidosMes, TotalPedidos, TotalPedidosAno, TotalPedidosDia, TotalProdutos, consultaTotalVendas] = await Promise.all([
+      Order.count({
+        where: {
+          NameCart: name,
+          createdAt: {
+            [Op.between]: [dateInicial, dataFinal]
           }
         }
       }),
-      Order.count({where:{NameCart:name}}),
-      Order.count({where:{NameCart:name, createdAt:{
-        [Op.between]:[dataAnoInicial, dataAnoFinal]
-      }}}),
-      Order.count({where:{NameCart:name, createdAt:{
-        [Op.between]:[dataDiaHoje, dataDiaHojeFinal]
-      }}}),
-      Product.count({where:{Id_Store:id}}),
+      Order.count({ where: { NameCart: name } }),
+      Order.count({
+        where: {
+          NameCart: name,
+          createdAt: {
+            [Op.between]: [dataAnoInicial, dataAnoFinal]
+          }
+        }
+      }),
+      Order.count({
+        where: {
+          NameCart: name,
+          createdAt: {
+            [Op.between]: [dataDiaHoje, dataDiaHojeFinal]
+          }
+        }
+      }),
+      Product.count({ where: { Id_Store: id } }),
       Product.findOne({
         attributes: [
           [fn('SUM', col('Value')), 'totalVendas']
@@ -45,14 +54,16 @@ export class CartItemRepository extends CartAbsRepository {
     ]);
 
     return {
-      TotalPedidoMes:TotalPedidosMes,
-      TotalPedidos:TotalPedidos,
-      TotalPedidosAno:TotalPedidosAno,
-      TotalPedidosDia:TotalPedidosDia,
-      TotalProdutos:TotalProdutos,
-      ValorVendaDia:consultaTotalVendas?.get('totalVendas') as number || 0
-    }
+      TotalPedidoMes: TotalPedidosMes,
+      TotalPedidos: TotalPedidos,
+      TotalPedidosAno: TotalPedidosAno,
+      TotalPedidosDia: TotalPedidosDia,
+      TotalProdutos: TotalProdutos,
+      ValorVendaDia: consultaTotalVendas?.get('totalVendas') as number || 0
+    };
   }
+
+
 
   async FindAllOrder(status:string,nameStore: string, qtdItens: number, page: number): Promise<IResponseListAllOrders | null> {
     const offset = (page - 1) * qtdItens;

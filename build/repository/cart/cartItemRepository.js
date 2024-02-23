@@ -14,11 +14,12 @@ class CartItemRepository extends ICartRepository_1.CartAbsRepository {
         const dateInicial = (0, sequelize_1.literal)("DATE_TRUNC('month',CURRENT_DATE)");
         const dataAnoInicial = (0, sequelize_1.literal)("DATE_TRUNC('year',CURRENT_DATE)");
         const dataDiaHoje = (0, sequelize_1.literal)("CURRENT_DATE");
-        const dataFinal = (0, sequelize_1.literal)("LAST_DAY(CURRENT_DATE)");
-        const dataAnoFinal = (0, sequelize_1.literal)("DATE_TRUNC('year', CURRENT_DATE) + INTERVAL '1 year' - INTERVAL '1 day'");
+        const dataFinal = (0, sequelize_1.literal)("DATE_TRUNC('day', (CURRENT_DATE + INTERVAL '1 month' - INTERVAL '1 day'))");
+        const dataAnoFinal = (0, sequelize_1.literal)("DATE_TRUNC('day', (CURRENT_DATE + INTERVAL '1 year' - INTERVAL '1 day'))");
         const dataDiaHojeFinal = (0, sequelize_1.literal)("CURRENT_DATE + INTERVAL '1 day'");
         const [TotalPedidosMes, TotalPedidos, TotalPedidosAno, TotalPedidosDia, TotalProdutos, consultaTotalVendas] = await Promise.all([
-            order_1.Order.count({ where: {
+            order_1.Order.count({
+                where: {
                     NameCart: name,
                     createdAt: {
                         [sequelize_1.Op.between]: [dateInicial, dataFinal]
@@ -26,12 +27,22 @@ class CartItemRepository extends ICartRepository_1.CartAbsRepository {
                 }
             }),
             order_1.Order.count({ where: { NameCart: name } }),
-            order_1.Order.count({ where: { NameCart: name, createdAt: {
+            order_1.Order.count({
+                where: {
+                    NameCart: name,
+                    createdAt: {
                         [sequelize_1.Op.between]: [dataAnoInicial, dataAnoFinal]
-                    } } }),
-            order_1.Order.count({ where: { NameCart: name, createdAt: {
+                    }
+                }
+            }),
+            order_1.Order.count({
+                where: {
+                    NameCart: name,
+                    createdAt: {
                         [sequelize_1.Op.between]: [dataDiaHoje, dataDiaHojeFinal]
-                    } } }),
+                    }
+                }
+            }),
             product_1.default.count({ where: { Id_Store: id } }),
             product_1.default.findOne({
                 attributes: [
