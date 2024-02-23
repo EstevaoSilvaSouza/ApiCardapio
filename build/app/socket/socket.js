@@ -6,9 +6,9 @@ exports.ArrayOrderTime = new Map();
 class SocketServer {
     constructor() {
         this.io = new socket_io_1.Server({ cors: {
-                origin: '*',
+                origin: 'https://cardapio-web-pearl.vercel.app',
                 methods: ['GET', 'POST', 'PUT'],
-                credentials: false,
+                credentials: true,
             } });
         this.initSocket();
     }

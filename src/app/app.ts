@@ -17,7 +17,10 @@ export default class App {
 
   private Middleware = () => {
     this.app.use(
-      Cors()
+      Cors({
+        origin: 'https://cardapio-web-pearl.vercel.app',
+        credentials: true,
+      })
     );
     
     this.app.use(cookieParser());
