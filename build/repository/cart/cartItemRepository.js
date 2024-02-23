@@ -9,7 +9,6 @@ const order_1 = require("../../data/order");
 const ICartRepository_1 = require("./ICartRepository");
 const productsOrder_1 = require("../../data/productsOrder");
 const product_1 = __importDefault(require("../../data/product"));
-const sequelize_2 = require("sequelize/types/sequelize");
 class CartItemRepository extends ICartRepository_1.CartAbsRepository {
     async GetAllCount(id, name) {
         const dateInicial = (0, sequelize_1.literal)("DATE_TRUNC('month',CURRENT_DATE)");
@@ -36,7 +35,7 @@ class CartItemRepository extends ICartRepository_1.CartAbsRepository {
             product_1.default.count({ where: { Id_Store: id } }),
             product_1.default.findOne({
                 attributes: [
-                    [(0, sequelize_2.fn)('SUM', (0, sequelize_2.col)('Value')), 'totalVendas']
+                    [(0, sequelize_1.fn)('SUM', (0, sequelize_1.col)('Value')), 'totalVendas']
                 ],
                 where: {
                     createdAt: {

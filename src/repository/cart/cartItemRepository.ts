@@ -1,9 +1,8 @@
-import { Op, literal } from "sequelize";
+import { Op, col, fn, literal } from "sequelize";
 import { IOrder, Order } from '../../data/order';
 import { CartAbsRepository, IGetAllCount, IResponseListAllOrders } from "./ICartRepository";
 import { IProductsOrder, ProductsOrder } from "../../data/productsOrder";
 import Product from "../../data/product";
-import { col, fn } from "sequelize/types/sequelize";
 
 export class CartItemRepository extends CartAbsRepository {
   async GetAllCount(id:number,name:string): Promise<IGetAllCount | null> {
