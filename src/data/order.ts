@@ -11,6 +11,7 @@ export interface IOrder {
   StatusOrder?:string;
   Items?:IProductsOrder[];
   Id_Table?: number;
+  createdAt?:Date | string;
 }
 
 export class Order extends Model<IOrder> {

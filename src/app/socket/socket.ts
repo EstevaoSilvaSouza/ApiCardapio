@@ -9,7 +9,7 @@ class SocketServer {
   
     constructor() {
       this.io = new Server({cors:{
-              origin: 'https://cardapio-web-pearl.vercel.app',
+              origin: '*',
               methods: ['GET', 'POST', 'PUT'],
               credentials: false,
       }});

@@ -13,13 +13,10 @@ const cart_route_1 = require("./routers/cart_route");
 class App {
     constructor() {
         this.Middleware = () => {
-            this.app.use((0, cors_1.default)({
-                origin: 'https://cardapio-web-pearl.vercel.app',
-                credentials: true,
-            }));
+            this.app.use((0, cors_1.default)());
             this.app.use((0, cookie_parser_1.default)());
             this.app.use(express_1.default.json());
-            this.app.use(express_1.default.urlencoded({ extended: true, limit: 2500 }));
+            this.app.use(express_1.default.urlencoded({ extended: true, limit: 2000 }));
             this.app.options('*', (0, cors_1.default)());
         };
         this.Route = () => {

@@ -13,6 +13,7 @@ export interface IProduct {
   Description: string;
   Tag: string;
   Id_Store?:number;
+  createdAt?:Date | string;
 }
 
 export default class Product extends Model<IProduct> {

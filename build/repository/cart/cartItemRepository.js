@@ -9,20 +9,49 @@ const order_1 = require("../../data/order");
 const ICartRepository_1 = require("./ICartRepository");
 const productsOrder_1 = require("../../data/productsOrder");
 const product_1 = __importDefault(require("../../data/product"));
+const sequelize_2 = __importDefault(require("sequelize/types/sequelize"));
 class CartItemRepository extends ICartRepository_1.CartAbsRepository {
     async GetAllCount(id, name) {
-        const [TotalPedidos, PFinalizados, TotalProdutos] = await Promise.all([
+        const dateInicial = (0, sequelize_1.literal)("DATE_TRUNC('month',CURRENT_DATE)");
+        const dataAnoInicial = (0, sequelize_1.literal)("DATE_TRUNC('year',CURRENT_DATE)");
+        const dataDiaHoje = (0, sequelize_1.literal)("CURRENT_DATE");
+        const dataFinal = (0, sequelize_1.literal)("LAST_DAY(CURRENT_DATE)");
+        const dataAnoFinal = (0, sequelize_1.literal)("DATE_TRUNC('year', CURRENT_DATE) + INTERVAL '1 year' - INTERVAL '1 day'");
+        const dataDiaHojeFinal = (0, sequelize_1.literal)("CURRENT_DATE + INTERVAL '1 day'");
+        const [TotalPedidosMes, TotalPedidos, TotalPedidosAno, TotalPedidosDia, TotalProdutos, consultaTotalVendas] = await Promise.all([
+            order_1.Order.count({ where: {
+                    NameCart: name,
+                    createdAt: {
+                        [sequelize_1.Op.between]: [dateInicial, dataFinal]
+                    }
+                }
+            }),
             order_1.Order.count({ where: { NameCart: name } }),
-            order_1.Order.count({ where: { NameCart: name, StatusOrder: 'Finalizado' } }),
-            product_1.default.count({ where: { Id_Store: id } })
+            order_1.Order.count({ where: { NameCart: name, createdAt: {
+                        [sequelize_1.Op.between]: [dataAnoInicial, dataAnoFinal]
+                    } } }),
+            order_1.Order.count({ where: { NameCart: name, createdAt: {
+                        [sequelize_1.Op.between]: [dataDiaHoje, dataDiaHojeFinal]
+                    } } }),
+            product_1.default.count({ where: { Id_Store: id } }),
+            product_1.default.findOne({
+                attributes: [
+                    [sequelize_2.default.fn('SUM', sequelize_2.default.col('Value')), 'totalVendas']
+                ],
+                where: {
+                    createdAt: {
+                        [sequelize_1.Op.between]: [sequelize_2.default.literal("CURRENT_DATE"), sequelize_2.default.literal("CURRENT_DATE + INTERVAL '1 day'")]
+                    }
+                }
+            })
         ]);
         return {
-            TotalPedidoMes: PFinalizados,
+            TotalPedidoMes: TotalPedidosMes,
             TotalPedidos: TotalPedidos,
-            TotalPedidosAno: PFinalizados,
-            TotalPedidosDia: PFinalizados,
+            TotalPedidosAno: TotalPedidosAno,
+            TotalPedidosDia: TotalPedidosDia,
             TotalProdutos: TotalProdutos,
-            ValorVendaDia: PFinalizados
+            ValorVendaDia: (consultaTotalVendas === null || consultaTotalVendas === void 0 ? void 0 : consultaTotalVendas.get('totalVendas')) || 0
         };
     }
     async FindAllOrder(nameStore, qtdItens, page) {

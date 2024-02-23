@@ -1,25 +1,57 @@
-import { Op } from "sequelize";
+import { Op, literal } from "sequelize";
 import { IOrder, Order } from '../../data/order';
 import { CartAbsRepository, IGetAllCount, IResponseListAllOrders } from "./ICartRepository";
 import { IProductsOrder, ProductsOrder } from "../../data/productsOrder";
 import Product from "../../data/product";
+import sequelize from "sequelize/types/sequelize";
 
 export class CartItemRepository extends CartAbsRepository {
   async GetAllCount(id:number,name:string): Promise<IGetAllCount | null> {
 
-    const [TotalPedidos, PFinalizados,TotalProdutos] = await Promise.all([
+    const dateInicial = literal("DATE_TRUNC('month',CURRENT_DATE)");
+    const dataAnoInicial = literal("DATE_TRUNC('year',CURRENT_DATE)");
+    const dataDiaHoje = literal("CURRENT_DATE");
+    const dataFinal = literal("LAST_DAY(CURRENT_DATE)");
+    const dataAnoFinal = literal("DATE_TRUNC('year', CURRENT_DATE) + INTERVAL '1 year' - INTERVAL '1 day'");
+    const dataDiaHojeFinal = literal("CURRENT_DATE + INTERVAL '1 day'");
+
+
+    const [TotalPedidosMes,TotalPedidos, TotalPedidosAno,TotalPedidosDia,TotalProdutos,consultaTotalVendas] = await Promise.all([
+      Order.count({where:
+        {
+          NameCart:name,
+          createdAt:{
+            [Op.between]:[dateInicial,dataFinal]
+          }
+        }
+      }),
       Order.count({where:{NameCart:name}}),
-      Order.count({where:{NameCart:name, StatusOrder:'Finalizado'}}),
-      Product.count({where:{Id_Store:id}})
+      Order.count({where:{NameCart:name, createdAt:{
+        [Op.between]:[dataAnoInicial, dataAnoFinal]
+      }}}),
+      Order.count({where:{NameCart:name, createdAt:{
+        [Op.between]:[dataDiaHoje, dataDiaHojeFinal]
+      }}}),
+      Product.count({where:{Id_Store:id}}),
+      Product.findOne({
+        attributes: [
+          [sequelize.fn('SUM', sequelize.col('Value')), 'totalVendas']
+        ],
+        where: {
+          createdAt: {
+            [Op.between]: [sequelize.literal("CURRENT_DATE"), sequelize.literal("CURRENT_DATE + INTERVAL '1 day'")]
+          }
+        }
+      })
     ])
 
     return {
-      TotalPedidoMes:PFinalizados,
+      TotalPedidoMes:TotalPedidosMes,
       TotalPedidos:TotalPedidos,
-      TotalPedidosAno:PFinalizados,
-      TotalPedidosDia:PFinalizados,
+      TotalPedidosAno:TotalPedidosAno,
+      TotalPedidosDia:TotalPedidosDia,
       TotalProdutos:TotalProdutos,
-      ValorVendaDia:PFinalizados
+      ValorVendaDia:consultaTotalVendas?.get('totalVendas') as number || 0
     }
   }
 
