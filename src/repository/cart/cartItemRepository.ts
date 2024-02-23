@@ -3,7 +3,7 @@ import { IOrder, Order } from '../../data/order';
 import { CartAbsRepository, IGetAllCount, IResponseListAllOrders } from "./ICartRepository";
 import { IProductsOrder, ProductsOrder } from "../../data/productsOrder";
 import Product from "../../data/product";
-import sequelize from "sequelize/types/sequelize";
+import { col, fn } from "sequelize/types/sequelize";
 
 export class CartItemRepository extends CartAbsRepository {
   async GetAllCount(id:number,name:string): Promise<IGetAllCount | null> {
@@ -35,15 +35,15 @@ export class CartItemRepository extends CartAbsRepository {
       Product.count({where:{Id_Store:id}}),
       Product.findOne({
         attributes: [
-          [sequelize.fn('SUM', sequelize.col('Value')), 'totalVendas']
+          [fn('SUM', col('Value')), 'totalVendas']
         ],
         where: {
           createdAt: {
-            [Op.between]: [sequelize.literal("CURRENT_DATE"), sequelize.literal("CURRENT_DATE + INTERVAL '1 day'")]
+            [Op.between]: [literal("CURRENT_DATE"), literal("CURRENT_DATE + INTERVAL '1 day'")]
           }
         }
       })
-    ])
+    ]);
 
     return {
       TotalPedidoMes:TotalPedidosMes,
