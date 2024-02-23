@@ -15,6 +15,7 @@ export interface IUser {
     Type:string;
     Status:boolean;
     IsActive:boolean;
+    NameStore?:string;
     Stores?:IStore[];
 }
 

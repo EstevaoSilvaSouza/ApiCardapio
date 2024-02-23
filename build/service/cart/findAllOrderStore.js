@@ -6,8 +6,8 @@ class FindAllOrderStore {
     constructor(CartItemRepository) {
         this.CartItemRepository = CartItemRepository;
     }
-    async Execute(nameStore, qtdItens, pagina) {
-        const findOrder = await this.CartItemRepository.FindAllOrder(nameStore, qtdItens, pagina);
+    async Execute(status, nameStore, qtdItens, pagina) {
+        const findOrder = await this.CartItemRepository.FindAllOrder(status, nameStore, qtdItens, pagina);
         if (!findOrder) {
             throw ({ message: 'Falha em processar as Orders' });
         }

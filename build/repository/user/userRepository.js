@@ -8,12 +8,7 @@ const user_1 = require("../../data/user");
 class UserRepository {
     constructor() {
         this.create = async (p) => {
-            try {
-                return await user_1.User.create(p);
-            }
-            catch (error) {
-                return error;
-            }
+            return await user_1.User.create(p);
         };
         this.getAll = () => {
             throw ('ok');

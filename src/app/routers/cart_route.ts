@@ -19,7 +19,7 @@ class CartRoute extends CartController{
     CreateOrder = () => this.Router.post('/store/newOrder',this.Create);
     FindOrderById = () => this.Router.get('/store/findOrder/:Id', this.FindOrder);
     UpdateOrderProduct = () => this.Router.put('/store/orderUpdate',AuhHttpOnly,this.UpdateStatusOrderStore);
-    FindAllOrders = () => this.Router.get('/store/listOrders/:QtdItensPage/:Page',AuhHttpOnly,this.ListAllOrders);
+    FindAllOrders = () => this.Router.get('/store/listOrders/:QtdItensPage/:Page/:Status',AuhHttpOnly,this.ListAllOrders);
 }
 
 export const _CartRoute = new CartRoute().Router;
