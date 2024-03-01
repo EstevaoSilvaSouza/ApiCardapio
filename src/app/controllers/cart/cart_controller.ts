@@ -10,6 +10,9 @@ export class CartController {
     protected async Create(req:Request,res:Response){
         try{
             const payload = req.body;
+            if(!payload.buyerInfo || !payload.buyerInfo.Name || !payload.buyerInfo.Phone){
+              return res.status(500).json({message:'Falha ao criar Pedido, campos em branco'})
+            }
             const createOrder = await _CreateOrderService.Execute(payload);
             if(!createOrder) return res.status(401).json({message:'Falha ao criar Order'});
             if(ArrayOrderTime.has(payload.NameCart)){
