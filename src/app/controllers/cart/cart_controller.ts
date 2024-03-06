@@ -10,7 +10,7 @@ export class CartController {
     protected async Create(req:Request,res:Response){
         try{
             const payload = req.body;
-            if(!payload.buyerInfo || !payload.buyerInfo.Name || !payload.buyerInfo.Phone){
+            if(!payload.buyerName || !payload.buyerPhone){
               return res.status(500).json({message:'Falha ao criar Pedido, campos em branco'})
             }
             const createOrder = await _CreateOrderService.Execute(payload);
