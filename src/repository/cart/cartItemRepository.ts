@@ -5,6 +5,10 @@ import { IProductsOrder, ProductsOrder } from "../../data/productsOrder";
 import Product from "../../data/product";
 
 export class CartItemRepository extends CartAbsRepository {
+
+  async DeleteOrder(idOrder:number):Promise<any>{
+    return Order.destroy({where:{Id:idOrder}})
+  }
   async GetAllCount(id:number,name:string): Promise<IGetAllCount | null> {
 
     const dateInicial = literal("DATE_TRUNC('month',CURRENT_DATE)");

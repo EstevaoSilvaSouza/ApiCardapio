@@ -9,7 +9,8 @@ const http_1 = __importDefault(require("http"));
 const app = new app_1.default().app;
 const server = http_1.default.createServer(app);
 socket_1.default.initialize(server);
-server.listen(3080, () => {
+server.listen(3080, async () => {
+    //Order.sync({alter:true});
     console.log(`
         Servidor online teste!
 

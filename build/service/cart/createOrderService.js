@@ -8,6 +8,7 @@ const genericData_1 = __importDefault(require("../../data/genericData"));
 const cartItemRepository_1 = require("../../repository/cart/cartItemRepository");
 const findService_1 = require("../store/findService");
 const createProductOrderService_1 = require("./createProductOrderService");
+const deleteService_1 = require("./deleteService");
 class CreateOrderService {
     constructor(s) {
         this.s = s;
@@ -15,12 +16,14 @@ class CreateOrderService {
             var _a, _b;
             const OrderObj = new genericData_1.default(payload).returnData();
             OrderObj.StatusOrder = "Aguardando confirmação da Loja";
+            OrderObj.buyerName = payload.buyerName;
+            OrderObj.buyerPhone = payload.buyerPhone;
             const createOrder = await this.s.Create(OrderObj);
             if (!createOrder) {
+                deleteService_1._DeleteOrderService.handleExecute(createOrder.Id);
                 throw ({ message: 'Falha interna ao criar Order' });
             }
             const getIdStore = await findService_1._FindService.Execute('one', payload.NameCart);
-            console.log(getIdStore);
             if (!getIdStore)
                 throw ({ message: getIdStore });
             if (getIdStore.Id) {

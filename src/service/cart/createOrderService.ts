@@ -7,17 +7,24 @@ import { CartItemRepository } from "../../repository/cart/cartItemRepository";
 import { _FindService } from "../store/findService";
 import { _CreateProductOrderService } from "./createProductOrderService";
 import crypto from 'crypto';
+import { _DeleteOrderService } from "./deleteService";
 class CreateOrderService {
     constructor(private s:ICartRepository<any>){}
 
     Execute = async (payload:IOrder) : Promise<IOrder | null> => {
         const OrderObj : IOrder = new GenericData<IOrder>(payload).returnData();
         OrderObj.StatusOrder = "Aguardando confirmação da Loja"
+        OrderObj.buyerName = payload.buyerName;
+        OrderObj.buyerPhone = payload.buyerPhone;
+
         const createOrder = await this.s.Create(OrderObj);
 
-        if(!createOrder){ throw({message:'Falha interna ao criar Order'})}
+        if(!createOrder){ 
+            _DeleteOrderService.handleExecute(createOrder!.Id!)
+            throw({message:'Falha interna ao criar Order'})
+        }
         const getIdStore =  await _FindService.Execute('one',payload.NameCart) as IStore;
-       console.log(getIdStore)
+
         if(!getIdStore) throw({message:getIdStore})
         if(getIdStore.Id){
             if(OrderObj.Items?.length! >= 1){

@@ -10,6 +10,9 @@ const ICartRepository_1 = require("./ICartRepository");
 const productsOrder_1 = require("../../data/productsOrder");
 const product_1 = __importDefault(require("../../data/product"));
 class CartItemRepository extends ICartRepository_1.CartAbsRepository {
+    async DeleteOrder(idOrder) {
+        return order_1.Order.destroy({ where: { Id: idOrder } });
+    }
     async GetAllCount(id, name) {
         const dateInicial = (0, sequelize_1.literal)("DATE_TRUNC('month',CURRENT_DATE)");
         const dataAnoInicial = (0, sequelize_1.literal)("DATE_TRUNC('year',CURRENT_DATE)");

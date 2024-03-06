@@ -29,6 +29,16 @@ Order.init({
         type: sequelize_1.DataTypes.STRING,
         allowNull: true,
     },
+    buyerName: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'sem cart',
+    },
+    buyerPhone: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'sem number'
+    }
 }, {
     sequelize: dbContext_1._DbContext,
     tableName: "Order",

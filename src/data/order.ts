@@ -12,6 +12,8 @@ export interface IOrder {
   Items?:IProductsOrder[];
   Id_Table?: number;
   createdAt?:Date | string;
+  buyerName?:string;
+  buyerPhone?:string;
 }
 
 export class Order extends Model<IOrder> {
@@ -40,6 +42,17 @@ Order.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    buyerName:{
+      type:DataTypes.STRING,
+      allowNull:false,
+      defaultValue:'sem cart',
+      
+    },
+    buyerPhone:{
+      type:DataTypes.STRING,
+      allowNull:false,
+      defaultValue:'sem number'
+    }
   },
   {
     sequelize: _DbContext,

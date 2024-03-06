@@ -16,7 +16,9 @@ import Http from 'http'
 const app = new App().app;
 const server = Http.createServer(app);
 socketInit.initialize(server)
-  server.listen(3080, () => {
+  server.listen(3080, async () => {
+
+    //Order.sync({alter:true});
     console.log(`
         Servidor online teste!
 
