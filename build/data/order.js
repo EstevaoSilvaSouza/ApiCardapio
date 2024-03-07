@@ -31,13 +31,11 @@ Order.init({
     },
     buyerName: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-        defaultValue: 'sem cart',
+        allowNull: true,
     },
     buyerPhone: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-        defaultValue: 'sem number'
+        allowNull: true,
     }
 }, {
     sequelize: dbContext_1._DbContext,

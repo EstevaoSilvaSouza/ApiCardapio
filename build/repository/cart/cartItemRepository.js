@@ -9,6 +9,7 @@ const order_1 = require("../../data/order");
 const ICartRepository_1 = require("./ICartRepository");
 const productsOrder_1 = require("../../data/productsOrder");
 const product_1 = __importDefault(require("../../data/product"));
+const image_1 = require("../../data/image");
 class CartItemRepository extends ICartRepository_1.CartAbsRepository {
     async DeleteOrder(idOrder) {
         return order_1.Order.destroy({ where: { Id: idOrder } });
@@ -96,7 +97,14 @@ class CartItemRepository extends ICartRepository_1.CartAbsRepository {
     async FindByIdOrder(idOrder) {
         return await order_1.Order.findByPk(idOrder, {
             include: [
-                { model: productsOrder_1.ProductsOrder, as: "orderProducts" }
+                { model: productsOrder_1.ProductsOrder, as: "orderProducts",
+                    include: [{
+                            model: product_1.default,
+                            include: [{
+                                    model: image_1.Image
+                                }]
+                        }]
+                }
             ]
         });
     }

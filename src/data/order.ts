@@ -44,14 +44,13 @@ Order.init(
     },
     buyerName:{
       type:DataTypes.STRING,
-      allowNull:false,
-      defaultValue:'sem cart',
-      
+      allowNull:true,
+
     },
     buyerPhone:{
       type:DataTypes.STRING,
-      allowNull:false,
-      defaultValue:'sem number'
+      allowNull:true,
+    
     }
   },
   {

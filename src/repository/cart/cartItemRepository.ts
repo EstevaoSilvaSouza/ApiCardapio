@@ -3,6 +3,7 @@ import { IOrder, Order } from '../../data/order';
 import { CartAbsRepository, IGetAllCount, IResponseListAllOrders } from "./ICartRepository";
 import { IProductsOrder, ProductsOrder } from "../../data/productsOrder";
 import Product from "../../data/product";
+import { Image } from "../../data/image";
 
 export class CartItemRepository extends CartAbsRepository {
 
@@ -100,7 +101,14 @@ export class CartItemRepository extends CartAbsRepository {
   async FindByIdOrder(idOrder: number): Promise<IOrder | null> {
     return await Order.findByPk(idOrder,{
       include:[
-        {model:ProductsOrder, as:"orderProducts"}
+        {model:ProductsOrder, as:"orderProducts",
+        include:[{
+          model:Product,
+          include:[{
+            model:Image
+          }]
+        }]
+      }
       ]
     });
   }
