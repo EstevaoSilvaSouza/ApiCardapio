@@ -81,7 +81,6 @@ class StoreController {
                 if (findStoreByUserId === null || findStoreByUserId === void 0 ? void 0 : findStoreByUserId.obj) {
                     const idStore = (_b = (_a = findStoreByUserId.obj) === null || _a === void 0 ? void 0 : _a.Stores[0]) === null || _b === void 0 ? void 0 : _b.Id;
                     const payload = { Name, Type, Value, Quantity, Description, Tag };
-                    console.log(idStore);
                     const addProduct = await createProductService_1._CreateProductService.handleExecute(payload, idStore);
                     if (addProduct === null || addProduct === void 0 ? void 0 : addProduct.Id) {
                         return res.status(200).json({ message: 'Produto adicionado com sucesso' });

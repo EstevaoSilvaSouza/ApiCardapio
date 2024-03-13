@@ -87,7 +87,7 @@ export default class StoreController {
           
           const idStore= findStoreByUserId.obj?.Stores[0]?.Id;
           const payload : IProduct = {Name,Type,Value,Quantity,Description,Tag};
-          console.log(idStore);
+         
           const addProduct = await _CreateProductService.handleExecute(payload,idStore);
           if(addProduct?.Id) {
             return res.status(200).json({message:'Produto adicionado com sucesso'});

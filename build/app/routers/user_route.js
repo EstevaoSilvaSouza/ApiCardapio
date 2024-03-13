@@ -17,12 +17,14 @@ class UserRouter extends user_controller_1.default {
         });
         this.auth = () => this.Router.post('/authenticate-user', this.AuthUser);
         this.validateToken = () => this.Router.get('/authenticate-validate', auth_httponly_1.AuhHttpOnly, validate_token_1.validateToken);
+        this.getUserDetails = () => this.Router.get('/get-userdetails', auth_httponly_1.AuhHttpOnly, this.FindUserAuthOnly);
         this.Router = (0, express_1.Router)();
         //Abaixo as rotas!!
         this.create();
         this.teste();
         this.auth();
         this.validateToken();
+        this.getUserDetails();
     }
 }
 exports._UserRouter = new UserRouter().Router;

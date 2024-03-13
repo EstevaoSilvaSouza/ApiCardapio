@@ -10,8 +10,25 @@ export default class UserRepository implements UserAbs {
         throw ('ok')
     };
     findById = (id: number) : Promise<IUser | null> => {
-        throw ('ok')
+        return User.findByPk(id,{
+            attributes:{exclude:["Password","createdAt","updatedAt"]},
+            include:[{
+                model:Store, attributes:{exclude:['createdAt','updatedAt']},through:{attributes:[]}
+            }]
+        });
     };
+
+    findAllUserByStore = async (idStore:number): Promise<IUser[] | null> =>{
+        return User.findAll({
+            attributes:{exclude:["Password","createdAt","updatedAt"]},
+            
+            include:[{
+            
+                model:Store,attributes:{exclude:['createdAt','updatedAt','Stores']}, through:{attributes:[]}, where:{Id:idStore}
+            }],
+            
+        })
+    }
     findByUserName = async (u: string) : Promise<IUser | null> => {
         return  User.findOne(
             {

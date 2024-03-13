@@ -14,7 +14,20 @@ class UserRepository {
             throw ('ok');
         };
         this.findById = (id) => {
-            throw ('ok');
+            return user_1.User.findByPk(id, {
+                attributes: { exclude: ["Password", "createdAt", "updatedAt"] },
+                include: [{
+                        model: store_1.default, attributes: { exclude: ['createdAt', 'updatedAt'] }, through: { attributes: [] }
+                    }]
+            });
+        };
+        this.findAllUserByStore = async (idStore) => {
+            return user_1.User.findAll({
+                attributes: { exclude: ["Password", "createdAt", "updatedAt"] },
+                include: [{
+                        model: store_1.default, attributes: { exclude: ['createdAt', 'updatedAt', 'Stores'] }, through: { attributes: [] }, where: { Id: idStore }
+                    }],
+            });
         };
         this.findByUserName = async (u) => {
             return user_1.User.findOne({

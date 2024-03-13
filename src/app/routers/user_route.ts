@@ -15,6 +15,7 @@ class UserRouter extends UserController {
         this.teste();
         this.auth();
         this.validateToken();
+        this.getUserDetails();
     }
 
     create = () => this.Router.post('/create-user',this.NewUser); 
@@ -23,6 +24,7 @@ class UserRouter extends UserController {
     }); 
     auth = () => this.Router.post('/authenticate-user', this.AuthUser);
     validateToken = () => this.Router.get('/authenticate-validate' ,AuhHttpOnly,validateToken);
+    getUserDetails = () => this.Router.get('/get-userdetails', AuhHttpOnly,this.FindUserAuthOnly);
 }
 
 export const _UserRouter = new UserRouter().Router;

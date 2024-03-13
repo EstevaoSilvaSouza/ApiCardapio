@@ -5,6 +5,9 @@ import { _AuthUser } from "../../../service/user/authUserService";
 import { IUser } from '../../../data/user';
 import { checkTypeResponse } from "../../../types/checkTypeResponse";
 import { AuthTokenGenerate } from "../../../types/authUserTokenGenerate";
+import { _FindStoreByUserService } from "../../../service/user/findStoreByUser";
+import { _FindUserById } from "../../../service/user/findByIdUser";
+import { _FindAllUserByStore } from "../../../service/user/FindAllUserByStore";
 
 
 export default class UserController {
@@ -60,6 +63,21 @@ export default class UserController {
                 Data: new Date(),
                 Error: error
             });
+        }
+    }
+
+    protected async FindUserAuthOnly (req:Request,res:Response) {
+
+        //realiazr aqui os requestes já vou pegar logo é tudo!!
+        const idUser = req.User.Id;
+        const guestUsers = await _FindAllUserByStore.handleExecute(idUser);
+        const accountDetails = await _FindUserById.handleExecute(idUser);
+
+
+        
+
+        if(guestUsers && accountDetails) {
+            return res.status(200).json({accountDetails, guestUsers})
         }
     }
 }

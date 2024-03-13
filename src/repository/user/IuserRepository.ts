@@ -12,12 +12,14 @@ export interface IUserRepository<T> {
     getAll: (id:number) => Promise<T[] | null>;
     findById:(id:number) => Promise<T | null>;
     findByUserName: (u:string) => Promise<T | null>;
+    findAllUserByStore:(idStore:number) => Promise<T[] | null>;
     delete:(id:number) => Promise<boolean | null>;
     update:(p:T) => Promise<T | null>;
 }
 
 
 export default abstract class UserAbs implements IUserRepository<IUser>{
+    abstract findAllUserByStore: (idStore:number) => Promise<IUser[] | null>;
     abstract create: (p: IUser) => Promise<IUser | null>;
     abstract  getAll: (id: number) => Promise<IUser[] | null>;
     abstract findById: (id: number) => Promise<IUser | null>;

@@ -4,6 +4,8 @@ const createService_1 = require("../../../service/user/createService");
 const authUserService_1 = require("../../../service/user/authUserService");
 const checkTypeResponse_1 = require("../../../types/checkTypeResponse");
 const authUserTokenGenerate_1 = require("../../../types/authUserTokenGenerate");
+const findByIdUser_1 = require("../../../service/user/findByIdUser");
+const FindAllUserByStore_1 = require("../../../service/user/FindAllUserByStore");
 class UserController {
     async NewUser(req, res) {
         const payload = req.body;
@@ -51,6 +53,15 @@ class UserController {
                 Data: new Date(),
                 Error: error
             });
+        }
+    }
+    async FindUserAuthOnly(req, res) {
+        //realiazr aqui os requestes já vou pegar logo é tudo!!
+        const idUser = req.User.Id;
+        const guestUsers = await FindAllUserByStore_1._FindAllUserByStore.handleExecute(idUser);
+        const accountDetails = await findByIdUser_1._FindUserById.handleExecute(idUser);
+        if (guestUsers && accountDetails) {
+            return res.status(200).json({ accountDetails, guestUsers });
         }
     }
 }
