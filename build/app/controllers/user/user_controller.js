@@ -58,10 +58,12 @@ class UserController {
     async FindUserAuthOnly(req, res) {
         //realiazr aqui os requestes já vou pegar logo é tudo!!
         const idUser = req.User.Id;
-        const guestUsers = await FindAllUserByStore_1._FindAllUserByStore.handleExecute(idUser);
         const accountDetails = await findByIdUser_1._FindUserById.handleExecute(idUser);
-        if (guestUsers && accountDetails) {
-            return res.status(200).json({ accountDetails, guestUsers });
+        if (accountDetails === null || accountDetails === void 0 ? void 0 : accountDetails.Stores) {
+            const guestUsers = await FindAllUserByStore_1._FindAllUserByStore.handleExecute(Number(accountDetails.Stores[0].Id));
+            if (guestUsers) {
+                return res.status(200).json({ accountDetails, guestUsers });
+            }
         }
     }
 }

@@ -70,14 +70,13 @@ export default class UserController {
 
         //realiazr aqui os requestes já vou pegar logo é tudo!!
         const idUser = req.User.Id;
-        const guestUsers = await _FindAllUserByStore.handleExecute(idUser);
         const accountDetails = await _FindUserById.handleExecute(idUser);
-
-
-        
-
-        if(guestUsers && accountDetails) {
-            return res.status(200).json({accountDetails, guestUsers})
+        if(accountDetails?.Stores) {
+            const guestUsers = await _FindAllUserByStore.handleExecute(Number(accountDetails.Stores[0].Id!));
+            if(guestUsers) {
+                return res.status(200).json({accountDetails, guestUsers})
+            }
         }
+
     }
 }
