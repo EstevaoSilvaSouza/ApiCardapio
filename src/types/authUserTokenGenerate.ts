@@ -8,7 +8,7 @@ export const AuthTokenGenerate = (obj:IUser)  :string | undefined => {
 
     if(obj){
         
-        const {Id,Name, FullName,Stores} = obj;
+        const {Id,Name, FullName,Stores, Type} = obj;
         return JWT.sign({Id,Name,FullName,Stores},ObjGlobal.passwordTokenGenerate,{expiresIn:'1h'});
     }
    }

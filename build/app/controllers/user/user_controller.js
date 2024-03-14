@@ -36,7 +36,6 @@ class UserController {
             const validateAuth = await authUserService_1._AuthUser.handleExecute({ Username, Password });
             const expirationDate = new Date();
             expirationDate.setHours(expirationDate.getHours() + 1);
-            console.log(validateAuth);
             if ((0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).status === 403 || (0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).status === 404 || (0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).status === 401)
                 return res.status((0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).status).json({ message: (0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).message, returnCode: validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num });
             res.cookie('_xc0d3_t0k3n', (0, authUserTokenGenerate_1.AuthTokenGenerate)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.obj), {
