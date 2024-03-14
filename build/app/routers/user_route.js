@@ -8,6 +8,7 @@ const express_1 = require("express");
 const user_controller_1 = __importDefault(require("../controllers/user/user_controller"));
 const validate_token_1 = require("../midlwares/validate.token");
 const auth_httponly_1 = require("../midlwares/auth.httponly");
+const auth_checkPermission_1 = require("../midlwares/auth.checkPermission");
 class UserRouter extends user_controller_1.default {
     constructor() {
         super();
@@ -17,7 +18,8 @@ class UserRouter extends user_controller_1.default {
         });
         this.auth = () => this.Router.post('/authenticate-user', this.AuthUser);
         this.validateToken = () => this.Router.get('/authenticate-validate', auth_httponly_1.AuhHttpOnly, validate_token_1.validateToken);
-        this.getUserDetails = () => this.Router.get('/get-userdetails', auth_httponly_1.AuhHttpOnly, this.FindUserAuthOnly);
+        this.getUserDetails = () => this.Router.get('/get-userdetails', auth_httponly_1.AuhHttpOnly, (0, auth_checkPermission_1.CheckPermission)(['Root', 'SuperAdmin', 'Admin']), this.FindUserAuthOnly);
+        this.createUserAddStore = () => this.Router.post('/create-user-store', auth_httponly_1.AuhHttpOnly, (0, auth_checkPermission_1.CheckPermission)(['Root', 'SuperAdmin', 'Admin']), this.CreateUserAddStore);
         this.Router = (0, express_1.Router)();
         //Abaixo as rotas!!
         this.create();
@@ -25,6 +27,7 @@ class UserRouter extends user_controller_1.default {
         this.auth();
         this.validateToken();
         this.getUserDetails();
+        this.createUserAddStore();
     }
 }
 exports._UserRouter = new UserRouter().Router;

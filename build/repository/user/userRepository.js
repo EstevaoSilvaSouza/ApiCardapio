@@ -5,8 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const store_1 = __importDefault(require("../../data/store"));
 const user_1 = require("../../data/user");
+const userStore_1 = require("../../data/userStore");
 class UserRepository {
     constructor() {
+        this.createAddStore = async (p, idStore) => {
+            return await user_1.User.create(p).then((e) => userStore_1.UsuarioStore.create({ Id_Store: idStore, Id_Usuario: e.Id }));
+        };
         this.create = async (p) => {
             return await user_1.User.create(p);
         };

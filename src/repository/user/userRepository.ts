@@ -1,8 +1,12 @@
 import Store from "../../data/store";
 import { IUser, User } from "../../data/user";
+import { UsuarioStore } from "../../data/userStore";
 import UserAbs from "./IuserRepository";
 
 export default class UserRepository implements UserAbs {
+    createAddStore = async (p: IUser,idStore:number) :Promise<IUser | null> => {
+        return await User.create(p).then((e) => UsuarioStore.create({Id_Store:idStore,Id_Usuario:e.Id!})) as IUser;       
+    }
     create = async (p: IUser) : Promise<IUser | null> => {
          return await User.create(p);
     };

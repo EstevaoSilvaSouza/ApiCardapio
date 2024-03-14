@@ -6,6 +6,7 @@ const checkTypeResponse_1 = require("../../../types/checkTypeResponse");
 const authUserTokenGenerate_1 = require("../../../types/authUserTokenGenerate");
 const findByIdUser_1 = require("../../../service/user/findByIdUser");
 const FindAllUserByStore_1 = require("../../../service/user/FindAllUserByStore");
+const createUserService_1 = require("../../../service/user/createUserService");
 class UserController {
     async NewUser(req, res) {
         const payload = req.body;
@@ -64,6 +65,22 @@ class UserController {
             if (guestUsers) {
                 return res.status(200).json({ accountDetails, guestUsers });
             }
+        }
+    }
+    async CreateUserAddStore(req, res) {
+        const payload = req.body;
+        const idUser = req.User.Id;
+        try {
+            const accountDetails = await findByIdUser_1._FindUserById.handleExecute(idUser);
+            if (accountDetails === null || accountDetails === void 0 ? void 0 : accountDetails.Stores) {
+                const createUser = await createUserService_1._CreateUserServiceAdd.handleExecute(payload, Number(accountDetails.Stores[0].Id));
+                if (createUser) {
+                    return res.status(200).json(createUser);
+                }
+            }
+        }
+        catch (e) {
+            return res.status(500).json(e);
         }
     }
 }

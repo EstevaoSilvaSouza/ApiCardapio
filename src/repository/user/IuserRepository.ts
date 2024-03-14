@@ -1,7 +1,5 @@
 import { IUser } from "../../data/user";
 
-
-
 export interface IGetUser{
     skipe?:string;
     take?:string;
@@ -9,6 +7,7 @@ export interface IGetUser{
 
 export interface IUserRepository<T> {
     create:(p:T) => Promise<T | null>;
+    createAddStore:(p:T,idStore:number) => Promise<T | null>;
     getAll: (id:number) => Promise<T[] | null>;
     findById:(id:number) => Promise<T | null>;
     findByUserName: (u:string) => Promise<T | null>;
@@ -19,6 +18,7 @@ export interface IUserRepository<T> {
 
 
 export default abstract class UserAbs implements IUserRepository<IUser>{
+    abstract createAddStore:(p:IUser,idStore:number) => Promise<IUser | null>;
     abstract findAllUserByStore: (idStore:number) => Promise<IUser[] | null>;
     abstract create: (p: IUser) => Promise<IUser | null>;
     abstract  getAll: (id: number) => Promise<IUser[] | null>;

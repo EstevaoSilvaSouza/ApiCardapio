@@ -3,6 +3,7 @@ import UserController from "../controllers/user/user_controller";
 import { validateToken } from "../midlwares/validate.token";
 import { AuthUser } from "../midlwares/auth.tokent";
 import { AuhHttpOnly } from "../midlwares/auth.httponly";
+import { CheckPermission } from "../midlwares/auth.checkPermission";
 
 
 class UserRouter extends UserController {
@@ -16,6 +17,7 @@ class UserRouter extends UserController {
         this.auth();
         this.validateToken();
         this.getUserDetails();
+        this.createUserAddStore();
     }
 
     create = () => this.Router.post('/create-user',this.NewUser); 
@@ -24,7 +26,8 @@ class UserRouter extends UserController {
     }); 
     auth = () => this.Router.post('/authenticate-user', this.AuthUser);
     validateToken = () => this.Router.get('/authenticate-validate' ,AuhHttpOnly,validateToken);
-    getUserDetails = () => this.Router.get('/get-userdetails', AuhHttpOnly,this.FindUserAuthOnly);
+    getUserDetails = () => this.Router.get('/get-userdetails', AuhHttpOnly,CheckPermission(['Root','SuperAdmin','Admin']),this.FindUserAuthOnly);
+    createUserAddStore  = () => this.Router.post('/create-user-store', AuhHttpOnly,CheckPermission(['Root','SuperAdmin','Admin']),this.CreateUserAddStore);
 }
 
 export const _UserRouter = new UserRouter().Router;

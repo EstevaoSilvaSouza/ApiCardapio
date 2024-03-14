@@ -21,6 +21,7 @@ export interface IUser {
 
 
 export class User extends Model<IUser> {
+    declare Id?:number;
     declare Name:string;
     declare FullName:string;
     declare Username:string;
