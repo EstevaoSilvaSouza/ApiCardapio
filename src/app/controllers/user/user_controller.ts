@@ -87,12 +87,13 @@ export default class UserController {
             if(accountDetails?.Stores) {
                 const createUser = await _CreateUserServiceAdd.handleExecute(payload,Number(accountDetails.Stores[0].Id!))
                 if(createUser) {
-                    return res.status(200).json(createUser);
+                    return res.status(200).json({message:"usuario cadastrado com sucesso", createUser});
                 }
             }
         }
-        catch(e){
-            return res.status(500).json(e)
+        catch(e:any){
+            console.log(e)
+            return res.status(500).json({message:e})
         }
         
         

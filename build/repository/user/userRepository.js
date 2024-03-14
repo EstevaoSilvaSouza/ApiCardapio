@@ -9,10 +9,13 @@ const userStore_1 = require("../../data/userStore");
 class UserRepository {
     constructor() {
         this.createAddStore = async (p, idStore) => {
-            return await user_1.User.create(p).then((e) => userStore_1.UsuarioStore.create({ Id_Store: idStore, Id_Usuario: e.Id }));
+            return await user_1.User.create(p);
         };
         this.create = async (p) => {
             return await user_1.User.create(p);
+        };
+        this.createUserStore = async (idUser, IdStore) => {
+            return await userStore_1.UsuarioStore.create({ Id_Store: IdStore, Id_Usuario: idUser });
         };
         this.getAll = () => {
             throw ('ok');

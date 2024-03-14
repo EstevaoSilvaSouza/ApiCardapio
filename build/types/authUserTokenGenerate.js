@@ -10,7 +10,7 @@ const AuthTokenGenerate = (obj) => {
     try {
         if (obj) {
             const { Id, Name, FullName, Stores, Type } = obj;
-            return jsonwebtoken_1.default.sign({ Id, Name, FullName, Stores }, globalConfi_1.ObjGlobal.passwordTokenGenerate, { expiresIn: '1h' });
+            return jsonwebtoken_1.default.sign({ Id, Name, FullName, Stores, Type }, globalConfi_1.ObjGlobal.passwordTokenGenerate, { expiresIn: '1h' });
         }
     }
     catch (error) {

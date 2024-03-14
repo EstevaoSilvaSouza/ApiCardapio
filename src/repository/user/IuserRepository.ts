@@ -1,4 +1,5 @@
 import { IUser } from "../../data/user";
+import { UsuarioStore } from '../../data/userStore';
 
 export interface IGetUser{
     skipe?:string;
@@ -14,10 +15,12 @@ export interface IUserRepository<T> {
     findAllUserByStore:(idStore:number) => Promise<T[] | null>;
     delete:(id:number) => Promise<boolean | null>;
     update:(p:T) => Promise<T | null>;
+    createUserStore :(Id:number,idStore:number) => Promise<UsuarioStore>; 
 }
 
 
 export default abstract class UserAbs implements IUserRepository<IUser>{
+    abstract createUserStore: (Id: number, idStore: number) => Promise<UsuarioStore>;
     abstract createAddStore:(p:IUser,idStore:number) => Promise<IUser | null>;
     abstract findAllUserByStore: (idStore:number) => Promise<IUser[] | null>;
     abstract create: (p: IUser) => Promise<IUser | null>;

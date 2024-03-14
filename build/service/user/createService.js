@@ -25,7 +25,7 @@ class CreateUserService {
                 if (checkUser) {
                     throw { message: 'Falha ao cadastrar, Usuario já existente.', error: 'U-2002' };
                 }
-                ObjCreate.Type = 'Normal';
+                ObjCreate.Type = 'Admin';
                 ObjCreate.Status = true;
                 ObjCreate.IsActive = true;
                 const newUser = await this.e.create(ObjCreate);

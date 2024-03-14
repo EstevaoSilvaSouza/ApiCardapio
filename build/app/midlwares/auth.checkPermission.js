@@ -9,6 +9,7 @@ const CheckPermission = (permissions) => {
 exports.CheckPermission = CheckPermission;
 const ValidatePermission = (per, req, res, next) => {
     const userPermission = req.User.Type;
+    console.log(userPermission);
     if (per.some((a) => a.includes(userPermission))) {
         next();
     }

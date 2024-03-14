@@ -17,7 +17,7 @@ class UserRouter extends UserController {
         this.auth();
         this.validateToken();
         this.getUserDetails();
-        this.createUserAddStore();
+        this.createUserAddStoreChange();
     }
 
     create = () => this.Router.post('/create-user',this.NewUser); 
@@ -27,7 +27,7 @@ class UserRouter extends UserController {
     auth = () => this.Router.post('/authenticate-user', this.AuthUser);
     validateToken = () => this.Router.get('/authenticate-validate' ,AuhHttpOnly,validateToken);
     getUserDetails = () => this.Router.get('/get-userdetails', AuhHttpOnly,CheckPermission(['Root','SuperAdmin','Admin']),this.FindUserAuthOnly);
-    createUserAddStore  = () => this.Router.post('/create-user-store', AuhHttpOnly,CheckPermission(['Root','SuperAdmin','Admin']),this.CreateUserAddStore);
+    createUserAddStoreChange  = () => this.Router.post('/create-userstore',CheckPermission(['Root','SuperAdmin','Admin']), AuhHttpOnly,this.CreateUserAddStore);
 }
 
 export const _UserRouter = new UserRouter().Router;

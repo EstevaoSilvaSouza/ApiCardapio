@@ -5,11 +5,15 @@ import UserAbs from "./IuserRepository";
 
 export default class UserRepository implements UserAbs {
     createAddStore = async (p: IUser,idStore:number) :Promise<IUser | null> => {
-        return await User.create(p).then((e) => UsuarioStore.create({Id_Store:idStore,Id_Usuario:e.Id!})) as IUser;       
+        return await User.create(p);
     }
     create = async (p: IUser) : Promise<IUser | null> => {
          return await User.create(p);
     };
+
+    createUserStore = async (idUser:number,IdStore:number) : Promise<UsuarioStore>=> {
+        return await UsuarioStore.create({Id_Store:IdStore, Id_Usuario:idUser})
+    }
     getAll = () : Promise<IUser[] | null> => {
         throw ('ok')
     };
