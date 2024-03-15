@@ -45,7 +45,8 @@ class UserController {
                 maxAge: 3600000,
                 expires: expirationDate,
             });
-            return res.status(200).json({ message: (0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).message, data: `${(_a = validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.obj) === null || _a === void 0 ? void 0 : _a.Name} ${(_b = validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.obj) === null || _b === void 0 ? void 0 : _b.FullName}`, returnCode: validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num, token: (0, authUserTokenGenerate_1.AuthTokenGenerate)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.obj) });
+            const accountDetails = await findByIdUser_1._FindUserById.handleExecute((_a = validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.obj) === null || _a === void 0 ? void 0 : _a.Id);
+            return res.status(200).json({ message: (0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).message, data: `${(_b = accountDetails === null || accountDetails === void 0 ? void 0 : accountDetails.Stores[0]) === null || _b === void 0 ? void 0 : _b.Name}`, returnCode: validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num, token: (0, authUserTokenGenerate_1.AuthTokenGenerate)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.obj) });
         }
         catch ({ error }) {
             return res.status(500).json({

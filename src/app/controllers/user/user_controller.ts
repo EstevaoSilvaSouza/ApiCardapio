@@ -54,8 +54,8 @@ export default class UserController {
                 maxAge: 3600000,
                 expires: expirationDate,
             });
-            
-            return res.status(200).json({message:checkTypeResponse(validateAuth?.num!).message, data:`${validateAuth?.obj?.Name} ${validateAuth?.obj?.FullName}`,returnCode:validateAuth?.num,token:AuthTokenGenerate(validateAuth?.obj!)}); 
+            const accountDetails :any = await _FindUserById.handleExecute(validateAuth?.obj?.Id!);
+            return res.status(200).json({message:checkTypeResponse(validateAuth?.num!).message, data:`${accountDetails?.Stores[0]?.Name!}`,returnCode:validateAuth?.num,token:AuthTokenGenerate(validateAuth?.obj!)}); 
         }
         catch ({ error }: any) {
             
