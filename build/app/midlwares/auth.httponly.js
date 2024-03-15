@@ -13,6 +13,7 @@ const AuhHttpOnly = (req, res, next) => {
     try {
         const decoded = jsonwebtoken_1.default.verify(token, '1234');
         req.User = decoded;
+        console.log(req.User);
         //console.log(req)
         next();
         // USAR AQUI O NEXT E COLOCAR DENTRO DO REQ.USER O DECODED!!  res.status(200).json({Date:new Date(),isAuth:true,Data:decoded});    

@@ -8,7 +8,7 @@ export const CheckPermission = (permissions:string[]) => {
 
 const ValidatePermission = (per:string[],req:Request, res:Response, next:NextFunction) => {
     const userPermission = req.User.Type;
-    console.log(userPermission)
+    
     if(per.some((a) => a.includes(userPermission))){
         next();
     }
