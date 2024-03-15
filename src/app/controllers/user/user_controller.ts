@@ -18,7 +18,7 @@ export default class UserController {
         if(!payload) return res.status(500).json()
 
         try{
-            const create = await _CreateUserService.handleExecute(payload);
+            const create = await _CreateUserService.handleExecute(payload,payload.NameStore);
             if(!create?.Id)return res.status(404).json({error:create})
             return res.status(200).json(create)
         }

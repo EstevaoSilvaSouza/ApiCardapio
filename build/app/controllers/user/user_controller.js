@@ -13,7 +13,7 @@ class UserController {
         if (!payload)
             return res.status(500).json();
         try {
-            const create = await createService_1._CreateUserService.handleExecute(payload);
+            const create = await createService_1._CreateUserService.handleExecute(payload, payload.NameStore);
             if (!(create === null || create === void 0 ? void 0 : create.Id))
                 return res.status(404).json({ error: create });
             return res.status(200).json(create);

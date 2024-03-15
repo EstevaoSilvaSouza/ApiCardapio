@@ -12,6 +12,7 @@ class CreateUserService {
             createObj!.Type = 'Agente';
             createObj!.Status = true;
             createObj!.IsActive = true;
+
             const find = await this.s.findByUserName(createObj.Username);
 
             if(find?.Username === payload.Username){

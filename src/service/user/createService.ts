@@ -12,12 +12,12 @@ class CreateUserService {
     
     constructor(private e:IUserRepository<IUser>){}
 
-    handleExecute = async (t: IUser): Promise<IUser | null> => {
+    handleExecute = async (t: IUser,nameStore:string): Promise<IUser | null> => {
         try{
             const ObjCreate = new GenericData<IUser>(t).returnData();
 
             //validar se existe a loja com mesmo nome.
-            const checkStore = await _FindService.Execute('one',ObjCreate.NameStore,0,0,0) as IStore
+            const checkStore = await _FindService.Execute('one',nameStore,0,0,0) as IStore
             if(checkStore){
                 throw { message:'Falha ao cadastrar, Loja já existente.',error:'S-2001'}
             }
@@ -37,9 +37,9 @@ class CreateUserService {
                 throw { message: 'Falha ao cadastrar usuário', error: newUser };
             }
     
-            const newStore = await _CreateService.handleExecute({Description:'Loja Nova', ImageUrl:'', Name:ObjCreate.NameStore!,Type:'',IdUser:newUser.Id});
+            const newStore = await _CreateService.handleExecute({Description:'Loja Nova', ImageUrl:'', Name:nameStore!,Type:'',IdUser:newUser.Id});
             if(newStore){
-                const InsertStoreuSER = await UsuarioStore.create({Id_Store:newStore.Id!, Id_Usuario:newUser.Id!});
+                const InsertStoreuSER = await this.e.createUserStore(newUser.Id!,newStore.Id!);
                     if(!InsertStoreuSER){
                         throw ({message:'Falha no processo, favor contato o dev do sistema.',error:'L-2111'})
                     }
