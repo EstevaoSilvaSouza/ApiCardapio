@@ -4,6 +4,7 @@ import { validateToken } from "../midlwares/validate.token";
 import { AuthUser } from "../midlwares/auth.tokent";
 import { AuhHttpOnly } from "../midlwares/auth.httponly";
 import { CheckPermission } from "../midlwares/auth.checkPermission";
+import { _CreateImageService } from "../../service/image/CreateImageService";
 
 
 class UserRouter extends UserController {
@@ -18,6 +19,7 @@ class UserRouter extends UserController {
         this.validateToken();
         this.getUserDetails();
         this.createUserAddStoreChange();
+        this.testDev();
     }
 
     create = () => this.Router.post('/create-user',this.NewUser); 
@@ -28,6 +30,7 @@ class UserRouter extends UserController {
     validateToken = () => this.Router.get('/authenticate-validate' ,AuhHttpOnly,validateToken);
     getUserDetails = () => this.Router.get('/get-userdetails', AuhHttpOnly,CheckPermission(['Root','SuperAdmin','Admin']),this.FindUserAuthOnly);
     createUserAddStoreChange  = () => this.Router.post('/create-userstore', AuhHttpOnly,CheckPermission(['Root','SuperAdmin','Admin']),this.CreateUserAddStore);
+    testDev = () => {this.Router.get('/devtest',_CreateImageService.handleExecute)}
 }
 
 export const _UserRouter = new UserRouter().Router;
