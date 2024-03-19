@@ -6,7 +6,7 @@ import { UsuarioStore } from "../../data/userStore";
 import { StoreByUser } from "../../service/store/findService";
 import AbsStoreRepository from "./IstoryRepository";
 
-export default class StoreRepository implements AbsStoreRepository {
+export default class StoreRepository extends AbsStoreRepository {
   async findProuctById(Id: number): Promise<IProduct | null>{
    return await Product.findByPk(Id);
   }

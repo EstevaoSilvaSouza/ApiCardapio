@@ -3,7 +3,7 @@ import { IUser, User } from "../../data/user";
 import { UsuarioStore } from "../../data/userStore";
 import UserAbs from "./IuserRepository";
 
-export default class UserRepository implements UserAbs {
+export default class UserRepository extends UserAbs {
     createAddStore = async (p: IUser,idStore:number) :Promise<IUser | null> => {
         return await User.create(p);
     }
