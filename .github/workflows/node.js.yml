@@ -27,7 +27,7 @@ jobs:
       run: npm install
     - name: Buildando a aplicação para a pasta build/index.js
       run: npm run build
-    - name: Rodando a API para testar
+    - name: Rodando a API para testar Dev 
       run: node build/index.js &
     - name: Aguardando API Iniciar
       run: sleep 15  # Corrigindo o comando sleep
