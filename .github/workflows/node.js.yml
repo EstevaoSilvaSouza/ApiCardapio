@@ -1,4 +1,4 @@
-name: CI/CD API CardapioWeb - Deploy Main 🐱‍👤🐱‍🚀
+name: CI/CD API CardapioWeb - Deploy Main  v1 🐱‍👤🐱‍🚀
 
 on:
   push:
