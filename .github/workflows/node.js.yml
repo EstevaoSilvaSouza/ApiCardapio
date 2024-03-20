@@ -30,6 +30,6 @@ jobs:
     - name: Rodando a API para testar Dev 
       run: node build/index.js &
     - name: Aguardando API Iniciar
-      run: sleep 15  # Corrigindo o comando sleep
+      run: sleep 10  # Corrigindo o comando sleep
     - name: FAZENDO REQUEST NA API PARA TESTAR
-      run: curl -sSf http://localhost:3080  # Realiza uma solicitação para testar a API
+      run: curl -sSf http://localhost:3080/user/test  # Realiza uma solicitação para testar a API
