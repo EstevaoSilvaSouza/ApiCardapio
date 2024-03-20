@@ -53,6 +53,6 @@ jobs:
     - name: Rodando a API para testar
       run : node build/index.js
     - name : Aguardando API Iniciar
-      run : slep(15)
+      run : sleep 15
     - name : FAZENDO REQUEST NA API PARA TESTAR
     - run : curl -sSf http://localhost:3080
