@@ -2,9 +2,9 @@ name: CI/CD API CardapioWeb - Deploy Main  v1 🐱‍👤🐱‍🚀
 
 on:
   push:
-    branches: [ "main" ]  # Corrigindo para "main" em vez de "Main"
+    branches: [ "Main" ]  # Corrigindo para "main" em vez de "Main"
   pull_request:
-    branches: [ "main" ]  # Corrigindo para "main" em vez de "Main"
+    branches: [ "Main" ]  # Corrigindo para "main" em vez de "Main"
 
 jobs:
   build:
