@@ -24,7 +24,7 @@ class UserRouter extends UserController {
 
     create = () => this.Router.post('/create-user',this.NewUser); 
     teste = () => this.Router.get('/test',(req:Request,res:Response) => {
-        res.send('ok');
+        res.status(200).json({ok:'ok'})
     }); 
     auth = () => this.Router.post('/authenticate-user', this.AuthUser);
     validateToken = () => this.Router.get('/authenticate-validate' ,AuhHttpOnly,validateToken);
