@@ -2,9 +2,9 @@ name: CI/CD API CardapioWeb - Deploy Main  v1 🐱‍👤🐱‍🚀
 
 on:
   push:
-    branches: [ "Main" ]  # Corrigindo para "main" em vez de "Main"
+    branches: [ "main" ]  # Corrigindo para "main" em vez de "Main"
   pull_request:
-    branches: [ "Main" ]  # Corrigindo para "main" em vez de "Main"
+    branches: [ "main" ]  # Corrigindo para "main" em vez de "Main"
 
 jobs:
   build:
@@ -28,6 +28,10 @@ jobs:
     - name: Buildando a aplicação para a pasta build/index.js
       run: npm run build
     - name: Rodando a API para testar Dev 
-      run: node build/index.js
+      run: |
+            cd ./build
+            node index.js
+    - name: Aguardando API Iniciar
+      run: sleep 16  # Aumentando o tempo de espera para garantir que a API esteja pronta
     - name: FAZENDO REQUEST NA API PARA TESTAR
       run: curl -sSf http://localhost:3080/user/test  # Realiza uma solicitação para testar a API
