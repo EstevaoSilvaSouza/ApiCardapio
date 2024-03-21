@@ -9,6 +9,7 @@ export interface IImage {
   Id?: number;
   Name: string;
   Url: string;
+  Id_Product?:number;
 }
 
 export class Image extends Model<IImage> {

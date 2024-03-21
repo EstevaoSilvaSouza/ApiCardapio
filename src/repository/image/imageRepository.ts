@@ -1,12 +1,12 @@
-import { Image } from "../../data/image";
+import { IImage, Image } from "../../data/image";
 import ImageRepositoryAbs from "./IimageRepository";
 
 
-class ImageRepository  extends ImageRepositoryAbs{
-    create = async (payload: Image) : Promise<Image | null> => {
+export default class ImageRepository  extends ImageRepositoryAbs{
+    create = async (payload: IImage) : Promise<IImage | null> => {
         return await Image.create(payload);
     };
-    update = async (payload: Image) : Promise<Image | null> => {
+    update = async (payload: IImage) : Promise<IImage | null> => {
         return await Image.create(payload);
     };
     delete = async (id: number) : Promise<boolean | null> => {

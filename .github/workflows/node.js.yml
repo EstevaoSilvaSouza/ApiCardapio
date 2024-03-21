@@ -1,0 +1,35 @@
+name: CI/CD API CardapioWeb - Deploy Main  v1 🐱‍👤🐱‍🚀
+
+on:
+  push:
+    branches: [ "Main" ]  # Corrigindo para "main" em vez de "Main"
+  pull_request:
+    branches: [ "Main" ]  # Corrigindo para "main" em vez de "Main"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x,20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    - name: Instalação pacotes de Desenvolvimento e Dev
+      run: npm install
+    - name: Buildando a aplicação para a pasta build/index.js
+      run: npm run build
+    - name: Rodando a API para testar Dev 
+      run: node build/index.js &
+    - name: Aguardando API Iniciar
+      run: sleep 5  # Corrigindo o comando sleep
+    - name: FAZENDO REQUEST NA API PARA TESTAR
+      run: curl -sSf http://localhost:3080/  # Realiza uma solicitação para testar a API
