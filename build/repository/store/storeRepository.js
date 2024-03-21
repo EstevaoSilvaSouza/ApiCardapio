@@ -7,7 +7,8 @@ const image_1 = require("../../data/image");
 const product_1 = __importDefault(require("../../data/product"));
 const store_1 = __importDefault(require("../../data/store"));
 const user_1 = require("../../data/user");
-class StoreRepository {
+const IstoryRepository_1 = __importDefault(require("./IstoryRepository"));
+class StoreRepository extends IstoryRepository_1.default {
     async findProuctById(Id) {
         return await product_1.default.findByPk(Id);
     }

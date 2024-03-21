@@ -13,8 +13,8 @@ class UserRouter extends user_controller_1.default {
     constructor() {
         super();
         this.create = () => this.Router.post('/create-user', this.NewUser);
-        this.teste = () => this.Router.get('/test', auth_httponly_1.AuhHttpOnly, (req, res) => {
-            res.send('ok');
+        this.teste = () => this.Router.get('/test', (req, res) => {
+            res.status(200).json({ ok: 'ok' });
         });
         this.auth = () => this.Router.post('/authenticate-user', this.AuthUser);
         this.validateToken = () => this.Router.get('/authenticate-validate', auth_httponly_1.AuhHttpOnly, validate_token_1.validateToken);
@@ -28,6 +28,7 @@ class UserRouter extends user_controller_1.default {
         this.validateToken();
         this.getUserDetails();
         this.createUserAddStoreChange();
+        //this.testDev();
     }
 }
 exports._UserRouter = new UserRouter().Router;

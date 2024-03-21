@@ -6,8 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const store_1 = __importDefault(require("../../data/store"));
 const user_1 = require("../../data/user");
 const userStore_1 = require("../../data/userStore");
-class UserRepository {
+const IuserRepository_1 = __importDefault(require("./IuserRepository"));
+class UserRepository extends IuserRepository_1.default {
     constructor() {
+        super(...arguments);
         this.createAddStore = async (p, idStore) => {
             return await user_1.User.create(p);
         };
