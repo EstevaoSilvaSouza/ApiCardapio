@@ -28,9 +28,7 @@ jobs:
     - name: Buildando a aplicação para a pasta build/index.js
       run: npm run build
     - name: Rodando a API para testar Dev 
-      run: |
-            cd ./build
-            node index.js
+      run:  cd ./build && node index.js &
     - name: Aguardando API Iniciar
       run: sleep 16  # Aumentando o tempo de espera para garantir que a API esteja pronta
     - name: FAZENDO REQUEST NA API PARA TESTAR
