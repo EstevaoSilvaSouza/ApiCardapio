@@ -56,7 +56,7 @@ export default class UserController {
             });
             const accountDetails: any = await _FindUserById.handleExecute(validateAuth?.obj?.Id!);
             if(accountDetails){
-                return res.status(200).json({message:checkTypeResponse(validateAuth?.num!).message, data:`${accountDetails?.Stores[0]?.Name!}`,returnCode:validateAuth?.num,token:AuthTokenGenerate(validateAuth?.obj!)}); 
+                return res.status(200).json({message:checkTypeResponse(validateAuth?.num!).message, data:`${accountDetails?.Stores[0]?.Name!}`,returnCode:validateAuth?.num}); 
             }
             
         }

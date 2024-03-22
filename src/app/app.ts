@@ -5,6 +5,7 @@ import Cors from "cors";
 import { _UserRouter } from "./routers/user_route";
 import cookieParser from 'cookie-parser';
 import { _CartRoute } from "./routers/cart_route";
+import { LogAuditMidlwReq } from "./midlwares/logaudit";
 
 export default class App {
   public app: Application;
@@ -22,17 +23,21 @@ export default class App {
         credentials: true,
       })
     );
-    
+
     this.app.use(cookieParser());
     this.app.use(Express.json({limit:'50mb'}));
     this.app.use(Express.urlencoded({ extended: true, limit:'50mb' }));
     this.app.options('*', Cors());
-  };
 
+    
+  }
   private Route = () => {
+
+    this.app.use(LogAuditMidlwReq()); 
     this.app.use('/store', _StoreRoute);
     this.app.use('/user', _UserRouter);
     this.app.use('/cart',_CartRoute);
     this.app.use("*", NotFound);
+
   };
 }

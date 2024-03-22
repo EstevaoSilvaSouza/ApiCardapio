@@ -47,7 +47,7 @@ class UserController {
             });
             const accountDetails = await findByIdUser_1._FindUserById.handleExecute((_a = validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.obj) === null || _a === void 0 ? void 0 : _a.Id);
             if (accountDetails) {
-                return res.status(200).json({ message: (0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).message, data: `${(_b = accountDetails === null || accountDetails === void 0 ? void 0 : accountDetails.Stores[0]) === null || _b === void 0 ? void 0 : _b.Name}`, returnCode: validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num, token: (0, authUserTokenGenerate_1.AuthTokenGenerate)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.obj) });
+                return res.status(200).json({ message: (0, checkTypeResponse_1.checkTypeResponse)(validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num).message, data: `${(_b = accountDetails === null || accountDetails === void 0 ? void 0 : accountDetails.Stores[0]) === null || _b === void 0 ? void 0 : _b.Name}`, returnCode: validateAuth === null || validateAuth === void 0 ? void 0 : validateAuth.num });
             }
         }
         catch ({ error }) {

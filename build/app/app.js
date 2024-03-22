@@ -10,6 +10,7 @@ const cors_1 = __importDefault(require("cors"));
 const user_route_1 = require("./routers/user_route");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cart_route_1 = require("./routers/cart_route");
+const logaudit_1 = require("./midlwares/logaudit");
 class App {
     constructor() {
         this.Middleware = () => {
@@ -23,6 +24,7 @@ class App {
             this.app.options('*', (0, cors_1.default)());
         };
         this.Route = () => {
+            this.app.use((0, logaudit_1.LogAuditMidlwReq)());
             this.app.use('/store', store_route_1._StoreRoute);
             this.app.use('/user', user_route_1._UserRouter);
             this.app.use('/cart', cart_route_1._CartRoute);
