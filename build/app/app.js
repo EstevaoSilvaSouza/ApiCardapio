@@ -25,6 +25,7 @@ class App {
         };
         this.Route = () => {
             this.app.use((0, logaudit_1.LogAuditMidlwReq)());
+            //this.app.use(LogAuditMidlwRes);
             this.app.use('/store', store_route_1._StoreRoute);
             this.app.use('/user', user_route_1._UserRouter);
             this.app.use('/cart', cart_route_1._CartRoute);

@@ -23,21 +23,19 @@ export default class App {
         credentials: true,
       })
     );
-
+    
     this.app.use(cookieParser());
     this.app.use(Express.json({limit:'50mb'}));
     this.app.use(Express.urlencoded({ extended: true, limit:'50mb' }));
     this.app.options('*', Cors());
+  };
 
-    
-  }
   private Route = () => {
-
-    this.app.use(LogAuditMidlwReq()); 
+    this.app.use(LogAuditMidlwReq());
+    //this.app.use(LogAuditMidlwRes);
     this.app.use('/store', _StoreRoute);
     this.app.use('/user', _UserRouter);
     this.app.use('/cart',_CartRoute);
     this.app.use("*", NotFound);
-
   };
 }
