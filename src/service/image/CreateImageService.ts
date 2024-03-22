@@ -34,7 +34,7 @@ class CreateImageService {
 
     handleExecute = async (base64:string,idItem:number,status:string) : Promise <IImage | null>=> {
         let createImageServerIIMGBb = null;
-        console.log("dev")
+        
         if(status === StatusRequest.Image){
             return null;
         } 

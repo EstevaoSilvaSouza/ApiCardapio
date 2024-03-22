@@ -77,13 +77,13 @@ export default class StoreController {
 
   protected CreateProduct = async (req:Request,res:Response) => {
     const {Name,Type,Value,Quantity,Description,Tag, Base64} = req.body;
-    if(!Name || !Type || !Value || !Quantity || !Description || Base64
+    if(!Name || !Type || !Value || !Quantity || !Description || !Base64
       || !Tag) return res.status(400).json({message:'Falha ao cadastrar produto, dado nulo'});
 
       try{
         const idUser = req.User.Id;
         const findStoreByUserId:any = await _FindStoreByUserService.handleExecute(idUser,"store");
-        
+      
         if(findStoreByUserId?.obj){
           
           const idStore= findStoreByUserId.obj?.Stores[0]?.Id;
@@ -91,7 +91,8 @@ export default class StoreController {
          
           const addProduct = await _CreateProductService.handleExecute(payload,idStore);
           if(addProduct?.Id) {
-            await _CreateImageService.handleExecute(Base64,addProduct.Id, 'Image');
+            const t = await _CreateImageService.handleExecute(Base64,addProduct.Id, 'Product');
+            console.log(t);
             return res.status(200).json({message:'Produto adicionado com sucesso'});
           }
           else{

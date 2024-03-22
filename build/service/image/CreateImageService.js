@@ -30,7 +30,6 @@ class CreateImageService {
         };
         this.handleExecute = async (base64, idItem, status) => {
             let createImageServerIIMGBb = null;
-            console.log("dev");
             if (status === IimageRepository_1.StatusRequest.Image) {
                 return null;
             }
