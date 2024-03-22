@@ -9,6 +9,7 @@ import { IProduct } from "../../../data/product";
 import { _UpdateProductService } from "../../../service/store/updateProductService";
 import { _FindProductByIdService } from "../../../service/store/findProductByIdService";
 import { _FindAllCountService } from "../../../service/store/findAllCountService";
+import { _CreateImageService } from "../../../service/image/CreateImageService";
 
 export default class StoreController {
   protected Find = async (req: Request, res: Response) => {
@@ -75,8 +76,8 @@ export default class StoreController {
   };
 
   protected CreateProduct = async (req:Request,res:Response) => {
-    const {Name,Type,Value,Quantity,Description,Tag} = req.body;
-    if(!Name || !Type || !Value || !Quantity || !Description
+    const {Name,Type,Value,Quantity,Description,Tag, Base64} = req.body;
+    if(!Name || !Type || !Value || !Quantity || !Description || Base64
       || !Tag) return res.status(400).json({message:'Falha ao cadastrar produto, dado nulo'});
 
       try{
@@ -90,6 +91,7 @@ export default class StoreController {
          
           const addProduct = await _CreateProductService.handleExecute(payload,idStore);
           if(addProduct?.Id) {
+            await _CreateImageService.handleExecute(Base64,addProduct.Id, 'Image');
             return res.status(200).json({message:'Produto adicionado com sucesso'});
           }
           else{
