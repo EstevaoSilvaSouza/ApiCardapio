@@ -25,7 +25,7 @@ export default class App {
     
     this.app.use(cookieParser());
     this.app.use(Express.json());
-    this.app.use(Express.urlencoded({ extended: true, limit: 2000 }));
+    this.app.use(Express.urlencoded({ extended: true, limit: 3500 }));
     this.app.options('*', Cors());
   };
 
