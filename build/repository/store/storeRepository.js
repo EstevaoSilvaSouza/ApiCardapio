@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const image_1 = require("../../data/image");
 const product_1 = __importDefault(require("../../data/product"));
+const settingPage_1 = __importDefault(require("../../data/settingPage"));
 const store_1 = __importDefault(require("../../data/store"));
 const user_1 = require("../../data/user");
 const IstoryRepository_1 = __importDefault(require("./IstoryRepository"));
@@ -37,13 +38,17 @@ class StoreRepository extends IstoryRepository_1.default {
             return await store_1.default.findOne({
                 where: { Name: storeName },
                 attributes: { exclude: ["createdAt", "updatedAt"] },
-                include: {
-                    model: product_1.default,
-                    include: [
-                        { model: image_1.Image, attributes: { exclude: ["createdAt", "updatedAt"] } },
-                    ],
-                    attributes: { exclude: ["createdAt", "updatedAt"] },
-                },
+                include: [
+                    {
+                        model: product_1.default,
+                        attributes: { exclude: ["createdAt", "updatedAt"] },
+                        include: [{ model: image_1.Image, attributes: { exclude: ["createdAt", "updatedAt"] } }],
+                    },
+                    {
+                        model: settingPage_1.default,
+                        attributes: { exclude: ["createdAt", "updatedAt", "Id", "Id_CustomSettingCss"] }
+                    }
+                ],
             });
         }
         else {

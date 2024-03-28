@@ -4,9 +4,26 @@ import { IUser } from "../../data/user";
 import { UsuarioStore } from "../../data/userStore";
 import { IUserRepository } from "../../repository/user/IuserRepository";
 import UserRepository from "../../repository/user/userRepository";
+import { _CreateServiceSettingPage } from "../settingPage/createService";
 import { _CreateService } from "../store/createService";
 import { _FindService } from "../store/findService";
 import { _FindByUserNew, _FindbyUserService } from "./findByUsername";
+
+
+export enum CssPageCustom {
+    ColorBackground ='#fff',
+    FontPage =  'default',
+    ColorButtonCategory=  'orange',
+    ColorButtonInputCart=  '090303b9',
+    ColorHeaderTitleCategory=  '#000000',
+    ColorFontCategory=  '#fff',
+    ColorButtonAddProductCart=  'orange',
+    ColorButtonCart=  'orange',
+    ColorButtonHoverAddProductCart=  'orange',
+    ColorFontHeader=  'orange',
+    ColorFontHeaderCategory=  'orange',
+    ColorHoverButtonCategory =  'red'
+}
 
 class CreateUserService {
     
@@ -37,8 +54,26 @@ class CreateUserService {
                 throw { message: 'Falha ao cadastrar usuário', error: newUser };
             }
     
-            const newStore = await _CreateService.handleExecute({Description:'Loja Nova', ImageUrl:'', Name:nameStore!,Type:'',IdUser:newUser.Id});
+            const newStore = await _CreateService.handleExecute({Description:'Loja Nova', ImageUrl:'', Name:nameStore!,Type:'',IdUser:newUser.Id})
             if(newStore){
+                const newPageSettingCss = await _CreateServiceSettingPage.handleExecute({
+                    ColorBackground :CssPageCustom.ColorBackground,
+                    ColorButtonAddProductCart: CssPageCustom.ColorButtonAddProductCart,
+                    ColorButtonHoverAddProductCart: CssPageCustom.ColorButtonHoverAddProductCart,
+                    ColorButtonCart: CssPageCustom.ColorButtonCart,
+                    ColorButtonCategory: CssPageCustom.ColorButtonCart,
+                    ColorButtonInputCart:CssPageCustom.ColorButtonInputCart,
+                    ColorFontCategory:CssPageCustom.ColorFontCategory,
+                    ColorFontHeader:CssPageCustom.ColorFontHeader,
+                    ColorFontHeaderCategory:CssPageCustom.ColorFontHeaderCategory,
+                    ColorHeaderTitleCategory:CssPageCustom.ColorHeaderTitleCategory,
+                    ColorHoverButtonCategory:CssPageCustom.ColorHoverButtonCategory,
+                    FontPage:CssPageCustom.FontPage,
+                    Id_CustomSettingCss:newStore.Id
+                },Number(newStore.Id));
+
+                if(!newPageSettingCss){ throw({message:'Falha ao processar css custom, favor contatar o dev.', erro:'L-2110'})}
+
                 const InsertStoreuSER = await this.e.createUserStore(newUser.Id!,newStore.Id!);
                     if(!InsertStoreuSER){
                         throw ({message:'Falha no processo, favor contato o dev do sistema.',error:'L-2111'})

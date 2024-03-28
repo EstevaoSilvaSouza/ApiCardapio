@@ -1,5 +1,6 @@
 import { Image } from "../../data/image";
 import Product, { IProduct } from "../../data/product";
+import SettingPage from "../../data/settingPage";
 import Store, { IStore } from "../../data/store";
 import { User } from "../../data/user";
 import { UsuarioStore } from "../../data/userStore";
@@ -36,14 +37,17 @@ export default class StoreRepository extends AbsStoreRepository {
       return await Store.findOne({
         where: { Name: storeName },
         attributes: { exclude: ["createdAt", "updatedAt"] },
-        include: {
-          model: Product,
-          include: [
-            { model: Image, attributes: { exclude: ["createdAt", "updatedAt"] } },
-          ],
-  
-          attributes: { exclude: ["createdAt", "updatedAt"] },
-        },
+        include: [
+          {
+            model: Product,
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+            include: [{ model: Image, attributes: { exclude: ["createdAt", "updatedAt"] } }],
+          },
+          {
+            model:SettingPage,
+            attributes:{exclude:["createdAt","updatedAt","Id","Id_CustomSettingCss"]}
+          }
+        ],
       });
     }
     else {
