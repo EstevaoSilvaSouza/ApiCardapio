@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const settingPage_1 = __importDefault(require("../../data/settingPage"));
 const store_1 = __importDefault(require("../../data/store"));
 const user_1 = require("../../data/user");
 const userStore_1 = require("../../data/userStore");
@@ -26,7 +27,8 @@ class UserRepository extends IuserRepository_1.default {
             return user_1.User.findByPk(id, {
                 attributes: { exclude: ["Password", "createdAt", "updatedAt"] },
                 include: [{
-                        model: store_1.default, attributes: { exclude: ['createdAt', 'updatedAt'] }, through: { attributes: [] }
+                        model: store_1.default, attributes: { exclude: ['createdAt', 'updatedAt'] }, through: { attributes: [] },
+                        include: [{ model: settingPage_1.default, attributes: { exclude: ['Id', 'createdAt', 'updatedAt', 'Id_CustomSettingCss'] } }]
                     }]
             });
         };

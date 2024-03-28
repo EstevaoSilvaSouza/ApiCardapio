@@ -1,3 +1,4 @@
+import SettingPage from "../../data/settingPage";
 import Store from "../../data/store";
 import { IUser, User } from "../../data/user";
 import { UsuarioStore } from "../../data/userStore";
@@ -21,7 +22,8 @@ export default class UserRepository extends UserAbs {
         return User.findByPk(id,{
             attributes:{exclude:["Password","createdAt","updatedAt"]},
             include:[{
-                model:Store, attributes:{exclude:['createdAt','updatedAt']},through:{attributes:[]}
+                model:Store, attributes:{exclude:['createdAt','updatedAt']},through:{attributes:[]},
+                include:[{model:SettingPage, attributes:{exclude:['Id','createdAt','updatedAt','Id_CustomSettingCss']}}]
             }]
         });
     };
