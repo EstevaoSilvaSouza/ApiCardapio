@@ -9,6 +9,7 @@ const updateProductService_1 = require("../../../service/store/updateProductServ
 const findProductByIdService_1 = require("../../../service/store/findProductByIdService");
 const findAllCountService_1 = require("../../../service/store/findAllCountService");
 const CreateImageService_1 = require("../../../service/image/CreateImageService");
+const updateService_1 = require("../../../service/settingPage/updateService");
 class StoreController {
     constructor() {
         this.Find = async (req, res) => {
@@ -111,6 +112,18 @@ class StoreController {
             }
             catch (error) {
                 return res.status(500).json({ message: error });
+            }
+        };
+        this.UpdateColorCustomPage = async (req, res) => {
+            const body = req.body;
+            try {
+                const idStore = req.User.Stores[0].Id;
+                const update = await updateService_1._UpdateServiceSettingPage.handleExecute(body, idStore);
+                if (update && update[0] > 0)
+                    return res.status(200).json(update);
+            }
+            catch (error) {
+                return res.status(500).json({ message: error.message });
             }
         };
         this.FindProductById = async (req, res) => {

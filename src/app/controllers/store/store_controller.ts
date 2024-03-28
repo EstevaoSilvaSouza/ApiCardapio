@@ -10,6 +10,7 @@ import { _UpdateProductService } from "../../../service/store/updateProductServi
 import { _FindProductByIdService } from "../../../service/store/findProductByIdService";
 import { _FindAllCountService } from "../../../service/store/findAllCountService";
 import { _CreateImageService } from "../../../service/image/CreateImageService";
+import { _UpdateServiceSettingPage } from "../../../service/settingPage/updateService";
 
 export default class StoreController {
   protected Find = async (req: Request, res: Response) => {
@@ -120,6 +121,19 @@ export default class StoreController {
       return res.status(500).json({message:error})
     }
   };
+
+  protected UpdateColorCustomPage = async (req:Request,res:Response) => {
+    const body = req.body;
+
+    try{
+      const idStore = req.User.Stores[0].Id;
+      const update = await _UpdateServiceSettingPage.handleExecute(body,idStore);
+      if(update && update[0] > 0) return res.status(200).json(update)
+    }
+    catch(error:any){
+      return res.status(500).json({message:error.message});
+    }
+  }
 
   protected FindProductById = async (req:Request, res:Response) => {
     try{
