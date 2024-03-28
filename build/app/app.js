@@ -15,7 +15,7 @@ class App {
     constructor() {
         this.Middleware = () => {
             this.app.use((0, cors_1.default)({
-                origin: 'https://cardapio-web-pearl.vercel.app/',
+                origin: 'https://cardapio-web-pearl.vercel.app',
                 credentials: true,
             }));
             this.app.use((0, cookie_parser_1.default)());

@@ -19,7 +19,7 @@ export default class App {
   private Middleware = () => {
     this.app.use(
       Cors({
-        origin: 'https://cardapio-web-pearl.vercel.app/',
+        origin: 'https://cardapio-web-pearl.vercel.app',
         credentials: true,
       })
     );
@@ -31,7 +31,7 @@ export default class App {
   };
 
   private Route = () => {
-    this.app.use(LogAuditMidlwReq());
+    //this.app.use(LogAuditMidlwReq());
     //this.app.use(LogAuditMidlwRes);
     this.app.use('/store', _StoreRoute);
     this.app.use('/user', _UserRouter);
